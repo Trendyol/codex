@@ -10,9 +10,10 @@ const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
 
   useHelmet(app);
-  setupSwagger(app);
   useCompression(app);
   useGlobalPipes(app);
+  setupSwagger(app);
+  enableCors(app);
 
   await app.listen(4000);
 };
@@ -42,6 +43,10 @@ const setupSwagger = (app: INestApplication) => {
   SwaggerModule.setup('api', app, document, {
     explorer: true,
   });
+};
+
+const enableCors = (app: INestApplication) => {
+  app.enableCors();
 };
 
 bootstrap();
