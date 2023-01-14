@@ -1,7 +1,8 @@
+import { AppModule } from './app.module';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import helmet from 'helmet';
-import { AppModule } from './app.module';
+import * as compression from 'compression';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 const bootstrap = async () => {
@@ -9,6 +10,7 @@ const bootstrap = async () => {
 
   useHelmet(app);
   setupSwagger(app);
+  useCompression(app);
   useGlobalPipes(app);
 
   await app.listen(4000);
@@ -20,6 +22,10 @@ const useHelmet = (app: INestApplication) => {
 
 const useGlobalPipes = (app: INestApplication) => {
   app.useGlobalPipes(new ValidationPipe());
+};
+
+const useCompression = (app: INestApplication) => {
+  app.use(compression());
 };
 
 const setupSwagger = (app: INestApplication) => {
