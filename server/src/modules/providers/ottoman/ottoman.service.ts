@@ -37,13 +37,14 @@ export class OttomanDataServices extends IDataServices implements OnModuleInit {
     });
 
     const userModel = ottoman.model<User, Document<User>>('user', userSchema);
-    this.users = new OttomanGenericRepository<User>(userModel);
+    this.users = new OttomanGenericRepository<User>(userModel, this.connection);
     const submissionModel = ottoman.model<Submission, Document<Submission>>(
       'submission',
       submissionSchema,
     );
     this.submissions = new OttomanGenericRepository<Submission>(
       submissionModel,
+      this.connection,
     );
   }
 }
