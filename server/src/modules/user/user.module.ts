@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
-import { OttomanService } from '@ottoman/ottoman.service';
+import { OttomanModule } from '@ottoman/ottoman.module';
 
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
 @Module({
   controllers: [UserController],
-  providers: [UserService, OttomanService],
+  imports: [OttomanModule],
   exports: [UserService],
+  providers: [UserService],
 })
 export class UserModule {}

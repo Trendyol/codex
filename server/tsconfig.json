@@ -20,8 +20,9 @@
     "paths": {
       "@user/*": ["src/modules/user/*"],
       "@auth/*": ["src/modules/auth/*"],
+      "@data/*": ["src/modules/providers/data/*"],
       "@ottoman/*": ["src/modules/providers/ottoman/*"],
-      "@core/*": ["src/core/*"],
+      "@core/*": ["src/core/*"]
     }
   }
 }

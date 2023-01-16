@@ -1,9 +1,15 @@
+import { IDataServices } from '@core/data/services/data.service';
 import { Module } from '@nestjs/common';
 
-import { OttomanService } from './ottoman.service';
+import { OttomanDataServices } from './ottoman.service';
 
 @Module({
-  providers: [OttomanService],
-  exports: [OttomanService],
+  providers: [
+    {
+      provide: IDataServices,
+      useClass: OttomanDataServices,
+    },
+  ],
+  exports: [IDataServices],
 })
 export class OttomanModule {}

@@ -1,21 +1,15 @@
+import { IDataServices } from '@core/data/services/data.service';
 import { Injectable } from '@nestjs/common';
-
-import { OttomanService } from '../providers/ottoman/ottoman.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly ottomanService: OttomanService) {}
+  constructor(private readonly dataService: IDataServices) {}
 
   async create(name: string, email: string) {
-    const user = new this.ottomanService.UserModel({
-      name,
-      email,
-    });
-
-    return user.save();
+    return this.dataService.users.create({ name, email });
   }
 
   async findOne(filter: any) {
-    return this.ottomanService.UserModel.findOne(filter);
+    return this.dataService.users.findOne(filter);
   }
 }
