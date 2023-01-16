@@ -29,6 +29,7 @@ yarn-error.log
 /packages/**/LICENSE
 *.tsbuildinfo
 dist/
+.env
 
 # example
 /quick-start
