@@ -1,3 +1,4 @@
+import { UserDTO } from '@auth/dto/user.dto';
 import { User } from '@core/decorators/user.decorator';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 
@@ -10,7 +11,10 @@ export class UserController {
 
   @Get('/me')
   @UseGuards(JwtGuard)
-  getUser(@User() user) {
-    return user.name;
+  async getUser(@User() user: UserDTO) {
+    const { name, email } = await this.userService.findOne({
+      email: user.email,
+    });
+    return { name, email };
   }
 }

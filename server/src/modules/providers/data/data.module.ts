@@ -3,6 +3,6 @@ import { OttomanModule } from '@ottoman/ottoman.module';
 
 @Module({
   imports: [OttomanModule],
-  providers: [OttomanModule],
+  exports: [OttomanModule],
 })
 export class DataModule {}
