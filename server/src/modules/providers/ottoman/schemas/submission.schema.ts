@@ -1,3 +1,5 @@
-import { createOttomanSchema } from '@ottoman/helpers';
+import { Schema } from 'ottoman';
 
-export const submissionSchema = createOttomanSchema<'Submission'>({ code: String });
+export const submissionSchema = new Schema({
+  code: String,
+});

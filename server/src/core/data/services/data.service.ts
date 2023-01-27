@@ -1,9 +1,15 @@
-import { Submission } from '../entities';
-import { User } from '../entities/user.entity';
+import { Exclude } from 'class-transformer';
+
+import { SubmissionEntity } from '../entities';
+import { UserEntity } from '../entities/user.entity';
 import { IGenericRepository } from '../repositories/generic.repository';
 
-export abstract class IDataServices {
-  abstract connection: any;
-  abstract users: IGenericRepository<User, User>;
-  abstract submissions: IGenericRepository<Submission, Submission>;
+type Pure<T> = Omit<T, 'id'>;
+
+export abstract class IDataService {
+  abstract users: IGenericRepository<Pure<UserEntity>, UserEntity>;
+  abstract submissions: IGenericRepository<
+    Pure<SubmissionEntity>,
+    SubmissionEntity
+  >;
 }

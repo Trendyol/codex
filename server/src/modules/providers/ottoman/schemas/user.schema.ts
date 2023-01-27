@@ -1,3 +1,6 @@
-import { createOttomanSchema } from '@ottoman/helpers';
+import { Schema } from 'ottoman';
 
-export const userSchema = createOttomanSchema<'User'>({ email: String, name: String });
+export const userSchema = new Schema({
+  email: String,
+  name: String,
+});
