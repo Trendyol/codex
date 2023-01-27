@@ -1,7 +1,6 @@
+import config from '@core/config/configuration';
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { OttomanModule } from '@ottoman/ottoman.module';
 import { UserModule } from '@user/user.module';
 
 import { AuthController } from './auth.controller';
@@ -13,10 +12,9 @@ import { JwtStrategy } from './strategies/jwt.strategy';
   imports: [
     UserModule,
     JwtModule.registerAsync({
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.get('JWT_SECRET'),
+      useFactory: async () => ({
+        secret: config.jwt.secret,
       }),
-      inject: [ConfigService],
     }),
   ],
   controllers: [AuthController],

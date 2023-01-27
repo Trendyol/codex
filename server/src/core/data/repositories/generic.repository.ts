@@ -1,6 +1,6 @@
-export interface IGenericRepository<T extends EntitiesAll, R extends T> {
-  getAll(): Promise<R[]>;
-  create(options: Exclude<T, 'id'>): Promise<R>;
-  findOne(filter: Partial<T>): Promise<R | undefined>;
+export interface IGenericRepository<T, R> {
+  find(): Promise<R[]>;
+  create(options: T): Promise<R>;
+  findOne(filter: Partial<R>): Promise<T | undefined>;
   delete(id: string): Promise<any>;
 }

@@ -1,20 +1,22 @@
+import config from '@core/config/configuration';
 import { ACCESS_TOKEN } from '@core/constants';
+import { UserEntity } from '@core/data/entities';
+import { User } from '@core/decorators/user.decorator';
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 
 import { AuthService } from './auth.service';
 import { GoogleGuard } from './guards/google.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService, private readonly configService: ConfigService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Get('google/callback')
   @UseGuards(GoogleGuard)
-  async googleAuthCallback(@Req() request, @Res() response) {
-    const token = await this.authService.handleAuth(request.user);
+  async googleAuthCallback(@User() user: UserEntity, @Res() response) {
+    const token = await this.authService.handleAuth(user);
 
     response.cookie(ACCESS_TOKEN, token, { httpOnly: true });
-    return response.redirect(this.configService.get('REDIRECT_URL'));
+    return response.redirect(config.redirectUrl);
   }
 }

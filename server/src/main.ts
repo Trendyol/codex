@@ -1,5 +1,5 @@
+import config from '@core/config/configuration';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as compression from 'compression';
@@ -10,7 +10,6 @@ import { AppModule } from './app.module';
 
 const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
-  const configService = app.get(ConfigService);
 
   useHelmet(app);
   useCompression(app);
@@ -19,7 +18,7 @@ const bootstrap = async () => {
   setupSwagger(app);
   enableCors(app);
 
-  await app.listen(configService.get('PORT'));
+  await app.listen(config.port);
 };
 
 const useHelmet = (app: INestApplication) => {
@@ -35,7 +34,10 @@ const useCompression = (app: INestApplication) => {
 };
 
 const setupSwagger = (app: INestApplication) => {
-  const config = new DocumentBuilder().setTitle('Codex API').setVersion('0.1').build();
+  const config = new DocumentBuilder()
+    .setTitle('Codex API')
+    .setVersion('0.1')
+    .build();
 
   const document = SwaggerModule.createDocument(app, config, {
     deepScanRoutes: true,

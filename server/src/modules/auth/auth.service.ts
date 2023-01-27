@@ -2,13 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '@user/user.service';
 
-import { UserDTO } from './dto/user.dto';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly jwtService: JwtService, private readonly userService: UserService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly userService: UserService,
+  ) {}
 
-  async handleAuth(user: UserDTO) {
+  async handleAuth(user: UserDto) {
     const { email, name } = user;
     let signedUser;
 
@@ -17,7 +20,10 @@ export class AuthService {
     } catch {
       signedUser = await this.userService.create(name, email);
     } finally {
-      return this.jwtService.sign({ email: signedUser.email, name: signedUser.name });
+      return this.jwtService.sign({
+        email: signedUser.email,
+        name: signedUser.name,
+      });
     }
   }
 }
