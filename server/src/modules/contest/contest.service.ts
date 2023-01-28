@@ -12,23 +12,23 @@ export class ContestService {
     const contest = await this.dataService.contests.create({
       ...createContestDto,
       participants: [],
-      teams: [],
       status: Status.upcoming,
     });
 
     return contest;
   }
 
-  // Participate users to the contest
   async participate(userId: string, contestId: string) {
     const contest = await this.dataService.contests.findById(contestId);
 
-    if (contest.status !== Status.pending) {
-      throw new BadRequestException("Can't join contest");
+    if (contest.status != Status.pending && contest.status != Status.upcoming) {
+      throw new BadRequestException(
+        `Can't participate to ${Status[contest.status]} contest`,
+      );
     }
 
     if (contest.participants.includes(userId)) {
-      throw new BadRequestException();
+      throw new BadRequestException('Already participated');
     }
 
     await this.dataService.contests.update(contestId, {
@@ -39,10 +39,7 @@ export class ContestService {
   }
 
   createTeam(contestId: string, participants: string[]) {
-    return this.dataService.teams.create({
-      contestId,
-      participants,
-    });
+    return this.dataService.teams.create({ contestId, participants });
   }
 
   startContest(contestId: string) {
@@ -53,14 +50,13 @@ export class ContestService {
   }
 
   async setupTeams(contestId: string) {
-    // TODO: Add contest player limit
     const contest = await this.dataService.contests.findById(contestId);
 
     let participants = [];
 
     contest.participants.forEach((participant) => {
       participants.push(participant);
-      if (participants.length === 3) {
+      if (participants.length === contest.teamSize) {
         this.createTeam(contestId, participants);
         participants = [];
       }
@@ -70,16 +66,14 @@ export class ContestService {
   }
 
   async join(userId: string, contestId: string) {
-    const contest = await this.dataService.contests.findOne({
-      id: contestId,
-    });
+    const contest = await this.dataService.contests.findById(contestId);
 
-    if (contest.status === Status.pending) {
-      return contest;
+    if (contest.status == Status.pending) {
+      return await (contest as any)._populate('*');
     }
 
-    if (contest.status === Status.ongoing) {
-      return this.info(userId, contestId);
+    if (contest.status == Status.ongoing) {
+      return { ...contest, team: await this.findTeam(userId, contestId) };
     }
 
     throw new BadRequestException(
@@ -87,19 +81,20 @@ export class ContestService {
     );
   }
 
-  async info(userId: string, contestId: string) {
-    const filter = {
-      contestId,
-      $any: {
-        $expr: [{ team: { $in: 'participants' } }],
-        $satisfies: { team: { $eq: userId } },
+  async findTeam(userId: string, contestId: string) {
+    const { id, participants } = await this.dataService.teams.findOne(
+      {
+        contestId,
+        $any: {
+          $expr: [{ team: { $in: 'participants' } }],
+          $satisfies: { team: { $eq: userId } },
+        },
       },
-    };
+      {
+        populate: '*',
+      },
+    );
 
-    const team = await this.dataService.teams.findOne(filter, {
-      populate: '*',
-    });
-
-    return team;
+    return { id, participants };
   }
 }

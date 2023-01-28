@@ -4,6 +4,6 @@ export class ContestEntity {
   question: string;
   status: number;
   participants: string[];
-  teams: string[][];
+  teamSize: number;
   date: Date;
 }
