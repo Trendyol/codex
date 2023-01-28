@@ -1,4 +1,4 @@
-export class ContestEntity {
+export class ChallengeEntity {
   id: string;
   name: string;
   question: string;

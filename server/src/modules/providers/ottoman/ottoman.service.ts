@@ -1,13 +1,13 @@
 import config from '@core/config/configuration';
 import { SubmissionEntity, UserEntity } from '@core/data/entities';
-import { ContestEntity } from '@core/data/entities/contest.entity';
+import { ChallengeEntity } from '@core/data/entities/challenge.entity';
 import { TeamEntity } from '@core/data/entities/team.entity';
 import { IDataService } from '@core/data/services/data.service';
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Ottoman } from 'ottoman';
 
 import { Document, OttomanGenericRepository } from './ottoman.repository';
-import { contestSchema } from './schemas/contest.schema';
+import { challengeSchema } from './schemas/challenge.schema';
 import { submissionSchema } from './schemas/submission.schema';
 import { teamSchema } from './schemas/team.schema';
 import { userSchema } from './schemas/user.schema';
@@ -16,7 +16,7 @@ import { userSchema } from './schemas/user.schema';
 export class OttomanDataService implements IDataService, OnModuleInit {
   users: OttomanGenericRepository<UserEntity>;
   submissions: OttomanGenericRepository<SubmissionEntity>;
-  contests: OttomanGenericRepository<ContestEntity>;
+  challenges: OttomanGenericRepository<ChallengeEntity>;
   teams: OttomanGenericRepository<TeamEntity>;
 
   async onModuleInit() {
@@ -51,11 +51,11 @@ export class OttomanDataService implements IDataService, OnModuleInit {
       submissionModel,
     );
 
-    const contestModel = ottoman.model<ContestEntity, Document<ContestEntity>>(
-      'contest',
-      contestSchema,
+    const challengeModel = ottoman.model<ChallengeEntity, Document<ChallengeEntity>>(
+      'challenge',
+      challengeSchema,
     );
-    this.contests = new OttomanGenericRepository<ContestEntity>(contestModel);
+    this.challenges = new OttomanGenericRepository<ChallengeEntity>(challengeModel);
 
     const teamModel = ottoman.model<TeamEntity, Document<TeamEntity>>(
       'team',

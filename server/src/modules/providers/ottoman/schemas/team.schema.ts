@@ -1,6 +1,6 @@
 import { Schema } from 'ottoman';
 
 export const teamSchema = new Schema({
-  contestId: { type: String, ref: 'contest' },
+  challengeId: { type: String, ref: 'challenge' },
   participants: [{ type: String, ref: 'user' }],
 });

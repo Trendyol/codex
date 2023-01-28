@@ -1,5 +1,5 @@
 import { SubmissionEntity } from '../entities';
-import { ContestEntity } from '../entities/contest.entity';
+import { ChallengeEntity } from '../entities/challenge.entity';
 import { TeamEntity } from '../entities/team.entity';
 import { UserEntity } from '../entities/user.entity';
 import { IGenericRepository } from '../repositories/generic.repository';
@@ -12,6 +12,6 @@ export abstract class IDataService {
     Pure<SubmissionEntity>,
     SubmissionEntity
   >;
-  abstract contests: IGenericRepository<Pure<ContestEntity>, ContestEntity>;
+  abstract challenges: IGenericRepository<Pure<ChallengeEntity>, ChallengeEntity>;
   abstract teams: IGenericRepository<Pure<TeamEntity>, TeamEntity>;
 }
