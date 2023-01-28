@@ -1,12 +1,14 @@
+import { ACCESS_TOKEN } from '@auth/models/constants';
 import config from '@core/config/configuration';
-import { ACCESS_TOKEN } from '@core/constants';
 import { UserEntity } from '@core/data/entities';
 import { User } from '@core/decorators/user.decorator';
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Res, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
 import { GoogleGuard } from './guards/google.guard';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

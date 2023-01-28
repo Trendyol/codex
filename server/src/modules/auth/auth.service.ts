@@ -21,8 +21,10 @@ export class AuthService {
       signedUser = await this.userService.create(name, email);
     } finally {
       return this.jwtService.sign({
+        id: signedUser.id,
         email: signedUser.email,
         name: signedUser.name,
+        role: signedUser.role,
       });
     }
   }
