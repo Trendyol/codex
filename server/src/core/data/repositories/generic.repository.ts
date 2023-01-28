@@ -1,6 +1,8 @@
 export interface IGenericRepository<T, R> {
-  find(): Promise<R[]>;
+  find(filter: any, args?: any): Promise<R[]>;
+  findOne(filter: any, args?: any): Promise<T | undefined>;
+  findById(id: string): Promise<R | undefined>;
   create(options: T): Promise<R>;
-  findOne(filter: Partial<R>): Promise<T | undefined>;
+  update(id: string, options: any): Promise<R>;
   delete(id: string): Promise<any>;
 }

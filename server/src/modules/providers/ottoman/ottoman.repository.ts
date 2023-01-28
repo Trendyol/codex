@@ -7,16 +7,23 @@ export class OttomanGenericRepository<T>
   implements IGenericRepository<T, Document<T>>
 {
   constructor(private _model: ModelTypes<T, Document<T>>) {}
-  delete(id: string): Promise<any> {
-    return this._model.removeById(id);
+
+  find(filter: any, args?: any): Promise<any> {
+    return this._model.find(filter, args);
   }
-  find() {
-    return this._model.find();
+  findOne(filter: any, args?: any): Promise<any> {
+    return this._model.findOne(filter, args);
   }
-  findOne(filter: Partial<T>) {
-    return this._model.findOne(filter);
+  findById(id: string) {
+    return this._model.findById(id);
   }
   create(options: Exclude<T, 'id'>): Promise<Document<T>> {
     return this._model.create(options) as Promise<Document<T>>;
+  }
+  update(id: string, options: T): Promise<Document<T>> {
+    return this._model.updateById(id, options);
+  }
+  delete(id: string): Promise<any> {
+    return this._model.removeById(id);
   }
 }
