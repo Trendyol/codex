@@ -14,7 +14,7 @@ export class ContestController {
   constructor(private readonly contestService: ContestService) {}
 
   @Post()
-  @UseGuards(JwtGuard)
+  @UseGuards(JwtGuard, AdminGuard)
   create(@Body() createContestDto: CreateContestDto) {
     return this.contestService.create(createContestDto);
   }
@@ -28,6 +28,7 @@ export class ContestController {
   @Get('join/:contestId')
   @UseGuards(JwtGuard)
   join(@User() user: UserEntity, @Param('contestId') contestId: string) {
-    return this.contestService.join(user.id, contestId);
+    const contest = this.contestService.join(user.id, contestId);
+    return contest;
   }
 }

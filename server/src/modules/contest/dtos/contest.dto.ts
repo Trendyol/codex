@@ -1,18 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNumber, IsString } from 'class-validator';
+import { IsAlphanumeric, IsDateString } from 'class-validator';
 
-export class CreateContestDto {
+export class ContestDto {
   @ApiProperty()
-  @IsString()
+  @IsAlphanumeric()
   readonly name: string;
 
   @ApiProperty()
-  @IsString()
+  @IsAlphanumeric()
   readonly question: string;
-
-  @ApiProperty()
-  @IsNumber()
-  readonly teamSize: number;
 
   @ApiProperty()
   @IsDateString()
