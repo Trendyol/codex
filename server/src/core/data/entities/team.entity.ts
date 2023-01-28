@@ -1,5 +1,5 @@
 export class TeamEntity {
   id: string;
-  contestId: string;
+  challengeId: string;
   participants: string[];
 }
