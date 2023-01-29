@@ -3,9 +3,7 @@ import { IDocument, ModelTypes } from 'ottoman';
 
 export type Document<T> = IDocument<T> & T & { id: string };
 
-export class OttomanGenericRepository<T>
-  implements IGenericRepository<T, Document<T>>
-{
+export class OttomanGenericRepository<T> implements IGenericRepository<T, Document<T>> {
   constructor(private _model: ModelTypes<T, Document<T>>) {}
 
   async find(filter: any, args?: any) {
@@ -15,8 +13,8 @@ export class OttomanGenericRepository<T>
   findOne(filter: any, args?: any): Promise<any> {
     return this._model.findOne(filter, args);
   }
-  findById(id: string) {
-    return this._model.findById(id);
+  findById(id: string, args?: any) {
+    return this._model.findById(id, args);
   }
   create(options: Exclude<T, 'id'>): Promise<Document<T>> {
     return this._model.create(options) as Promise<Document<T>>;
