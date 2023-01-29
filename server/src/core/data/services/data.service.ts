@@ -12,6 +12,9 @@ export abstract class IDataService {
     Pure<SubmissionEntity>,
     SubmissionEntity
   >;
-  abstract challenges: IGenericRepository<Pure<ChallengeEntity>, ChallengeEntity>;
+  abstract challenges: IGenericRepository<
+    Pure<ChallengeEntity>,
+    ChallengeEntity
+  >;
   abstract teams: IGenericRepository<Pure<TeamEntity>, TeamEntity>;
 }

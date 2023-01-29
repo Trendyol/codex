@@ -5,5 +5,6 @@ export class ChallengeEntity {
   status: number;
   participants: string[];
   teamSize: number;
+  duration: number;
   date: Date;
 }

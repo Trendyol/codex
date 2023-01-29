@@ -15,6 +15,10 @@ export class CreateChallengeDto {
   readonly teamSize: number;
 
   @ApiProperty()
+  @IsNumber()
+  readonly duration: number;
+
+  @ApiProperty()
   @IsDateString()
   readonly date: Date;
 }

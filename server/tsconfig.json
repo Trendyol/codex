@@ -20,6 +20,7 @@
     "paths": {
       "@user/*": ["src/modules/user/*"],
       "@auth/*": ["src/modules/auth/*"],
+      "@challenge/*": ["src/modules/challenge/*"],
       "@data/*": ["src/modules/providers/data/*"],
       "@ottoman/*": ["src/modules/providers/ottoman/*"],
       "@core/*": ["src/core/*"]

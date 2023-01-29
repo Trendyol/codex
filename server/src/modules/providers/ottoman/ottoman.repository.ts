@@ -8,8 +8,9 @@ export class OttomanGenericRepository<T>
 {
   constructor(private _model: ModelTypes<T, Document<T>>) {}
 
-  find(filter: any, args?: any): Promise<any> {
-    return this._model.find(filter, args);
+  async find(filter: any, args?: any) {
+    const result = await this._model.find(filter, args);
+    return result.rows;
   }
   findOne(filter: any, args?: any): Promise<any> {
     return this._model.findOne(filter, args);

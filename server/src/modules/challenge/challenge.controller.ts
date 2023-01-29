@@ -1,4 +1,5 @@
 import { AdminGuard } from '@auth/guards/admin.guard';
+import { AnonymousGuard } from '@auth/guards/anonymous.guard';
 import { JwtGuard } from '@auth/guards/jwt.guard';
 import { UserEntity } from '@core/data/entities';
 import { User } from '@core/decorators/user.decorator';
@@ -19,16 +20,15 @@ export class ChallengeController {
     return this.challengeService.create(createChallengeDto);
   }
 
-  @Post('participate/:challengeId')
+  @Get()
+  @UseGuards(AnonymousGuard)
+  findAll(@User() user?: UserEntity) {
+    return this.challengeService.findAll(user?.id);
+  }
+
+  @Post(':challengeId/participate')
   @UseGuards(JwtGuard)
   participate(@User() user: UserEntity, @Param('challengeId') challengeId: string) {
     return this.challengeService.participate(user.id, challengeId);
-  }
-
-  @Get('join/:challengeId')
-  @UseGuards(JwtGuard)
-  join(@User() user: UserEntity, @Param('challengeId') challengeId: string) {
-    const challenge = this.challengeService.join(user.id, challengeId);
-    return challenge;
   }
 }
