@@ -5,6 +5,7 @@ import { UserModule } from '@user/user.module';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { AnonymousStrategy } from './strategies/anonymous.strategy';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
@@ -18,6 +19,6 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, GoogleStrategy],
+  providers: [AuthService, JwtStrategy, GoogleStrategy, AnonymousStrategy],
 })
 export class AuthModule {}

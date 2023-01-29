@@ -1,12 +1,18 @@
+import { ChallengeEntity } from '@core/data/entities/challenge.entity';
 import { IDataService } from '@core/data/services/data.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { DateTime } from 'luxon';
 
+import { TeamService } from '../team/team.service';
 import { CreateChallengeDto } from './dtos/create-challenge.dto';
 import { Status } from './models/enums';
 
 @Injectable()
 export class ChallengeService {
-  constructor(private readonly dataService: IDataService) {}
+  constructor(
+    private readonly dataService: IDataService,
+    private readonly teamService: TeamService,
+  ) {}
 
   async create(createChallengeDto: CreateChallengeDto) {
     const challenge = await this.dataService.challenges.create({
@@ -18,15 +24,20 @@ export class ChallengeService {
     return challenge;
   }
 
+  async findAll(userId?: string) {
+    const challenges = await this.dataService.challenges.find({});
+    return challenges.map((challenge) => ({
+      ...challenge,
+      question: challenge.status >= Status.ongoing && challenge.question,
+      participated: challenge.participants.includes(userId),
+    }));
+  }
+
   async participate(userId: string, challengeId: string) {
-    const { status, participants } = await this.dataService.challenges.findById(
-      challengeId,
-    );
+    const { status, participants } = await this.dataService.challenges.findById(challengeId);
 
     if (status != Status.pending && status != Status.upcoming) {
-      throw new BadRequestException(
-        `Can't participate to ${Status[status]} challenge`,
-      );
+      throw new BadRequestException(`Can't participate to ${Status[status]} challenge`);
     }
 
     if (participants.includes(userId)) {
@@ -38,62 +49,14 @@ export class ChallengeService {
     });
   }
 
-  createTeam(challengeId: string, participants: string[]) {
-    return this.dataService.teams.create({ challengeId, participants });
+  private startChallenge(challengeId: string) {
+    this.teamService.setupTeams(challengeId);
+    return this.dataService.challenges.update(challengeId, { status: Status.ongoing });
   }
 
-  startChallenge(challengeId: string) {
-    this.setupTeams(challengeId);
-    return this.dataService.challenges.update(challengeId, {
-      status: Status.ongoing,
-    });
-  }
 
-  async setupTeams(challengeId: string) {
-    const challenge = await this.dataService.challenges.findById(challengeId);
-    let participants = [];
 
-    challenge.participants.forEach((participant) => {
-      participants.push(participant);
-      if (participants.length === challenge.teamSize) {
-        this.createTeam(challengeId, participants);
-        participants = [];
-      }
-    });
-
-    if (participants.length) this.createTeam(challengeId, participants);
-  }
-
-  async join(userId: string, challengeId: string) {
-    const challenge = await this.dataService.challenges.findById(challengeId);
-
-    if (challenge.status == Status.pending) {
-      return await (challenge as any)._populate('*');
-    }
-
-    if (challenge.status == Status.ongoing) {
-      return { ...challenge, team: await this.findTeam(userId, challengeId) };
-    }
-
-    throw new BadRequestException(
-      `Can't join to ${Status[challenge.status]} challenge`,
-    );
-  }
-
-  async findTeam(userId: string, challengeId: string) {
-    const { id, participants } = await this.dataService.teams.findOne(
-      {
-        challengeId,
-        $any: {
-          $expr: [{ team: { $in: 'participants' } }],
-          $satisfies: { team: { $eq: userId } },
-        },
-      },
-      {
-        populate: '*',
-      },
-    );
-
-    return { id, participants };
+  async findChallengeById(challengeId: string) {
+    return this.dataService.challenges.findById(challengeId);
   }
 }

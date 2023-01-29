@@ -1,0 +1,40 @@
+import { IDataService } from '@core/data/services/data.service';
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class TeamService {
+  constructor(private readonly dataService: IDataService) {}
+  private createTeam(challengeId: string, participants: string[]) {
+    return this.dataService.teams.create({ challengeId, participants });
+  }
+
+  async setupTeams(challengeId: string) {
+    const challenge = await this.dataService.challenges.findById(challengeId);
+    let participants = [];
+
+    challenge.participants.forEach((participant) => {
+      participants.push(participant);
+      if (participants.length === challenge.teamSize) {
+        this.createTeam(challengeId, participants);
+        participants = [];
+      }
+    });
+
+    if (participants.length) this.createTeam(challengeId, participants);
+  }
+
+  async findTeam(userId: string, challengeId: string) {
+    const { id, participants } = await this.dataService.teams.findOne(
+      {
+        challengeId,
+        $any: {
+          $expr: [{ team: { $in: 'participants' } }],
+          $satisfies: { team: { $eq: userId } },
+        },
+      },
+      { populate: '*' },
+    );
+
+    return { id, participants };
+  }
+}

@@ -49,7 +49,10 @@ const setupSwagger = (app: INestApplication) => {
 };
 
 const enableCors = (app: INestApplication) => {
-  app.enableCors();
+  app.enableCors({
+    origin: '*',
+    credentials: true,
+  });
 };
 
 const useCookie = (app: INestApplication) => {
