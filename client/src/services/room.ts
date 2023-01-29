@@ -10,12 +10,9 @@ export const joinRoom = (
 
   console.log('joined');
 
-  socket.emit('join', { roomId, participantId });
+  socket.emit('join_lobby', { roomId, participantId });
 
-  socket.on('joinedRoom', (data) => {
-    joinedRoomCallback(data);
-  });
-  socket.on('joined', (data) => {
+  socket.on('joined_lobby', (data) => {
     console.log('joined', data);
   });
 };
