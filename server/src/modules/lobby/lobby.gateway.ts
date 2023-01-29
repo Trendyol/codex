@@ -1,5 +1,6 @@
 import { UserEntity } from '@core/data/entities';
 import { IDataService } from '@core/data/services/data.service';
+import { Logger } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
@@ -10,6 +11,8 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
+import { JoinLobbyMessage } from './messages/join-lobby.message';
+
 @WebSocketGateway({ namespace: '/lobby', cors: true })
 export class LobbyGateway implements OnGatewayInit {
   constructor(private readonly dataService: IDataService) {}
@@ -17,7 +20,7 @@ export class LobbyGateway implements OnGatewayInit {
   @WebSocketServer() wss: Server;
 
   afterInit() {
-    console.log('Connected to room namespace');
+    Logger.log('Lobby gateway initialized');
   }
 
   handleLobbyJoin = (lobbyId: string, user: UserEntity) => {
@@ -31,17 +34,16 @@ export class LobbyGateway implements OnGatewayInit {
     return this.lobbies[lobbyId];
   };
 
-  @SubscribeMessage('join')
+  @SubscribeMessage('join_lobby')
   async join(
     @ConnectedSocket() client: Socket,
-    @MessageBody() { lobbyId, participantId }: { lobbyId: string; participantId: string },
+    @MessageBody() { lobbyId, participantId }: JoinLobbyMessage,
   ) {
     const participant = await this.dataService.users.findById(participantId);
     const activeParticipants = this.handleLobbyJoin(lobbyId, participant);
 
     client.join(lobbyId);
-    client.emit('joined', activeParticipants);
-
-    client.to(lobbyId).emit('joinedRoom', participant);
+    client.emit('joined_lobby', activeParticipants);
+    client.to(lobbyId).emit('joined_lobby', activeParticipants);
   }
 }
