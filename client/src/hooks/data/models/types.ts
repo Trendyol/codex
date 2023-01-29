@@ -7,6 +7,13 @@ export type Challenge = {
   participated: boolean;
 };
 
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+};
+
 export type Participant = {
   id: string;
   name: string;

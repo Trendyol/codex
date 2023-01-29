@@ -1,8 +1,7 @@
-import { ChallengeEntity } from '@core/data/entities/challenge.entity';
 import { IDataService } from '@core/data/services/data.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { DateTime } from 'luxon';
 
+import { LobbyService } from '../lobby/lobby.service';
 import { TeamService } from '../team/team.service';
 import { CreateChallengeDto } from './dtos/create-challenge.dto';
 import { Status } from './models/enums';
@@ -12,6 +11,7 @@ export class ChallengeService {
   constructor(
     private readonly dataService: IDataService,
     private readonly teamService: TeamService,
+    private readonly lobbyService: LobbyService,
   ) {}
 
   async create(createChallengeDto: CreateChallengeDto) {
@@ -49,14 +49,10 @@ export class ChallengeService {
     });
   }
 
-  private startChallenge(challengeId: string) {
-    this.teamService.setupTeams(challengeId);
+  private async startChallenge(challengeId: string) {
+    const activeParticipants = await this.lobbyService.findActiveParticipants(challengeId);
+    this.teamService.setupTeams(challengeId, activeParticipants);
     return this.dataService.challenges.update(challengeId, { status: Status.ongoing });
   }
 
-
-
-  async findChallengeById(challengeId: string) {
-    return this.dataService.challenges.findById(challengeId);
-  }
 }

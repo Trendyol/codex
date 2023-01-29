@@ -1,5 +1,6 @@
-import { FC, ReactNode } from "react";
-import Sidebar from "./components/Sidebar";
+import { FC, ReactNode } from 'react';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
 
 interface LayoutProps {
   children: ReactNode;
@@ -7,9 +8,12 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <div style={{ display: "flex" }}>
-      <Sidebar />
-      {children}
+    <div>
+      <Header />
+      <div style={{ display: 'flex' }}>
+        <Sidebar />
+        {children}
+      </div>
     </div>
   );
 };
