@@ -1,3 +1,4 @@
+import { UserEntity } from '@core/data/entities';
 import { IDataService } from '@core/data/services/data.service';
 import { Injectable } from '@nestjs/common';
 
@@ -8,11 +9,12 @@ export class TeamService {
     return this.dataService.teams.create({ challengeId, participants });
   }
 
-  async setupTeams(challengeId: string) {
+  async setupTeams(challengeId: string, activeParticipants: UserEntity[]) {
+    // Create teams based on socket connected users not participants
     const challenge = await this.dataService.challenges.findById(challengeId);
     let participants = [];
 
-    challenge.participants.forEach((participant) => {
+    activeParticipants.forEach((participant) => {
       participants.push(participant);
       if (participants.length === challenge.teamSize) {
         this.createTeam(challengeId, participants);

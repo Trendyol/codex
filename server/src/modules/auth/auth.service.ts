@@ -1,3 +1,4 @@
+import { IDataService } from '@core/data/services/data.service';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '@user/user.service';
@@ -9,6 +10,7 @@ export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly userService: UserService,
+    private readonly dataService: IDataService,
   ) {}
 
   async handleAuth(user: UserDto) {
@@ -16,7 +18,7 @@ export class AuthService {
     let signedUser;
 
     try {
-      signedUser = await this.userService.findOne({ email });
+      signedUser = await this.dataService.users.findOne({ email });
     } catch {
       signedUser = await this.userService.create(name, email);
     } finally {
