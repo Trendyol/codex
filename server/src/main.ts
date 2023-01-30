@@ -34,10 +34,7 @@ const useCompression = (app: INestApplication) => {
 };
 
 const setupSwagger = (app: INestApplication) => {
-  const config = new DocumentBuilder()
-    .setTitle('Codex API')
-    .setVersion('0.1')
-    .build();
+  const config = new DocumentBuilder().setTitle('Codex API').setVersion('0.1').build();
 
   const document = SwaggerModule.createDocument(app, config, {
     deepScanRoutes: true,
@@ -50,7 +47,7 @@ const setupSwagger = (app: INestApplication) => {
 
 const enableCors = (app: INestApplication) => {
   app.enableCors({
-    origin: '*',
+    origin: config.clientUrl,
     credentials: true,
   });
 };

@@ -20,10 +20,11 @@ export interface Config {
   };
 
   redirectUrl: string;
+  clientUrl: string;
 }
 
 export const config = {
-  port: parseInt(process.env.PORT, 10) || 3000,
+  port: Number(process.env.PORT) || 4000,
   jwt: {
     secret: process.env.JWT_SECRET,
   },
@@ -39,6 +40,7 @@ export const config = {
     password: process.env.CB_PASSWORD,
   },
   redirectUrl: process.env.REDIRECT_URL,
+  clientUrl: process.env.CLIENT_URL,
 };
 
 export default config as Config;

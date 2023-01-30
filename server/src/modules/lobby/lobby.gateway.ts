@@ -1,6 +1,9 @@
+import { WsGuard } from '@auth/guards/ws.guard';
+import config from '@core/config/configuration';
 import { UserEntity } from '@core/data/entities';
 import { IDataService } from '@core/data/services/data.service';
-import { Logger } from '@nestjs/common';
+import { User } from '@core/decorators/user.decorator';
+import { Logger, UseGuards } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
@@ -12,8 +15,16 @@ import {
 import { Server, Socket } from 'socket.io';
 
 import { JoinLobbyMessage } from './messages/join-lobby.message';
+import { MessageLobbyMessage } from './messages/message-lobby.message';
 
-@WebSocketGateway({ namespace: '/lobby', cors: true })
+@WebSocketGateway({
+  namespace: '/lobby',
+  cors: {
+    origin: [config.clientUrl],
+    httpOnly: true,
+    credentials: true,
+  },
+})
 export class LobbyGateway implements OnGatewayInit {
   constructor(private readonly dataService: IDataService) {}
   lobbies: Record<string, Array<UserEntity>> = {};
@@ -23,7 +34,7 @@ export class LobbyGateway implements OnGatewayInit {
     Logger.log('Lobby gateway initialized');
   }
 
-  handleLobbyJoin = (lobbyId: string, user: UserEntity) => {
+  getActiveParticipants = (lobbyId: string, user: UserEntity) => {
     if (!this.lobbies[lobbyId]) {
       this.lobbies[lobbyId] = [];
     }
@@ -40,10 +51,20 @@ export class LobbyGateway implements OnGatewayInit {
     @MessageBody() { lobbyId, participantId }: JoinLobbyMessage,
   ) {
     const participant = await this.dataService.users.findById(participantId);
-    const activeParticipants = this.handleLobbyJoin(lobbyId, participant);
+    const activeParticipants = this.getActiveParticipants(lobbyId, participant);
 
     client.join(lobbyId);
     client.emit('joined_lobby', activeParticipants);
     client.to(lobbyId).emit('joined_lobby', activeParticipants);
+  }
+
+  @UseGuards(WsGuard)
+  @SubscribeMessage('send_message_lobby')
+  message(
+    @User() user: UserEntity,
+    @ConnectedSocket() client: Socket,
+    @MessageBody() { lobbyId, message }: MessageLobbyMessage,
+  ) {
+    client.to(lobbyId).emit('message_lobby', { user, message });
   }
 }

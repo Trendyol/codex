@@ -1,17 +1,27 @@
 import { User } from '@hooks/data/models/types';
 import { io } from 'socket.io-client';
 
+const socket = io('http://localhost:4000/lobby', {
+  withCredentials: true,
+});
+
 export const joinLobby = (
   lobbyId: string,
   participantId: string,
-  joinedRoomCallback: (activeParticipants: User[]) => any,
+  joinedCallback: (activeParticipants: User[]) => any,
+  messageCallback: (user: User, message: string) => any,
 ) => {
-  const socket = io('http://localhost:4000/lobby');
-
   socket.emit('join_lobby', { lobbyId, participantId });
 
   socket.on('joined_lobby', (activeParticipants) => {
-    console.log(activeParticipants);
-    joinedRoomCallback(activeParticipants);
+    joinedCallback(activeParticipants);
   });
+
+  socket.on('message_lobby', ({ user, message }) => {
+    messageCallback(user, message);
+  });
+};
+
+export const sendMessage = (lobbyId: string, message: string) => {
+  socket.emit('send_message_lobby', { lobbyId, message });
 };
