@@ -5,6 +5,7 @@ import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 
 const App = ({ Component, pageProps }: AppProps) => {
+
   return (
     <SWRConfig value={{ fetcher }}>
       <Layout>
