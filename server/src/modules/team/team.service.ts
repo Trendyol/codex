@@ -10,7 +10,6 @@ export class TeamService {
   }
 
   async setupTeams(challengeId: string, activeParticipants: UserEntity[]) {
-    // Create teams based on socket connected users not participants
     const challenge = await this.dataService.challenges.findById(challengeId);
     let participants = [];
 
