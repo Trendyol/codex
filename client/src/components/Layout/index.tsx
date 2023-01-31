@@ -1,17 +1,20 @@
 import { FC, ReactNode } from 'react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
+import { useRouter } from 'next/router';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
-  return (
+  const router = useRouter();
+
+  return (  
     <div>
-      <Header />
+      {router.pathname !== '/login' && <Header />}
       <div style={{ display: 'flex' }}>
-        <Sidebar />
+      {router.pathname !== '/login' && <Sidebar />}
         {children}
       </div>
     </div>
