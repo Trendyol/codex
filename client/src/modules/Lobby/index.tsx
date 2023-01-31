@@ -2,6 +2,7 @@ import { useLobby } from '@hooks/data';
 import { User } from '@hooks/data/models/types';
 import { useMe } from '@hooks/data/useMe';
 import { joinLobby, sendMessage } from '@services/lobby';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -28,13 +29,14 @@ const Lobby = () => {
   return (
     <div>
       <div>Lobby</div>
-      {activeParticipants.map(({ id, name }) => (
+      {activeParticipants.map(({ id, name, avatar }) => (
         <div
           style={{ background: '#333', color: 'white', padding: '30px' }}
           key={id}
         >
-          <div>
+          <div className="flex">
             {name} {id}
+            <Image alt="" width={40} height={40} src={avatar} />
           </div>
         </div>
       ))}
