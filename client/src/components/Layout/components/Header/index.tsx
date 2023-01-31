@@ -1,4 +1,5 @@
 import { useMe } from '@hooks/data/useMe';
+import Image from 'next/image';
 import Link from 'next/link';
 
 const Header = () => {
@@ -6,7 +7,15 @@ const Header = () => {
   return (
     <div>
       {me?.name ? (
-        <div>{me.name}</div>
+        <div className="flex">
+          <div>{me.name}</div>
+          <Image
+            alt="User Avatar"
+            width={50}
+            height={50}
+            src={me.avatar}
+          ></Image>
+        </div>
       ) : (
         <Link href="http://localhost:4000/auth/google/callback">Login</Link>
       )}
