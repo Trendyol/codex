@@ -3,7 +3,7 @@ import { SubmissionEntity, UserEntity } from '@core/data/entities';
 import { ChallengeEntity } from '@core/data/entities/challenge.entity';
 import { TeamEntity } from '@core/data/entities/team.entity';
 import { IDataService } from '@core/data/services/data.service';
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { Ottoman } from 'ottoman';
 
 import { Document, OttomanGenericRepository } from './ottoman.repository';
@@ -30,26 +30,25 @@ export class OttomanDataService implements IDataService, OnModuleInit {
     const username = config.couchbase.username;
     const password = config.couchbase.password;
 
-    await ottoman.connect({
-      connectionString,
-      bucketName,
-      username,
-      password,
-    });
+    try {
+      await ottoman.connect({
+        connectionString,
+        bucketName,
+        username,
+        password,
+      });
+    } catch (error) {
+      Logger.error('Error connecting to Couchbase', error);
+    }
 
-    const userModel = ottoman.model<UserEntity, Document<UserEntity>>(
-      'user',
-      userSchema,
-    );
+    const userModel = ottoman.model<UserEntity, Document<UserEntity>>('user', userSchema);
     this.users = new OttomanGenericRepository<UserEntity>(userModel);
 
-    const submissionModel = ottoman.model<
-      SubmissionEntity,
-      Document<SubmissionEntity>
-    >('submission', submissionSchema);
-    this.submissions = new OttomanGenericRepository<SubmissionEntity>(
-      submissionModel,
+    const submissionModel = ottoman.model<SubmissionEntity, Document<SubmissionEntity>>(
+      'submission',
+      submissionSchema,
     );
+    this.submissions = new OttomanGenericRepository<SubmissionEntity>(submissionModel);
 
     const challengeModel = ottoman.model<ChallengeEntity, Document<ChallengeEntity>>(
       'challenge',
@@ -57,10 +56,7 @@ export class OttomanDataService implements IDataService, OnModuleInit {
     );
     this.challenges = new OttomanGenericRepository<ChallengeEntity>(challengeModel);
 
-    const teamModel = ottoman.model<TeamEntity, Document<TeamEntity>>(
-      'team',
-      teamSchema,
-    );
+    const teamModel = ottoman.model<TeamEntity, Document<TeamEntity>>('team', teamSchema);
     this.teams = new OttomanGenericRepository<TeamEntity>(teamModel);
   }
 }
