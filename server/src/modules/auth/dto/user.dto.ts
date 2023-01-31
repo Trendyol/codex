@@ -1,6 +1,6 @@
 import { UserEntity } from '@core/data/entities';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail } from 'class-validator';
+import { IsEmail, IsString } from 'class-validator';
 
 export class UserDto implements Partial<UserEntity> {
   @ApiProperty()
@@ -9,4 +9,8 @@ export class UserDto implements Partial<UserEntity> {
   @ApiProperty()
   @IsEmail()
   readonly email: string;
+
+  @ApiProperty()
+  @IsString()
+  readonly avatar: string;
 }

@@ -6,12 +6,11 @@ import { Injectable } from '@nestjs/common';
 export class UserService {
   constructor(private readonly dataService: IDataService) {}
 
-  async create(name: string, email: string) {
-    return this.dataService.users.create({ name, email, role: Roles.USER });
+  async create(name: string, email: string, avatar: string) {
+    return this.dataService.users.create({ name, email, avatar, role: Roles.USER });
   }
 
   async findOne(filter: any) {
     return this.dataService.users.findOne(filter);
   }
-
 }
