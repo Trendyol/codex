@@ -1,5 +1,5 @@
 const Sidebar = () => {
-  return <div>Sidebar</div>
+  return <div className="text-red-400">Sidebar</div>
 };
 
 export default Sidebar;
