@@ -13,10 +13,10 @@ export class UserController {
   @Get('/me')
   @UseGuards(JwtGuard)
   async getUser(@User() user: UserEntity) {
-    const { id, name, email, role } = await this.userService.findOne({
+    const { id, name, email, avatar, role } = await this.userService.findOne({
       email: user.email,
     });
 
-    return { id, name, email, role };
+    return { id, name, email, avatar, role };
   }
 }
