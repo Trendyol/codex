@@ -27,7 +27,7 @@ const Input: FC<InputProps> = ({ intent, size, label, className, ...props }) => 
 
   return (
     <div>
-      {label && <label className="block mb-2 text-sm font-medium ">{label}</label>}
+      {label && <label className="block mb-2 text-sm font-medium">{label}</label>}
       <input className={inputClasses} {...props} />
     </div>
   );

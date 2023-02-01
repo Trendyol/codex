@@ -7,7 +7,7 @@ const LoginForm = () => {
   return (
     <section className="bg-background">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
-        <div className="flex items-center mb-6 text-4xl font-semibold">Codex</div>
+        <div className="flex items-center mb-6 text-4xl font-semibold text-primary-200">Codex</div>
         <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-white">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <form className="space-y-4 md:space-y-6">

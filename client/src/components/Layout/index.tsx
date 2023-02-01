@@ -10,12 +10,12 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = ({ children }) => {
   const router = useRouter();
 
-  return (  
-    <div>
+  return (
+    <div className="bg-background min-h-screen">
       {router.pathname !== '/login' && <Header />}
       <div style={{ display: 'flex' }}>
-      {router.pathname !== '/login' && <Sidebar />}
-        {children}
+        {router.pathname !== '/login' && <Sidebar />}
+        <div className='flex-1'>{children}</div>
       </div>
     </div>
   );
