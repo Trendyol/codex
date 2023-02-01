@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Home from '@modules/Home';
+import Home from '@modules/Dashboard';
 import Lobby from '@modules/Lobby';
 
 const HomePage = () => {

@@ -1,18 +1,19 @@
 import Button from '@components/ui/Button';
+import Card from '@components/ui/Card';
 import { FC } from 'react';
 import { BsFillTrophyFill } from 'react-icons/bs';
 
-type CardProps = {
+type ChallengeProps = {
   title: string;
   description: string;
 };
 
-const Card: FC<CardProps> = ({ title }) => {
+const Challenge: FC<ChallengeProps> = ({ title }) => {
   return (
-    <div className="bg-white w-full border rounded-md shadow p-6">
+    <Card>
       <div className="text-primary-400 text-xl font-semibold mb-6">{title}</div>
       <div className="flex">
-        <div className="mr-6 h-12 w-12 bg-[#9694ff] rounded-lg flex items-center justify-center">
+        <div className="mr-6 h-14 w-14 bg-[#9694ff] rounded-md flex items-center justify-center">
           <BsFillTrophyFill color="white" size={32} />
         </div>
         <div className="flex flex-1 flex-col ">
@@ -26,18 +27,18 @@ const Card: FC<CardProps> = ({ title }) => {
             mb-6text-primary-400 text-xl font-semibold mb-6
           </div>
           <div className="text-secondary-200 font-semibold flex justify-between mt-2">
-            <div>27 Jan 2023</div>
+            <div>27 Jan 2023 - Finished</div>
             <Button size={'small'} intent={'primary'}>
               Participate
             </Button>
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 
-export default Card;
+export default Challenge;
 
 // <div
 //   key={id}
