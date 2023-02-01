@@ -18,13 +18,13 @@ const Challenge: FC<ChallengeProps> = ({ title }) => {
         </div>
         <div className="flex flex-1 flex-col ">
           <div className="text-secondary-100 line-clamp-3">
-            text-primary-400 text-xl font-semibold mb-6text-primary-400 text-xl font-semibold mb-6
-            text-primary-400 text-xl font-semibold mb-6text-primary-400 text-xl font-semibold
-            mb-6text-primary-400 text-xl font-semibold mb-6text-primary-400 text-xl font-semibold
-            mb-6text-primary-400 text-xl font-semibold mb-6400 text-xl font-semibold mb-6
-            text-primary-400 text-xl font-semibold mb-6text-primary-400 text-xl font-semibold
-            mb-6text-primary-400 text-xl font-semibold mb-6text-primary-400 text-xl font-semibold
-            mb-6text-primary-400 text-xl font-semibold mb-6
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel convallis ex, et
+            venenatis enim. Morbi est mauris, bibendum sit amet erat ut, venenatis viverra sapien.
+            Nam sollicitudin et quam nec mollis. Duis volutpat est malesuada, lacinia est sit amet,
+            malesuada magna. In in scelerisque urna. Suspendisse consequat, risus et lacinia
+            tincidunt, risus nunc tincidunt velit, in maximus est tortor eget nunc. Praesent et
+            sapien sit amet neque mollis mollis sit amet at nunc. Proin vitae gravida purus. In
+            dolor arcu, tempor vel porttitor efficitur, rhoncus id nulla.
           </div>
           <div className="text-secondary-200 font-semibold flex justify-between mt-2">
             <div>27 Jan 2023 - Finished</div>
