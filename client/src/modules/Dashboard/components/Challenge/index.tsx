@@ -10,7 +10,7 @@ type ChallengeProps = {
 
 const Challenge: FC<ChallengeProps> = ({ title }) => {
   return (
-    <Card>
+    <Card className="min-w-[500px]">
       <div className="text-primary-400 text-xl font-semibold mb-6">{title}</div>
       <div className="flex">
         <div className="mr-6 h-14 w-14 bg-[#9694ff] rounded-md flex items-center justify-center">

@@ -11,7 +11,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
   const router = useRouter();
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="bg-background min-h-screen px-6 overflow-y-auto">
       {router.pathname !== '/login' && <Header />}
       <div style={{ display: 'flex' }}>
         {router.pathname !== '/login' && <Sidebar />}
