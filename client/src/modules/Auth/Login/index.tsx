@@ -1,10 +1,10 @@
-import LoginFrom from '@components/ui/LoginForm';
 import React from 'react';
+import LoginForm from '../components/LoginForm';
 
 const Login = () => {
   return (
-    <div className="w-full">
-      <LoginFrom />
+    <div className="w-full ">
+      <LoginForm />
     </div>
   );
 };
