@@ -4,13 +4,15 @@ import { FC, ReactNode } from 'react';
 type CardProps = {
   children: ReactNode;
   className?: string;
+  fluid?: boolean;
 };
 
-const Card: FC<CardProps> = ({ children, className }) => {
+const Card: FC<CardProps> = ({ children, className, fluid = true }) => {
   return (
     <div
       className={cx(
-        'bg-white w-full border rounded-xl p-6 cursor-pointer hover:shadow-lg transition-shadow',
+        'border rounded-xl p-5 cursor-pointer hover:shadow-lg transition-shadow bg-white',
+        fluid ? 'w-full' : '',
         className,
       )}
     >

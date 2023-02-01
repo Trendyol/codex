@@ -28,7 +28,7 @@ const Leaderboard = () => {
     <Card className="flex flex-col items-center gap-4 overflow-hidden">
       <div className="text-primary-400 text-lg font-semibold">Leaderboard</div>
       {leaderboard.map(({ id, avatar, name, points }) => (
-        <div key={id} className="flex items-center gap-5 w-full">
+        <div key={id} className="flex items-center gap-4 w-full">
           <Image alt="avatar" className="rounded-md" width={40} height={40} src={avatar} />
           <div className="flex flex-col">
             <div className="text-sm font-semibold whitespace-nowrap">{name}</div>
