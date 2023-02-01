@@ -31,7 +31,7 @@ const LoginFrom = () => {
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  className="bg-gray-50 border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                  className="border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
               <button
@@ -39,6 +39,17 @@ const LoginFrom = () => {
                 className="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-orange-500 hover:bg-orange-600 focus:ring-orange-700"
               >
                 Sign in
+              </button>
+              <div className='w-full flex items-center gap-2 text-gray-300'>
+                <div className='w-full flex-1 h-px bg-gray-700'></div>
+                or
+                <div className='w-full flex-1 h-px bg-gray-700'></div>
+              </div>
+              <button
+                type="submit"
+                className="bg-gray-50 border border-gray-700 sm:text-sm rounded-lg block w-full text-white focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-500 hover:bg-gray-600 focus:ring-gray-700"
+              >
+                Log in with Google
               </button>
               <p className="text-sm font-light text-gray-400">
                 Don’t have an account yet?{' '}
