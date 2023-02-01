@@ -7,6 +7,8 @@ module.exports = {
         primary: {
           100: '#3b82f6',
           200: '#2563eb',
+          300: '#495DB8',
+          400: '#29386B',
         },
         secondary: {
           100: '#6b7280',
@@ -17,5 +19,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/line-clamp')],
 };

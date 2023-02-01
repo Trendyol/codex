@@ -15,6 +15,7 @@ const buttonVariants = cva('text-center font-medium', {
       secondary: ['bg-white', 'border', 'border-gray-400', 'hover:bg-gray-100'],
     },
     size: {
+      small: ['text-sm', 'py-2', 'px-3', 'rounded-lg'],
       medium: ['text-sm', 'py-3', 'px-4', 'rounded-lg'],
     },
   },
