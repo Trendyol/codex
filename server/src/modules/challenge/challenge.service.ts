@@ -33,6 +33,15 @@ export class ChallengeService {
     }));
   }
 
+  async findOne(challengeId: string, userId?: string) {
+    const challenge = await this.dataService.challenges.findById(challengeId);
+    return {
+      ...challenge,
+      question: challenge.status >= Status.ongoing && challenge.question,
+      participated: challenge.participants.includes(userId),
+    };
+  }
+
   async participate(userId: string, challengeId: string) {
     const { status, participants } = await this.dataService.challenges.findById(challengeId);
 
@@ -54,5 +63,4 @@ export class ChallengeService {
     this.teamService.setupTeams(challengeId, activeParticipants);
     return this.dataService.challenges.update(challengeId, { status: Status.ongoing });
   }
-
 }

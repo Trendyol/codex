@@ -26,6 +26,12 @@ export class ChallengeController {
     return this.challengeService.findAll(user?.id);
   }
 
+  @Get(':challengeId')
+  @UseGuards(AnonymousGuard)
+  findOne(@Param('challengeId') challengeId: string, @User() user?: UserEntity) {
+    return this.challengeService.findOne(challengeId, user?.id);
+  }
+
   @Post(':challengeId/participate')
   @UseGuards(JwtGuard)
   participate(@User() user: UserEntity, @Param('challengeId') challengeId: string) {

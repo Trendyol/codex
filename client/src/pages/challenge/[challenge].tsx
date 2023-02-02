@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Lobby from '@modules/Lobby';
 import Challenge from '@modules/Challenge';
 
 const ChallengePage = () => {
