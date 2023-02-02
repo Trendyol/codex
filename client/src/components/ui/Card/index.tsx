@@ -13,8 +13,9 @@ const Card: FC<CardProps> = ({ children, className, fluid = true, onClick }) => 
     <div
       onClick={onClick}
       className={cx(
-        'border rounded-xl p-5 cursor-pointer hover:shadow-lg transition-shadow bg-white',
+        'border rounded-xl p-5  hover:shadow-lg transition-shadow bg-white',
         fluid ? 'w-full' : '',
+        onClick ? 'cursor-pointer' : '',
         className,
       )}
     >

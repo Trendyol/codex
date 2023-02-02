@@ -1,13 +1,13 @@
 import useSWR from 'swr';
 import { Challenge } from './models/types';
 
-export const useChallenges = (id: string) => {
+export const useChallenge = (id: string) => {
   const { data, error, isLoading, mutate } = useSWR<Challenge>(`/challenge/${id}`);
 
   return {
     error,
     isLoading,
-    challenges: data,
+    challenge: data,
     mutateChallenge: mutate,
   };
 };

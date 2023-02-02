@@ -5,6 +5,7 @@ export type Challenge = {
   status: number;
   teamSize: number;
   participated: boolean;
+  date: string;
 };
 
 export type User = {
