@@ -1,5 +1,6 @@
 import Button from '@components/ui/Button';
 import Input from '@components/ui/Input';
+import Link from 'next/link';
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -10,7 +11,7 @@ const LoginForm = () => {
         <div className="flex items-center mb-6 text-4xl font-semibold text-black">Codex</div>
         <div className="w-full rounded-lg shadow border mt-0 max-w-md p-0 bg-white">
           <div className="space-y-3 p-8">
-            <form className="space-y-6">
+            <div className="space-y-6">
               <Input label="Email" type="email" name="email" placeholder="name@company.com" />
               <Input
                 label="Password"
@@ -25,17 +26,23 @@ const LoginForm = () => {
                 or
                 <div className="w-full flex-1 h-px bg-gray-700"></div>
               </div>
-              <Button fluid intent={'secondary'} className="flex items-center justify-center">
-                <FcGoogle size={20} className="mr-2" />
-                <div>Log in with Google</div>
-              </Button>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/google/callback`}>
+                <Button
+                  fluid
+                  intent={'secondary'}
+                  className="flex items-center justify-center mt-6"
+                >
+                  <FcGoogle size={20} className="mr-2" />
+                  <div>Log in with Google</div>
+                </Button>
+              </Link>
               <p className="text-sm font-light text-gray-400">
                 Don’t have an account yet?
                 <a href="#" className="ml-2 font-medium hover:underline text-primary-100">
                   Sign up
                 </a>
               </p>
-            </form>
+            </div>
           </div>
         </div>
       </div>

@@ -4,16 +4,16 @@ import { FC } from 'react';
 import { BsFillTrophyFill } from 'react-icons/bs';
 
 type ChallengeProps = {
-  title: string;
+  name: string;
   description: string;
 };
 
-const Challenge: FC<ChallengeProps> = ({ title }) => {
+const Challenge: FC<ChallengeProps> = ({ name }) => {
   return (
-    <Card className="min-w-[500px]">
-      <div className="text-primary-400 text-xl font-semibold mb-6">{title}</div>
+    <Card className="min-w-[260px]">
+      <div className="text-primary-400 text-xl font-semibold mb-6">{name}</div>
       <div className="flex">
-        <div className="mr-6 h-14 w-14 bg-[#9694ff] rounded-md flex items-center justify-center">
+        <div className="mr-6 h-14 w-14 bg-[#9694ff] rounded-md flex items-center justify-center lg:hidden">
           <BsFillTrophyFill color="white" size={32} />
         </div>
         <div className="flex flex-1 flex-col ">
@@ -26,9 +26,9 @@ const Challenge: FC<ChallengeProps> = ({ title }) => {
             sapien sit amet neque mollis mollis sit amet at nunc. Proin vitae gravida purus. In
             dolor arcu, tempor vel porttitor efficitur, rhoncus id nulla.
           </div>
-          <div className="text-secondary-200 font-semibold flex justify-between mt-2">
-            <div>27 Jan 2023 - Finished</div>
-            <Button size={'small'} intent={'primary'}>
+          <div className="text-secondary-200 font-semibold flex justify-between mt-2 lg:text-sm">
+            <div>27 Jan 2023 - Upcoming</div>
+            <Button className="flex " fluid={false} size={'small'} intent={'primary'}>
               Participate
             </Button>
           </div>

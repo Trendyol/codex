@@ -8,7 +8,7 @@ const List = () => {
   return (
     <div className="flex flex-col gap-8 flex-1">
       {challenges?.map(({ id, name, status, teamSize, participated }) => (
-        <Challenge key={id} title={name} description={name} />
+        <Challenge key={id} name={name} description={name} />
       ))}
     </div>
   );

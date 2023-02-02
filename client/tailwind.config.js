@@ -4,12 +4,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        black: "#1B1212",
+        black: '#1B1212',
         primary: {
+          50: '#7c8db5',
           100: '#3b82f6',
           200: '#2563eb',
-          300: '#495DB8',
+          300: '#435ebe',
           400: '#29386B',
+          500: '#25396f'
         },
         secondary: {
           100: '#6b7280',
@@ -30,6 +32,7 @@ module.exports = {
       lg: { max: '1023px' },
       md: { max: '767px' },
       sm: { max: '639px' },
+      xs: { max: '479px' },
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],
