@@ -3,13 +3,14 @@ import Input from '@components/ui/Input';
 import { useMe } from '@hooks/data/useMe';
 import Image from 'next/image';
 import Link from 'next/link';
+import Logo from '../Logo';
 
 const Header = () => {
   const { me } = useMe();
   return (
     <div className="h-header border-b flex items-center gap-5 px-8 bg-white justify-between w-full sticky top-0 md:px-4">
       <div className="flex items-center ">
-        <div className="font-semibold text-2xl mr-8 md:mr-4">Codex</div>
+        <Logo />
         <div className="w-[440px] lg:w-[300px] md:w-[260px] sm:w-[140px]">
           <Input placeholder="Search..." />
         </div>
@@ -18,7 +19,7 @@ const Header = () => {
         {me ? (
           <div className="flex items-center mr-8">
             <div className="mr-4 rounded-md overflow-hidden xs:hidden">
-              <Image src={me.avatar} width={40} height={40} alt="avatar" />
+              <Image src={me.avatar} width={42} height={42} alt="avatar" />
             </div>
             <div className="flex flex-col whitespace-nowrap">
               <div className="font-semibold truncate xs:max-w-[120px]">{me.name}</div>
