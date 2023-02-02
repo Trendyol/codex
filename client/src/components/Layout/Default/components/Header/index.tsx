@@ -8,7 +8,7 @@ import Link from 'next/link';
 const Header = () => {
   const { me } = useMe();
   return (
-    <div className="h-[70px] flex items-center gap-5 px-16 bg-white justify-between w-full">
+    <div className="h-header border-b flex items-center gap-5 px-8 bg-white justify-between w-full">
       <div className="flex items-center ">
         <div className="font-semibold text-2xl mr-8">Codex</div>
         <div className="w-[420px]">
@@ -28,7 +28,9 @@ const Header = () => {
           </div>
         ) : (
           <>
-            <Button className="mr-4">Log in</Button>
+            <Link href={'/login'}>
+              <Button className="mr-4">Log in</Button>
+            </Link>
             <Button intent={'secondary'}>Create account</Button>
           </>
         )}
