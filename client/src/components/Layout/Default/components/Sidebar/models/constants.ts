@@ -1,11 +1,10 @@
 import { BsFillGridFill } from 'react-icons/bs';
 import { FaUserAlt } from 'react-icons/fa';
-import { GiHeavyFighter } from 'react-icons/gi';
 import { IoSettingsSharp } from 'react-icons/io5';
 import { HiOutlineDocumentText } from 'react-icons/hi';
 import { AiFillGithub } from 'react-icons/ai';
 import { FaFeatherAlt } from 'react-icons/fa';
-import { BsCodeSlash } from 'react-icons/bs';
+import { IoRocketSharp } from 'react-icons/io5';
 import { AiFillCodeSandboxCircle } from 'react-icons/ai';
 
 export const MENU_ITEMS = [
@@ -16,7 +15,7 @@ export const MENU_ITEMS = [
   },
   {
     title: 'Practice',
-    Icon: GiHeavyFighter,
+    Icon: IoRocketSharp,
     path: '/practice',
   },
   {
@@ -44,7 +43,7 @@ export const USER_MENU_ITEMS = [
   },
   {
     title: 'Practice',
-    Icon: GiHeavyFighter,
+    Icon: IoRocketSharp,
     path: '/practice',
   },
   {

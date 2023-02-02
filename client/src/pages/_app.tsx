@@ -5,8 +5,8 @@ import { SWRConfig } from 'swr';
 import { Inter } from '@next/font/google';
 import { LAYOUT_EXCLUDED_PAGES } from '@models/constants';
 import { useRouter } from 'next/router';
-import AuthLayout from '@components/Layout/Auth';
-import DefaultLayout from '@components/Layout/Default';
+import AuthLayout from '@components/layout/Auth';
+import DefaultLayout from '@components/layout/Default';
 
 const inter = Inter({ subsets: ['latin'] });
 

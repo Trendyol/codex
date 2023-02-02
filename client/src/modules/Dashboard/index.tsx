@@ -1,7 +1,7 @@
-import Community from './components/Community';
-import Leaderboard from './components/Leaderboard';
+import Community from '@components/shared/Sections/Community';
+import Leaderboard from '@components/shared/Sections/Leaderboard';
+import Suggestion from '@components/shared/Sections/Suggestion';
 import List from './components/List';
-import Suggestion from './components/Suggestion';
 
 const Dashboard = () => {
   return (

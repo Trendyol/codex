@@ -1,16 +1,22 @@
 import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
+import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { BsFillTrophyFill } from 'react-icons/bs';
 
 type ChallengeProps = {
+  id: string;
   name: string;
   description: string;
 };
 
-const Challenge: FC<ChallengeProps> = ({ name }) => {
+const Challenge: FC<ChallengeProps> = ({ id, name }) => {
+  const router = useRouter();
+
+  const challengePath = `/challenge/${id}`;
+
   return (
-    <Card className="min-w-[260px]">
+    <Card className="min-w-[260px]" onClick={() => router.push(challengePath)}>
       <div className="text-primary-400 text-xl font-semibold mb-6">{name}</div>
       <div className="flex">
         <div className="mr-6 h-14 w-14 bg-[#9694ff] rounded-md flex items-center justify-center lg:hidden">
