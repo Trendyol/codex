@@ -1,8 +1,5 @@
 import Card from '@components/ui/Card';
-import { Challenge } from '@hooks/data/models/types';
-import { mockChallenges } from '@modules/User/models/constants';
-
-const challengeTableFields: Partial<keyof Challenge>[] = ['name', 'score', 'ranking', 'date'];
+import { challengeTableFields, mockChallenges } from '@modules/User/models/constants';
 
 const Challenges = () => {
   return (

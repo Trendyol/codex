@@ -33,7 +33,7 @@ export class ChallengeService {
     }));
   }
 
-  async findOne(challengeId: string, userId?: string) {
+  async findById(challengeId: string, userId?: string) {
     const challenge = await this.dataService.challenges.findById(challengeId);
     return {
       ...challenge,
