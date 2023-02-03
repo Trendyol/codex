@@ -2,7 +2,6 @@ import Avatar from '@components/ui/Avatar';
 import Button from '@components/ui/Button';
 import Input from '@components/ui/Input';
 import { useMe } from '@hooks/data/useMe';
-import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '../Logo';
 
@@ -18,7 +17,7 @@ const Header = () => {
       </div>
       <div className="flex items-center">
         {me ? (
-          <Avatar className="" name={me.name} avatar={me.avatar} points={3250} truncate />
+          <Avatar id={me.id} name={me.name} avatar={me.avatar} points={3250} truncate />
         ) : (
           <>
             <Link href={'/login'}>

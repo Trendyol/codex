@@ -1,19 +1,17 @@
 import Community from '@components/sections/Community';
 import Leaderboard from '@components/sections/Leaderboard';
 import Suggestion from '@components/sections/Suggestion';
+import Challenges from './components/Challenges';
 import Lore from './components/Lore';
-import Placement from './components/Placement';
-import Prize from './components/Prize';
-import Question from './components/Question';
+import Questions from './components/Questions';
 
-const Challenge = () => {
+const User = () => {
   return (
     <div className="flex gap-6">
       <div className="space-y-4">
         <Lore />
-        <Placement />
-        <Prize />
-        <Question />
+        <Challenges />
+        {/* <Questions /> */}
       </div>
       <div className="flex flex-col gap-4 flex-shrink-0 w-sidebar xl:w-[270px] md:hidden">
         <Leaderboard />
@@ -24,4 +22,4 @@ const Challenge = () => {
   );
 };
 
-export default Challenge;
+export default User;

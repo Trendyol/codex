@@ -13,7 +13,7 @@ const Prize = () => {
   return (
     <Card className="p-0 rounded-xl overflow-hidden h-fit min-h-[300px]">
       <div className="p-8">
-        <div className="text-2xl font-semibold">Prizes 🎁</div>
+        <div className="text-2xl font-semibold">Prizes</div>
         <div className="space-y-4 text-lg mt-3 sm:text-sm">
           {mockPrizes.map(({ id, name, points, extra }) => (
             <div key={id}>

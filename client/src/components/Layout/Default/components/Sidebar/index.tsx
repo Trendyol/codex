@@ -12,13 +12,13 @@ const Sidebar = () => {
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col gap-2">
           <div className="mt-2 mb-3 text-primary-500 text-sm lg:ml-0">{/* Menu */}</div>
-          {menuItems.map(({ path, title, Icon }) => (
-            <MenuItem key={title} path={path} title={title} Icon={Icon} />
+          {menuItems.map(({ path, title, Icon, disabled }) => (
+            <MenuItem key={title} path={path} title={title} Icon={Icon} disabled={disabled} />
           ))}
         </div>
         <div className="flex flex-col gap-2 pb-6">
-          {BOTTOM_MENU_ITEMS.map(({ path, title, Icon }) => (
-            <MenuItem key={title} path={path} title={title} Icon={Icon} />
+          {BOTTOM_MENU_ITEMS.map(({ path, title, Icon, disabled }) => (
+            <MenuItem key={title} path={path} title={title} Icon={Icon} disabled={disabled} />
           ))}
         </div>
       </div>

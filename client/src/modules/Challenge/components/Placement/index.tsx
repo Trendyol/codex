@@ -14,7 +14,7 @@ const Placement = () => {
   return (
     <Card className="p-0 rounded-xl overflow-hidden h-fit min-h-[400px]">
       <div className="p-8">
-        <div className="text-2xl font-semibold">Placements 🏆</div>
+        <div className="text-2xl font-semibold">Placements</div>
         <div className="mt-3 space-y-4">
           {mockPlacements.map(({ id, participants }, index) => {
             return (
@@ -26,6 +26,7 @@ const Placement = () => {
                     <Avatar
                       className="gap-4 w-52"
                       key={id}
+                      id={id}
                       name={name}
                       avatar={avatar}
                       points={points}

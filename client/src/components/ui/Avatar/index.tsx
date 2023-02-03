@@ -1,8 +1,10 @@
 import { cx } from 'class-variance-authority';
 import Image from 'next/image';
+import Link from 'next/link';
 import { FC } from 'react';
 
 type AvatarProps = {
+  id: string;
   name: string;
   points: number;
   avatar: string;
@@ -10,9 +12,10 @@ type AvatarProps = {
   truncate?: boolean;
 };
 
-const Avatar: FC<AvatarProps> = ({ name, avatar, points, truncate, className }) => {
+const Avatar: FC<AvatarProps> = ({ id, name, avatar, points, truncate, className }) => {
   return (
-    <div
+    <Link
+      href={`/user/${id}`}
       className={cx(
         'flex items-center gap-4 w-full hover:bg-gray-100 p-2 cursor-pointer rounded-md',
         className,
@@ -30,7 +33,7 @@ const Avatar: FC<AvatarProps> = ({ name, avatar, points, truncate, className }) 
         </div>
         <div className="text-xs text-secondary-100 truncate">{points} points</div>
       </div>
-    </div>
+    </Link>
   );
 };
 
