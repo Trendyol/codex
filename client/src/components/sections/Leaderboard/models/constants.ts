@@ -17,16 +17,4 @@ export const mockLeaderboard = [
     name: 'John Doe',
     points: 3150,
   },
-  {
-    id: 2,
-    avatar: 'https://i.pravatar.cc/300?img=6',
-    name: 'John Doe',
-    points: 3150,
-  },
-  {
-    id: 2,
-    avatar: 'https://i.pravatar.cc/300?img=7',
-    name: 'John Doe',
-    points: 3150,
-  },
 ];

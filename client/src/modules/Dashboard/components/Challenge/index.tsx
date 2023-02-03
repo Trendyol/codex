@@ -34,7 +34,7 @@ const Challenge: FC<ChallengeProps> = ({ id, name }) => {
           </div>
           <div className="text-secondary-200 font-semibold flex justify-between mt-2 lg:text-sm">
             <div>27 Jan 2023 - Upcoming</div>
-            <Button className="flex " fluid={false} size={'small'} intent={'primary'}>
+            <Button className="flex" fluid={false} size={'small'} intent={'secondary'}>
               Participate
             </Button>
           </div>
