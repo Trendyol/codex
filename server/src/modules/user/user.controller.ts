@@ -1,6 +1,6 @@
 import { UserEntity } from '@core/data/entities';
 import { User } from '@core/decorators/user.decorator';
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { JwtGuard } from '../auth/guards/jwt.guard';
@@ -18,5 +18,11 @@ export class UserController {
     });
 
     return { id, name, email, avatar, role };
+  }
+
+  @Get(':id')
+  async getUserById(@Param('id') id: string) {
+    const user = await this.userService.findById(id);
+    return user;
   }
 }

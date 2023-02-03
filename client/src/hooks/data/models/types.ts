@@ -6,6 +6,9 @@ export type Challenge = {
   teamSize: number;
   participated: boolean;
   date: string;
+  //
+  score: number;
+  ranking: number;
 };
 
 export type User = {

@@ -22,11 +22,13 @@ export const MENU_ITEMS = [
     title: 'Articles',
     Icon: FaFeatherAlt,
     path: '/articles',
+    disabled: true,
   },
   {
     title: 'Learn',
     Icon: AiFillCodeSandboxCircle,
     path: '/learn',
+    disabled: true,
   },
   {
     title: 'Login',
@@ -50,16 +52,13 @@ export const USER_MENU_ITEMS = [
     title: 'Articles',
     Icon: FaFeatherAlt,
     path: '/articles',
+    disabled: true,
   },
   {
     title: 'Learn',
     Icon: AiFillCodeSandboxCircle,
     path: '/learn',
-  },
-  {
-    title: 'Profile',
-    Icon: FaUserAlt,
-    path: '/profile',
+    disabled: true,
   },
   {
     title: 'Settings',
@@ -73,6 +72,7 @@ export const BOTTOM_MENU_ITEMS = [
     title: 'Docs',
     Icon: HiOutlineDocumentText,
     path: '/docs',
+    disabled: true,
   },
   {
     title: 'Github',
