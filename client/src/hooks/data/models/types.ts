@@ -11,6 +11,13 @@ export type Challenge = {
   ranking: number;
 };
 
+export type Problem = {
+  id: string;
+  title: string;
+  content: string;
+  difficulty: 0 | 1 | 2;
+};
+
 export type User = {
   id: string;
   name: string;

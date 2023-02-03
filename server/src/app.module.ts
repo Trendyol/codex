@@ -5,6 +5,7 @@ import { Module } from '@nestjs/common';
 import { UserModule } from '@user/user.module';
 
 import { LobbyModule } from './modules/lobby/lobby.module';
+import { ProblemModule } from './modules/problem/problem.module';
 import { RoomController } from './modules/room/room.controller';
 import { RoomModule } from './modules/room/room.module';
 import { TeamController } from './modules/team/team.controller';
@@ -12,7 +13,7 @@ import { TeamModule } from './modules/team/team.module';
 import { TeamService } from './modules/team/team.service';
 
 @Module({
-  imports: [UserModule, AuthModule, DataModule, ChallengeModule, LobbyModule, RoomModule, TeamModule],
+  imports: [UserModule, AuthModule, DataModule, ChallengeModule, LobbyModule, RoomModule, TeamModule, ProblemModule],
   controllers: [RoomController, TeamController],
   providers: [TeamService],
 })

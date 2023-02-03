@@ -28,8 +28,8 @@ export class ChallengeController {
 
   @Get(':challengeId')
   @UseGuards(AnonymousGuard)
-  findOne(@Param('challengeId') challengeId: string, @User() user?: UserEntity) {
-    return this.challengeService.findOne(challengeId, user?.id);
+  findById(@Param('challengeId') challengeId: string, @User() user?: UserEntity) {
+    return this.challengeService.findById(challengeId, user?.id);
   }
 
   @Post(':challengeId/participate')

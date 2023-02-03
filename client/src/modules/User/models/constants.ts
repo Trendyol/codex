@@ -1,3 +1,5 @@
+import { Challenge } from '@hooks/data/models/types';
+
 export const mockChallenges = [
   {
     id: '1',
@@ -38,4 +40,11 @@ export const mockChallenges = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae ante eget quam volutpat luctus. Duis efficitur tristique leo in efficitur. Proin pellentesque luctus purus, ut sollicitudin ipsum. Cras lacinia lobortis tincidunt.',
   },
+];
+
+export const challengeTableFields: Partial<keyof Challenge>[] = [
+  'name',
+  'score',
+  'ranking',
+  'date',
 ];
