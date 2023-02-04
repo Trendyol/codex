@@ -8,7 +8,7 @@ const Leaderboard = () => {
     <Card className="flex flex-col items-center gap-2 overflow-hidden">
       <div className="text-primary-400 text-lg font-semibold">Leaderboard</div>
       {mockLeaderboard.map(({ id, avatar, name, points }) => (
-        <Avatar key={id} name={name} avatar={avatar} points={points} />
+        <Avatar id={id} key={id} name={name} avatar={avatar} points={points} />
       ))}
       <Button intent={'secondary'} fluid>
         See All

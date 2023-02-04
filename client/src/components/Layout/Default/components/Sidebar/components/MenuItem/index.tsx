@@ -20,7 +20,7 @@ const MenuItem: FC<MenuItemProps> = ({ path, title, Icon, disabled }) => {
     <Link href={disabled ? '#' : path} key={title} title={title}>
       <div
         className={cx(
-          'flex items-center gap-4 p-3 rounded-lg  transition-colors w-[250px] xl:w-[220px] lg:w-full lg:gap-0',
+          'flex items-center gap-4 p-3 rounded-lg  transition-colors w-[250px] xl:w-[180px] lg:w-full lg:gap-0',
           isActive ? 'bg-primary-300 text-white' : 'text-primary-300 hover:bg-gray-100',
           disabled ? 'cursor-not-allowed' : '',
         )}

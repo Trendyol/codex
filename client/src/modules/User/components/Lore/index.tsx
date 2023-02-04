@@ -9,8 +9,6 @@ const Lore = () => {
   const router = useRouter();
   const { user } = useUser(router.query.user as string | '');
 
-  console.log(router.query.user as string);
-
   return (
     <Card className="p-0 rounded-xl overflow-hidden h-fit min-h-[500px]">
       <div
