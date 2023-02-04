@@ -1,0 +1,1 @@
+export const MAX_PARTICIPANT_DISPLAY = 5;

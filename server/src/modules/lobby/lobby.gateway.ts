@@ -65,6 +65,7 @@ export class LobbyGateway implements OnGatewayInit {
     @ConnectedSocket() client: Socket,
     @MessageBody() { lobbyId, message }: MessageLobbyMessage,
   ) {
+    client.emit('message_lobby', { user, message });
     client.to(lobbyId).emit('message_lobby', { user, message });
   }
 }
