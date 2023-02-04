@@ -16,6 +16,7 @@ const Lobby = () => {
   const { lobby } = useLobby(router.query.challenge as string);
   const { me } = useMe();
   const [activeParticipants, setActiveParticipants] = useState<User[]>([]);
+  const [messages, setMessages] = useState<{ user: User; message: string }[]>([]);
 
   useEffect(() => {
     if (!lobby || !lobby.id || !me) return;
@@ -24,21 +25,17 @@ const Lobby = () => {
       lobby.id,
       me.id,
       (activeParticipants) => setActiveParticipants(activeParticipants),
-      (user, message) => console.log(user, message),
+      (user, message) => setMessages((messages) => [...messages, { user, message }]),
     );
   }, [lobby, me]);
 
   return (
-    <div className="">
-      <div className="text-2xl text-primary-400 mb-6">Dashboard</div>
+    <div>
+      <div className="text-2xl text-primary-400 mb-6">{challenge?.name}</div>
       <div className="flex gap-6 flex-1">
         <div className="w-full space-y-4">
-          <Participants
-            activeParticipants={[
-              ...activeParticipants,
-            ]}
-          />
-          <Chat />
+          <Participants activeParticipants={activeParticipants} />
+          <Chat messages={messages} />
         </div>
         <div className="flex flex-col gap-4 flex-shrink-0 w-sidebar xl:w-[270px] md:hidden">
           <Countdown />
