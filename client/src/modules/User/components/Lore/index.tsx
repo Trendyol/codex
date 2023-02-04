@@ -10,7 +10,7 @@ const Lore = () => {
   const { user } = useUser(router.query.user as string | '');
 
   return (
-    <Card className="p-0 rounded-xl overflow-hidden h-fit min-h-[500px]">
+    <Card className="p-0 rounded-xl overflow-hidden h-fit min-h-[500px]" space={false}>
       <div
         className="h-48 w-full relative bg-white"
         style={{ background: randomGradient('challenge.id') }}
@@ -28,7 +28,7 @@ const Lore = () => {
           Update
         </Button>
       </div>
-      <div className="mt-12 p-8">
+      <div className="mt-12 p-6">
         <div className="flex items-baseline gap-3">
           <span className="text-2xl font-semibold">John Doe</span>
         </div>

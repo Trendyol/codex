@@ -23,9 +23,9 @@ const Problems = () => {
         <tbody>
           {problems?.map(({ id, title, difficulty }) => (
             <tr key={id} className="border-t border-gray-200 cursor-pointer hover:bg-gray-50">
-              <td className="px-8 py-4 whitespace-nowrap text-black font-semibold">{title}</td>
-              <td className="px-8 py-4 whitespace-nowrap">
-                <Badge className="capitalize" intent={Difficulty[difficulty]}>
+              <td className="px-8 py-2.5 whitespace-nowrap text-black font-semibold">{title}</td>
+              <td className="px-8 whitespace-nowrap">
+                <Badge className="capitalize" size={'small'} intent={Difficulty[difficulty]}>
                   {Difficulty[difficulty]}
                 </Badge>
               </td>

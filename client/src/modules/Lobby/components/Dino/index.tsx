@@ -3,9 +3,9 @@ import Card from '@components/ui/Card';
 const Dino = () => {
   return (
     <Card className="h-[420px]">
-      <div className="h-[380px] relative">
+      <div className="h-[372px] relative">
         <iframe
-          className="absolute w-full h-full z-50"
+          className="absolute w-full h-full z-50 rounded-md"
           src="https://chromedino.com/"
           scrolling="no"
           width="100%"

@@ -8,7 +8,7 @@ import Questions from './components/Questions';
 const User = () => {
   return (
     <div className="flex gap-6">
-      <div className="space-y-4">
+      <div className="space-y-4 flex flex-col flex-1">
         <Lore />
         <Challenges />
         {/* <Questions /> */}

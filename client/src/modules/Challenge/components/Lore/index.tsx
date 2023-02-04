@@ -1,3 +1,4 @@
+import Badge from '@components/shared/Badge';
 import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
 import { useChallenge } from '@hooks/data';
@@ -14,7 +15,7 @@ const Lore = () => {
   const { name, teamSize, question, date, status } = challenge;
 
   return (
-    <Card className="p-0 rounded-xl overflow-hidden h-fit min-h-[500px]">
+    <Card className="p-0 rounded-xl overflow-hidden h-fit min-h-[500px]" space={false}>
       <div
         className="h-48 w-full relative bg-white"
         style={{ background: randomGradient(challenge.id) }}
@@ -26,14 +27,11 @@ const Lore = () => {
           Participate
         </Button>
       </div>
-      <div className="mt-12 p-8">
+      <div className="mt-12 p-6">
         <div className="text-2xl font-semibold flex items-center gap-3">
           <span>{name}</span>
-          <span className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
-            Easy
-          </span>
+          <Badge size={'small'}>Easy</Badge>
         </div>
-
         <div className="text-secondary-100 text-sm mt-2">27 Jan 2023 - Upcoming</div>
         <div className="text-secondary-200 mt-3">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae ante eget quam volutpat
