@@ -9,7 +9,7 @@ import Question from './components/Question';
 const Challenge = () => {
   return (
     <div className="flex gap-6">
-      <div className="space-y-4">
+      <div className="space-y-4 flex flex-col flex-1">
         <Lore />
         <Placement />
         <Prize />
