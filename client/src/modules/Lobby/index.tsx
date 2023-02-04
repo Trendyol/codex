@@ -1,19 +1,21 @@
-import { useLobby } from '@hooks/data';
+import { useChallenge, useLobby } from '@hooks/data';
 import { User } from '@hooks/data/models/types';
 import { useMe } from '@hooks/data/useMe';
-import { joinLobby, sendMessage } from '@services/lobby';
-import Image from 'next/image';
+import { joinLobby } from '@services/lobby';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Chat from './components/Chat';
+import Countdown from './components/Countdown';
+import Dino from './components/Dino';
+import Participants from './components/Participants';
 
 const Lobby = () => {
   const router = useRouter();
-  const { challenge } = router.query;
-  const { lobby } = useLobby(challenge as string);
+  const { challenge } = useChallenge(router.query.challenge as string);
+
+  const { lobby } = useLobby(router.query.challenge as string);
   const { me } = useMe();
   const [activeParticipants, setActiveParticipants] = useState<User[]>([]);
-  const [messages, setMessages] = useState<string[]>([]);
-  const [message, setMessage] = useState<string>('');
 
   useEffect(() => {
     if (!lobby || !lobby.id || !me) return;
@@ -27,36 +29,20 @@ const Lobby = () => {
   }, [lobby, me]);
 
   return (
-    <div>
-      <div>Lobby</div>
-      {activeParticipants.map(({ id, name, avatar }) => (
-        <div
-          style={{ background: '#333', color: 'white', padding: '30px' }}
-          key={id}
-        >
-          <div className="flex">
-            {name} {id}
-            <Image alt="" width={40} height={40} src={avatar} />
-          </div>
+    <div className="">
+      <div className="text-2xl text-primary-400 mb-6">Dashboard</div>
+      <div className="flex gap-6 flex-1">
+        <div className="w-full space-y-4">
+          <Participants
+            activeParticipants={[
+              ...activeParticipants,
+            ]}
+          />
+          <Chat />
         </div>
-      ))}
-
-      <div>
-        <div>Lobby chat</div>
-        <div>
-          {messages.map((message, index) => (
-            <div key={index}>{message}</div>
-          ))}
-        </div>
-        <input value={message} onChange={(e) => setMessage(e.target.value)} />
-        <div
-          onClick={() => {
-            if (!lobby) return;
-            sendMessage(lobby?.id, message);
-            setMessage('');
-          }}
-        >
-          Submit
+        <div className="flex flex-col gap-4 flex-shrink-0 w-sidebar xl:w-[270px] md:hidden">
+          <Countdown />
+          <Dino />
         </div>
       </div>
     </div>

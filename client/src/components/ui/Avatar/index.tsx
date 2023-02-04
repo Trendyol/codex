@@ -17,7 +17,7 @@ const Avatar: FC<AvatarProps> = ({ id, name, avatar, points, truncate, className
     <Link
       href={`/user/${id}`}
       className={cx(
-        'flex items-center gap-4 w-full hover:bg-gray-100 p-2 cursor-pointer rounded-md',
+        'flex items-center gap-4 w-full hover:bg-gray-100 p-2 cursor-pointer rounded-md text-ellipsis overflow-hidden',
         className,
       )}
     >
@@ -25,7 +25,7 @@ const Avatar: FC<AvatarProps> = ({ id, name, avatar, points, truncate, className
       <div className="flex flex-col">
         <div
           className={cx(
-            'text-sm font-semibold whitespace-nowrap ',
+            'text-sm font-semibold whitespace-nowrap',
             truncate ? 'truncate xs:w-[90px]' : '',
           )}
         >
