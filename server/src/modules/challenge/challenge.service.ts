@@ -1,9 +1,12 @@
 import { IDataService } from '@core/data/services/data.service';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { Interval } from '@nestjs/schedule';
+import { DateTime } from 'luxon';
 
 import { LobbyService } from '../lobby/lobby.service';
 import { TeamService } from '../team/team.service';
 import { CreateChallengeDto } from './dtos/create-challenge.dto';
+import { MINUTE, PENDING_DURATION } from './models/constants';
 import { Status } from './models/enums';
 
 @Injectable()
@@ -61,6 +64,44 @@ export class ChallengeService {
   private async startChallenge(challengeId: string) {
     const activeParticipants = await this.lobbyService.findActiveParticipants(challengeId);
     this.teamService.setupTeams(challengeId, activeParticipants);
-    return this.dataService.challenges.update(challengeId, { status: Status.ongoing });
+  }
+
+  @Interval(MINUTE)
+  async handleStatusUpdate() {
+    const unfinishedChallenges = await this.dataService.challenges.find({
+      status: { $lt: Status.finished }
+    });
+
+    unfinishedChallenges.forEach(({ id, status, date, duration }) => {
+      const currentStatus = this.getCurrentStatus(date, duration);
+
+      if (currentStatus != status) {
+        this.dataService.challenges.update(id, { status: currentStatus });
+        Logger.log(`Challenge status updated ${id}: ${Status[currentStatus]}`);
+        if (currentStatus == Status.ongoing) this.startChallenge(id);
+      }
+    });
+  }
+
+  getCurrentStatus(date: Date, duration: number) {
+    const currentDateTime = DateTime.now();
+
+    const challengeDateTime = DateTime.fromISO(date.toString());
+    const challengePendingDateTime = challengeDateTime.minus({ minutes: PENDING_DURATION });
+    const challengeFinishDateTime = challengeDateTime.plus({ minutes: duration });
+
+    if (currentDateTime > challengeFinishDateTime) {
+      return Status.finished;
+    }
+
+    if (currentDateTime > challengeDateTime) {
+      return Status.ongoing;
+    }
+
+    if (currentDateTime > challengePendingDateTime) {
+      return Status.pending;
+    }
+
+    return Status.upcoming;
   }
 }
