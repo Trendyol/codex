@@ -5,7 +5,7 @@ import { FC } from 'react';
 import CD, { CountdownRendererFn } from 'react-countdown';
 
 type CountdownProps = {
-  text: string;
+  text?: string;
   date?: string;
 };
 
@@ -26,8 +26,8 @@ const Countdown: FC<CountdownProps> = ({ text, date }) => {
   };
 
   return (
-    <Card className="flex flex-col items-center gap-2 overflow-hidden">
-      <div className="text-primary-400 text-lg font-semibold mb-2">{text}</div>
+    <Card className="flex flex-col items-center overflow-hidden">
+      {text && <div className="text-primary-400 text-lg font-semibold my-2">{text}</div>}
       <CD date={new Date(date || '')} renderer={cdRenderer} precision={2}></CD>
     </Card>
   );
