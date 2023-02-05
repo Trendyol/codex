@@ -1,9 +1,15 @@
 import Card from '@components/ui/Card';
 import { useChallenge } from '@hooks/data';
 import { useRouter } from 'next/router';
+import { FC } from 'react';
 import CD, { CountdownRendererFn } from 'react-countdown';
 
-const Countdown = () => {
+type CountdownProps = {
+  text: string;
+  date?: string;
+};
+
+const Countdown: FC<CountdownProps> = ({ text, date }) => {
   const router = useRouter();
   const { challenge } = useChallenge(router.query.challenge as string);
 
@@ -21,8 +27,8 @@ const Countdown = () => {
 
   return (
     <Card className="flex flex-col items-center gap-2 overflow-hidden">
-      <div className="text-primary-400 text-lg font-semibold mb-2">Time to Challenge</div>
-      <CD date={new Date(challenge?.date || '')} renderer={cdRenderer} precision={2}></CD>
+      <div className="text-primary-400 text-lg font-semibold mb-2">{text}</div>
+      <CD date={new Date(date || '')} renderer={cdRenderer} precision={2}></CD>
     </Card>
   );
 };
