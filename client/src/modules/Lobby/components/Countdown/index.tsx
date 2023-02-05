@@ -13,7 +13,7 @@ const Countdown = () => {
     };
 
     return (
-      <div className="text-6xl text-primary-500 font-semibold w-40">
+      <div className="text-6xl text-primary-500 font-semibold ">
         {withLeadingZero(minutes)}:{withLeadingZero(seconds)}
       </div>
     );

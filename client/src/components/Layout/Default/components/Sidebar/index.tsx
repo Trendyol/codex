@@ -16,7 +16,7 @@ const Sidebar: FC<SidebarProps> = () => {
     <div
       className={cx(
         'flex-shrink-0 bg-white pt-2 h-[calc(100vh-70px)] sticky top-[70px] lg:px-3',
-        collapse ? 'px-3' : 'px-8',
+        collapse ? 'px-3' : 'px-6',
       )}
     >
       <div className="flex flex-col justify-between h-full" onClick={() => setCollapse((e) => !e)}>
