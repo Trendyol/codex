@@ -10,6 +10,7 @@ export const joinLobby = (
   participantId: string,
   joinedCallback: (activeParticipants: User[]) => any,
   messageCallback: (user: User, message: string) => any,
+  changeStatusCallback: () => any,
 ) => {
   socket.emit('join_lobby', { lobbyId, participantId });
 
@@ -19,6 +20,10 @@ export const joinLobby = (
 
   socket.on('message_lobby', ({ user, message }) => {
     messageCallback(user, message);
+  });
+
+  socket.on('change_status', () => {
+    changeStatusCallback();
   });
 };
 

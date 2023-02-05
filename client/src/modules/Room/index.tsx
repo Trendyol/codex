@@ -6,8 +6,7 @@ import { useEffect } from 'react';
 
 const Room = () => {
   const router = useRouter();
-  const { challenge } = router.query;
-  const { room } = useRoom(challenge as string);
+  const { room } = useRoom(router.query.challenge as string);
   const { me } = useMe();
 
   useEffect(() => {
@@ -29,7 +28,6 @@ const Room = () => {
           <div>{name}</div>
         </div>
       ))}
-      <div>Question: {room?.question}</div>
     </div>
   );
 };

@@ -37,7 +37,7 @@ const Participants: FC<ParticipantsProps> = ({ activeParticipants }) => {
       <div className="mb-3 text-md text-primary-500 font-semibold">
         Participants ({activeParticipants.length}/60)
       </div>
-      <div className="-space-x-4" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <div className="-space-x-4 h-14" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <div className="flex -space-x-4 overflow-auto pb-3">
           {activeParticipants
             .slice(0, !expand ? MAX_PARTICIPANT_DISPLAY : activeParticipants.length)

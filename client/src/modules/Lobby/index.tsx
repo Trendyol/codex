@@ -12,11 +12,15 @@ import Participants from './components/Participants';
 const Lobby = () => {
   const router = useRouter();
   const { challenge } = useChallenge(router.query.challenge as string);
-
   const { lobby } = useLobby(router.query.challenge as string);
   const { me } = useMe();
+
   const [activeParticipants, setActiveParticipants] = useState<User[]>([]);
   const [messages, setMessages] = useState<{ user: User; message: string }[]>([]);
+
+  const handleRoomNavigation = () => {
+    router.push(`/room/${router.query.challenge}`);
+  };
 
   useEffect(() => {
     if (!lobby || !lobby.id || !me) return;
@@ -26,12 +30,13 @@ const Lobby = () => {
       me.id,
       (activeParticipants) => setActiveParticipants(activeParticipants),
       (user, message) => setMessages((messages) => [...messages, { user, message }]),
+      () => handleRoomNavigation(),
     );
   }, [lobby, me]);
 
   return (
     <div>
-      <div className="text-2xl text-primary-400 mb-6">{challenge?.name}</div>
+      <div className="text-2xl text-primary-400 mb-6">{challenge?.name || 'Challenge'}</div>
       <div className="flex gap-6 flex-1">
         <div className="w-full space-y-4">
           <Participants activeParticipants={activeParticipants} />

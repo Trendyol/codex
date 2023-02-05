@@ -63,13 +63,14 @@ export class ChallengeService {
 
   private async startChallenge(challengeId: string) {
     const activeParticipants = await this.lobbyService.findActiveParticipants(challengeId);
-    this.teamService.setupTeams(challengeId, activeParticipants);
+    await this.teamService.setupTeams(challengeId, activeParticipants);
+    this.lobbyService.changeStatus(challengeId, Status.ongoing);
   }
 
   @Interval(MINUTE)
   async handleStatusUpdate() {
     const unfinishedChallenges = await this.dataService.challenges.find({
-      status: { $lt: Status.finished }
+      status: { $lt: Status.finished },
     });
 
     unfinishedChallenges.forEach(({ id, status, date, duration }) => {

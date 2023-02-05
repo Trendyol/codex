@@ -37,10 +37,8 @@ const Chat: FC<ChatProps> = ({ messages }) => {
     messagesRef.current?.scrollTo({ top: messagesRef.current.scrollHeight, behavior: 'smooth' });
   }, [messages]);
 
-  if (!lobby || !me) return null;
-
   return (
-    <Card className="space-y-2 h-[420px] flex flex-col justify-between">
+    <Card className="space-y-2 h-[432px] flex flex-col justify-between">
       <div className="overflow-scroll h-full mb-2 space-y-2" ref={messagesRef}>
         {messages.map(({ user, message }, index) => (
           <Message user={user} message={message} key={index} />
