@@ -6,7 +6,7 @@ const Challenges = () => {
     <Card className="rounded-xl overflow-x-auto h-fit min-h-[300px]">
       <div className="relative">
         <div className="text-2xl font-semibold">Challenges</div>
-        <table className="w-full overflow-x-scroll text-sm text-left text-gray-500 mt-3 absolute top-16 left-0">
+        <table className="w-full overflow-x-scroll text-sm text-left mt-3 absolute top-10 left-0">
           <thead className="text-xs text-gray-700 uppercase">
             <tr>
               {challengeTableFields.map((field) => (

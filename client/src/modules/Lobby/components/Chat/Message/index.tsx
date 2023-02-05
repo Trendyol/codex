@@ -19,7 +19,7 @@ const Message: FC<MessageProps> = ({ user, message }) => {
           <span className="ml-2 text-secondary-100 text-xs">350 Points</span>
         </div>
         <div className="text-secondary-200 text-sm">{message}</div>
-        <div className="text-xs text-secondary-100 absolute right-0 bottom-0">12.00</div>
+        <div className="text-[10px] text-secondary-100 absolute right-0 bottom-0">12.00</div>
       </div>
     </div>
   );

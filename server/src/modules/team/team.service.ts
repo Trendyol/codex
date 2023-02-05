@@ -10,6 +10,8 @@ export class TeamService {
   }
 
   async setupTeams(challengeId: string, activeParticipants: UserEntity[]) {
+    if (!activeParticipants) return;
+  
     const challenge = await this.dataService.challenges.findById(challengeId);
     let participants = [];
 
@@ -21,7 +23,7 @@ export class TeamService {
       }
     });
 
-    if (participants.length) this.createTeam(challengeId, participants);
+    if (participants.length) await this.createTeam(challengeId, participants);
   }
 
   async findTeam(userId: string, challengeId: string) {

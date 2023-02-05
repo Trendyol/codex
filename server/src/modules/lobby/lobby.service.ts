@@ -24,4 +24,8 @@ export class LobbyService {
   async findActiveParticipants(challengeId: string) {
     return this.lobbyGateway.lobbies[challengeId];
   }
+
+  changeStatus(lobbyId: string, status: Status) {
+    this.lobbyGateway.changeStatus(lobbyId, status);
+  }
 }

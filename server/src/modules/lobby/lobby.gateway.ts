@@ -1,4 +1,5 @@
 import { WsGuard } from '@auth/guards/ws.guard';
+import { Status } from '@challenge/models/enums';
 import config from '@core/config/configuration';
 import { UserEntity } from '@core/data/entities';
 import { IDataService } from '@core/data/services/data.service';
@@ -67,5 +68,9 @@ export class LobbyGateway implements OnGatewayInit {
   ) {
     client.emit('message_lobby', { user, message });
     client.to(lobbyId).emit('message_lobby', { user, message });
+  }
+
+  changeStatus(lobbyId: string, status: Status) {
+    this.wss.to(lobbyId).emit('change_status', status);
   }
 }
