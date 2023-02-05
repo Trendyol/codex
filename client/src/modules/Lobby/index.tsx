@@ -1,10 +1,10 @@
 import { useChallenge, useLobby } from '@hooks/data';
 import { User } from '@hooks/data/models/types';
 import { useMe } from '@hooks/data/useMe';
-import { joinLobby } from '@services/lobby';
+import { joinLobby, sendMessage } from '@services/lobby';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Chat from './components/Chat';
+import Chat from '../../components/shared/Chat';
 import Countdown from './components/Countdown';
 import Dino from './components/Dino';
 import Participants from './components/Participants';
@@ -38,11 +38,13 @@ const Lobby = () => {
     <div>
       <div className="text-2xl text-primary-400 mb-6">{challenge?.name || 'Challenge'}</div>
       <div className="flex gap-6 flex-1">
-        <div className="w-full space-y-4">
+        <div className="w-full space-y-6">
           <Participants activeParticipants={activeParticipants} />
-          <Chat messages={messages} />
+          <div className='h-[432px] flex flex-1'>
+            <Chat messages={messages} sendMessage={sendMessage} />
+          </div>
         </div>
-        <div className="flex flex-col gap-4 flex-shrink-0 w-sidebar xl:w-[270px] md:hidden">
+        <div className="flex flex-col gap-6 flex-shrink-0 w-sidebar xl:w-[270px] md:hidden">
           <Countdown />
           <Dino />
         </div>

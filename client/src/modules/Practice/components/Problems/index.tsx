@@ -8,33 +8,31 @@ const Problems = () => {
   const { problems } = useProblems();
 
   return (
-    <Card className="p-5 rounded-xl overflow-x-auto h-fit min-h-[600px] relative">
+    <Card className="rounded-xl overflow-x-auto h-fit min-h-[600px]">
       <div className="text-primary-400 text-xl font-semibold">Problems</div>
-      <div className="relative">
-        <table className="w-full overflow-x-scroll text-sm text-left text-gray-500 mt-3 absolute top-16 left-0">
-          <thead className="text-xs text-gray-700 uppercase">
-            <tr>
-              {problemTableFields.map((field) => (
-                <th key={field} scope="col" className="py-3 pl-8">
-                  {field}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {problems?.map(({ id, title, difficulty }) => (
-              <tr key={id} className="border-t border-gray-200 cursor-pointer hover:bg-gray-50">
-                <td className="px-6 py-2.5 whitespace-nowrap text-black">{title}</td>
-                <td className="px-6 whitespace-nowrap">
-                  <Badge className="capitalize" size={'small'} intent={Difficulty[difficulty]}>
-                    {Difficulty[difficulty]}
-                  </Badge>
-                </td>
-              </tr>
+      <table className="w-full overflow-x-scroll text-sm text-left text-gray-500 mt-3">
+        <thead className="text-xs text-gray-700 uppercase">
+          <tr>
+            {problemTableFields.map((field) => (
+              <th key={field} scope="col" className="py-3">
+                {field}
+              </th>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </tr>
+        </thead>
+        <tbody>
+          {problems?.map(({ id, title, difficulty }) => (
+            <tr key={id} className="border-t border-gray-200 cursor-pointer hover:bg-gray-50">
+              <td className="py-2.5 whitespace-nowrap text-black">{title}</td>
+              <td className="whitespace-nowrap">
+                <Badge className="capitalize" intent={Difficulty[difficulty]}>
+                  {Difficulty[difficulty]}
+                </Badge>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </Card>
   );
 };
