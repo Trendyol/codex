@@ -4,15 +4,23 @@ import Sidebar from './components/Sidebar';
 
 type DefaultLayoutProps = {
   children: ReactNode;
+  showHeader?: boolean;
+  showSidebar?: boolean;
+  collapsed?: boolean;
 };
 
-const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
+const DefaultLayout: FC<DefaultLayoutProps> = ({
+  children,
+  showHeader = false,
+  showSidebar = false,
+  collapsed = false,
+}) => {
   return (
-    <div className="bg-background min-h-screen w-full">
-      <Header />
+    <div className="min-h-screen w-full bg-background">
+      {showHeader && <Header />}
       <div className="flex">
-        <Sidebar />
-        <div className="flex-1 px-8 mt-6 md:px-4">{children}</div>
+        {showSidebar && <Sidebar collapsed={collapsed} />}
+        <div className="mt-6 flex-1 px-8 md:px-4">{children}</div>
       </div>
     </div>
   );

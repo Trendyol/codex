@@ -5,35 +5,29 @@ import { SWRConfig } from 'swr';
 import { Inter } from '@next/font/google';
 import { LAYOUT_EXCLUDED_PAGES } from '@models/constants';
 import { useRouter } from 'next/router';
-import AuthLayout from '@components/layout/Auth';
+import RawLayout from '@components/layout/Raw';
 import DefaultLayout from '@components/layout/Default';
+import { NextPage } from 'next';
+import { ReactElement, ReactNode } from 'react';
 
-const inter = Inter({ subsets: ['latin'] });
+type NextPageWithLayout = NextPage & {
+  getLayout?: (pageProps: AppProps, page: ReactElement) => ReactNode;
+};
 
-const App = ({ Component, pageProps }: AppProps) => {
-  const router = useRouter();
+export type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
 
-  if (LAYOUT_EXCLUDED_PAGES.includes(router.route)) {
-    return (
-      <>
-        <SWRConfig value={{ fetcher }}>
-          <div className={inter.className}>
-            <AuthLayout>
-              <Component {...pageProps} />
-            </AuthLayout>
-          </div>
-        </SWRConfig>
-      </>
-    );
+const App = ({ Component, pageProps }: AppPropsWithLayout) => {
+  if (Component.getLayout) {
+    return Component.getLayout(pageProps, <Component {...pageProps} />);
   }
 
   return (
     <SWRConfig value={{ fetcher }}>
-      <div className={inter.className}>
-        <DefaultLayout>
-          <Component {...pageProps} />
-        </DefaultLayout>
-      </div>
+      <DefaultLayout showHeader showSidebar>
+        <Component {...pageProps} />
+      </DefaultLayout>
     </SWRConfig>
   );
 };
