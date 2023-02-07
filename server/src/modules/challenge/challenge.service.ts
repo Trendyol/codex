@@ -6,7 +6,7 @@ import { DateTime } from 'luxon';
 import { LobbyService } from '../lobby/lobby.service';
 import { TeamService } from '../team/team.service';
 import { CreateChallengeDto } from './dtos/create-challenge.dto';
-import { MINUTE, PENDING_DURATION } from './models/constants';
+import { PENDING_DURATION, STATUS_INTERVAL } from './models/constants';
 import { Status } from './models/enums';
 
 @Injectable()
@@ -67,7 +67,7 @@ export class ChallengeService {
     this.lobbyService.changeStatus(challengeId, Status.ongoing);
   }
 
-  @Interval(MINUTE)
+  @Interval(STATUS_INTERVAL)
   async handleStatusUpdate() {
     const unfinishedChallenges = await this.dataService.challenges.find({
       status: { $lt: Status.finished },

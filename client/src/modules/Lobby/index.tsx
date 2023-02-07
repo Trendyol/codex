@@ -40,7 +40,7 @@ const Lobby = () => {
       <div className="flex flex-1 gap-6 md:flex-col">
         <div className="flex flex-1 flex-col gap-6">
           <Participants activeParticipants={activeParticipants} />
-          <Chat className="flex-1" messages={messages} sendMessage={sendMessage} />
+          <Chat className="h-full overflow-auto" messages={messages} sendMessage={sendMessage} />
         </div>
         <div className="flex w-[320px] shrink-0 flex-col gap-6 md:hidden">
           <Countdown text={'Time to Challenge'} date={challenge?.date} />
