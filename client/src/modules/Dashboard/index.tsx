@@ -1,6 +1,6 @@
-import Community from '@components/sections/Community';
-import Leaderboard from '@components/sections/Leaderboard';
-import Suggestion from '@components/sections/Suggestion';
+import Community from '@components/shared/Community';
+import Leaderboard from '@components/shared/Leaderboard';
+import Suggestion from '@components/shared/Suggestion';
 import List from './components/List';
 
 const Dashboard = () => {

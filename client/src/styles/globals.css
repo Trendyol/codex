@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  pre {
+    @apply p-2.5 bg-[#eff1f6] text-[#262626] rounded-md whitespace-pre-wrap;
+  }
+
+  code {
+    @apply p-0.5 bg-[#eff1f6] text-[#262626] rounded-md;
+  }
+}

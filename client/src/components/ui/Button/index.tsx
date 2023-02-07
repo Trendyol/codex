@@ -8,14 +8,14 @@ type ButtonProps = {
   fluid?: boolean;
 } & VariantProps<typeof buttonVariants>;
 
-const buttonVariants = cva('text-center font-medium', {
+const buttonVariants = cva('text-center font-medium box-border', {
   variants: {
     intent: {
       primary: ['bg-primary-100', 'hover:bg-primary-200', 'text-white'],
       secondary: ['bg-white', 'border', 'border-gray-400', 'hover:bg-gray-100'],
     },
     size: {
-      small: ['text-sm', 'py-2', 'px-3', 'rounded-lg'],
+      small: ['text-sm', 'py-2 h-[36px]', 'px-3', 'rounded-lg'],
       medium: ['text-sm', 'py-3', 'px-4', 'rounded-lg'],
     },
   },

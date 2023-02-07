@@ -1,3 +1,5 @@
+import Countdown from '@components/shared/Countdown';
+import Card from '@components/ui/Card';
 import { useChallenge, useLobby } from '@hooks/data';
 import { User } from '@hooks/data/models/types';
 import { useMe } from '@hooks/data/useMe';
@@ -5,7 +7,6 @@ import { joinLobby, sendMessage } from '@services/lobby';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Chat from '../../components/shared/Chat';
-import Countdown from './components/Countdown';
 import Dino from './components/Dino';
 import Participants from './components/Participants';
 
@@ -35,17 +36,14 @@ const Lobby = () => {
   }, [lobby, me]);
 
   return (
-    <div>
-      <div className="text-2xl text-primary-400 mb-6">{challenge?.name || 'Challenge'}</div>
-      <div className="flex gap-6 flex-1">
-        <div className="w-full space-y-6">
+    <div className="flex h-[calc(100vh-94px)] gap-6 pb-6">
+      <div className="flex flex-1 gap-6 md:flex-col">
+        <div className="flex flex-1 flex-col gap-6">
           <Participants activeParticipants={activeParticipants} />
-          <div className='h-[432px] flex flex-1'>
-            <Chat messages={messages} sendMessage={sendMessage} />
-          </div>
+          <Chat className="flex-1" messages={messages} sendMessage={sendMessage} />
         </div>
-        <div className="flex flex-col gap-6 flex-shrink-0 w-sidebar xl:w-[270px] md:hidden">
-          <Countdown />
+        <div className="flex w-[320px] shrink-0 flex-col gap-6 md:hidden">
+          <Countdown text={'Time to Challenge'} date={challenge?.date} />
           <Dino />
         </div>
       </div>

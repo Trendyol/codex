@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.4.6",
     "@next/font": "^13.1.6",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@types/node": "18.11.18",
@@ -26,15 +27,22 @@
     "react-countdown": "^2.3.5",
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
+    "react-markdown": "^8.0.5",
+    "react-syntax-highlighter": "^15.5.0",
+    "rehype-raw": "^6.1.1",
+    "remark-gfm": "^3.0.1",
     "socket.io-client": "^4.5.4",
     "swr": "^2.0.3",
     "typescript": "4.9.4"
   },
   "devDependencies": {
     "@types/random-gradient": "^0.0.0",
+    "@types/react-syntax-highlighter": "^15.5.6",
     "autoprefixer": "^10.4.13",
     "eslint-config-prettier": "^8.6.0",
     "postcss": "^8.4.21",
+    "prettier": "^2.8.3",
+    "prettier-plugin-tailwindcss": "^0.2.2",
     "tailwindcss": "^3.2.4"
   }
 }
