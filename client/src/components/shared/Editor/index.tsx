@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import MonacoEditor from '@monaco-editor/react';
-import Spinner from '../Spinner';
+import Spinner from '@components/shared/Spinner';
 
 type EditorProps = {};
 
@@ -11,7 +11,7 @@ const Editor: FC<EditorProps> = () => {
       defaultLanguage="javascript"
       defaultValue="// some comment"
       loading={
-        <div className="bg-white h-full w-full flex items-center justify-center">
+        <div className="flex h-full w-full items-center justify-center bg-white">
           <Spinner />
         </div>
       }
