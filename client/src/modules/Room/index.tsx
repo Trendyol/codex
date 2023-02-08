@@ -3,14 +3,18 @@ import Countdown from '@components/shared/Countdown';
 import Description from '@components/shared/Description';
 import Editor from '@components/shared/Editor';
 import Submission from '@components/shared/Submission';
+import TabsGroup from '@components/shared/TabsGroup';
 import { useChallenge, useRoom } from '@hooks/data';
+import { User } from '@hooks/data/models/types';
 import { useMe } from '@hooks/data/useMe';
-import { joinRoom } from '@services/room';
+import { joinRoom, sendMessage } from '@services/room';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Room = () => {
   const router = useRouter();
+  const [messages, setMessages] = useState<{ user: User; message: string }[]>([]);
+  const [notes, setNotes] = useState<{ user: User; message: string }[]>([]);
   const { challenge } = useChallenge(router.query.challenge as string);
   const { room } = useRoom(router.query.challenge as string);
   const { me } = useMe();
@@ -18,7 +22,9 @@ const Room = () => {
   useEffect(() => {
     if (!room || !me) return;
 
-    joinRoom(room.team.id, me.id);
+    joinRoom(room.team.id, (user, message) =>
+      setMessages((messages) => [...messages, { user, message }]),
+    );
   }, [room, me]);
 
   return (
@@ -30,9 +36,25 @@ const Room = () => {
         <Editor />
         <Submission />
       </div>
-      <div className="flex w-[320px] shrink-0 flex-col gap-6 md:hidden">
+      <div className="flex h-full w-[320px] shrink-0 flex-col gap-6 md:hidden">
         <Countdown date={challenge?.date} />
-        <Chat className="flex-1" sendMessage={() => {}} messages={[]}></Chat>
+
+        <TabsGroup tabs={['Video', 'Chat', 'Note']}>
+          <div>Video</div>
+
+          <Chat
+            className="flex flex-1 overflow-auto rounded-none border-none"
+            sendMessage={(message) => sendMessage(room?.team.id, message)}
+            messages={messages}
+          />
+          <Chat
+            className="flex flex-1 overflow-auto rounded-none border-none"
+            sendMessage={(message) =>
+              setNotes((notes) => [...notes, { user: me as User, message }])
+            }
+            messages={notes}
+          />
+        </TabsGroup>
       </div>
     </div>
   );

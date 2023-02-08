@@ -26,7 +26,7 @@ const Countdown: FC<CountdownProps> = ({ text, date }) => {
   };
 
   return (
-    <Card className="flex flex-col items-center overflow-hidden">
+    <Card className="flex flex-col items-center overflow-hidden flex-shrink-0">
       {text && <div className="text-primary-400 text-lg font-semibold my-2">{text}</div>}
       <CD date={new Date(date || '')} renderer={cdRenderer} precision={2}></CD>
     </Card>

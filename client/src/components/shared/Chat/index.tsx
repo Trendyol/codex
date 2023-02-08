@@ -1,6 +1,5 @@
 import Card from '@components/ui/Card';
 import Input from '@components/ui/Input';
-import { useLobby } from '@hooks/data';
 import { User } from '@hooks/data/models/types';
 import { useMe } from '@hooks/data/useMe';
 import { cx } from 'class-variance-authority';
@@ -10,14 +9,12 @@ import Message from './Message';
 
 type ChatProps = {
   messages: { user: User; message: string }[];
-  sendMessage: (lobbyId: string, message: string) => void;
+  sendMessage: (message: string) => void;
   className?: string;
 };
 
 const Chat: FC<ChatProps> = ({ messages, sendMessage, className }) => {
-  const router = useRouter();
   const { me } = useMe();
-  const { lobby } = useLobby(router.query.challenge as string);
 
   const [message, setMessage] = useState<string>('');
   const messagesRef = useRef<HTMLDivElement>(null);
@@ -27,10 +24,10 @@ const Chat: FC<ChatProps> = ({ messages, sendMessage, className }) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!lobby || !me) return;
+    if (!me) return;
 
-    if (e.key === 'Enter') {
-      sendMessage(lobby?.id, message);
+    if (e.key === 'Enter' && message) {
+      sendMessage(message);
       setMessage('');
     }
   };
@@ -40,8 +37,8 @@ const Chat: FC<ChatProps> = ({ messages, sendMessage, className }) => {
   }, [messages]);
 
   return (
-    <Card className={cx('space-y-2 flex flex-col justify-between', className)}>
-      <div className="overflow-scroll h-full mb-2 space-y-2" ref={messagesRef}>
+    <Card className={cx('flex flex-col justify-between space-y-2', className)}>
+      <div className="mb-2 h-full space-y-2 overflow-scroll" ref={messagesRef}>
         {messages.map(({ user, message }, index) => (
           <Message user={user} message={message} key={index} />
         ))}
