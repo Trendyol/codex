@@ -3,7 +3,10 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 export interface Config {
-  port: number;
+  ports: {
+    app: number;
+    peer: number;
+  };
   jwt: {
     secret: string;
   };
@@ -24,7 +27,10 @@ export interface Config {
 }
 
 export const config = {
-  port: Number(process.env.PORT) || 4000,
+  ports: {
+    app: Number(process.env.PORT) || 4000,
+    peer: Number(process.env.PORT_PEER) || 4001,
+  },
   jwt: {
     secret: process.env.JWT_SECRET,
   },

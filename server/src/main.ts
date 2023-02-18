@@ -1,10 +1,13 @@
 import config from '@core/config/configuration';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
+import * as express from 'express';
 import helmet from 'helmet';
+import * as http from 'http';
+import { ExpressPeerServer } from 'peer';
 
 import { AppModule } from './app.module';
 
@@ -18,7 +21,24 @@ const bootstrap = async () => {
   setupSwagger(app);
   enableCors(app);
 
-  await app.listen(config.port);
+  const peerServer = createPeerServer();
+  peerServer.listen(config.ports.peer, () => {
+    Logger.log(`Peer Server listening on ${config.ports.peer}`);
+  });
+
+  await app.listen(config.ports.app, () => {
+    Logger.log(`Nest Application Server listening on ${config.ports.app}`);
+  });
+};
+
+const createPeerServer = () => {
+  const app = express();
+  const server = http.createServer(app);
+  const peerServer = ExpressPeerServer(server, {
+    path: '/',
+  });
+  app.use('/peerjs', peerServer);
+  return server;
 };
 
 const useHelmet = (app: INestApplication) => {
