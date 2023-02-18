@@ -10,6 +10,7 @@ import { useMe } from '@hooks/data/useMe';
 import { joinRoom, sendMessage } from '@services/room';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Video from './components/Video';
 
 const Room = () => {
   const router = useRouter();
@@ -46,7 +47,7 @@ const Room = () => {
         <Countdown date={challenge?.date} />
 
         <TabsGroup tabs={['Video', 'Chat', 'Note']}>
-          <div>Video</div>
+          <Video />
 
           <Chat
             className="flex flex-1 overflow-auto rounded-none border-none"

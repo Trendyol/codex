@@ -22,6 +22,7 @@
     "flowbite": "^1.6.3",
     "flowbite-react": "^0.3.8",
     "next": "13.1.2",
+    "peerjs": "^1.4.7",
     "random-gradient": "^0.0.2",
     "react": "18.2.0",
     "react-countdown": "^2.3.5",
