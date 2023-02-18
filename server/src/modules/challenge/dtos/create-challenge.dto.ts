@@ -11,6 +11,10 @@ export class CreateChallengeDto {
   readonly question: string;
 
   @ApiProperty()
+  @IsString()
+  readonly problem: string;
+
+  @ApiProperty()
   @IsNumber()
   readonly teamSize: number;
 

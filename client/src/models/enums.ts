@@ -5,8 +5,8 @@ export enum Status {
   finished = 4,
 }
 
-export const Difficulty = {
-  0: 'easy',
-  1: 'medium',
-  2: 'hard',
-} as const;
+export enum Difficulty {
+  easy = 1,
+  medium = 2,
+  hard = 3,
+}

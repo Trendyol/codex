@@ -4,22 +4,26 @@ import Image from 'next/image';
 import { FC } from 'react';
 
 type MessageProps = {
-  user: User;
+  user?: User;
   message: string;
 };
 
 const Message: FC<MessageProps> = ({ user, message }) => {
-  const { name, avatar } = user;
+  const { name, avatar } = user || {};
   return (
-    <div className="flex bg-gray-50 p-2 rounded-md">
-      <Image className="rounded-md self-start" alt="avatar" width={32} height={32} src={avatar} />
-      <div className="ml-2 relative w-full">
-        <div className="text-primary-500 text-sm">
-          <span className="font-semibold">{name}</span>
-          <span className="ml-2 text-secondary-100 text-xs">350 Points</span>
-        </div>
-        <div className="text-secondary-200 text-sm">{message}</div>
-        <div className="text-[10px] text-secondary-100 absolute right-0 bottom-0">12.00</div>
+    <div className="flex rounded-md bg-gray-50 p-2">
+      {avatar && (
+        <Image className="self-start rounded-md" alt="avatar" width={32} height={32} src={avatar} />
+      )}
+      <div className="relative ml-2 w-full">
+        {name && (
+          <div className="text-sm text-primary-500">
+            <span className="font-semibold">{name}</span>
+            <span className="ml-2 text-xs text-secondary-100">350 Points</span>
+          </div>
+        )}
+        <div className="text-sm text-secondary-200 whitespace-normal break-all">{message}</div>
+        <div className="absolute right-0 bottom-0 text-[10px] text-secondary-100">12.00</div>
       </div>
     </div>
   );

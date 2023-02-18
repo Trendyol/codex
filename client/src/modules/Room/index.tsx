@@ -30,7 +30,13 @@ const Room = () => {
   return (
     <div className="flex h-[calc(100vh-94px)] gap-6 pb-6">
       <div className="h-full w-[350px] overflow-auto">
-        <Description title={'3. Longest Substring Without Repeating Characters'} />
+        {challenge?.problem && (
+          <Description
+            title={challenge?.problem.title}
+            content={challenge?.problem.content}
+            difficulty={challenge?.problem.difficulty}
+          />
+        )}
       </div>
       <div className="flex flex-1 flex-col gap-6">
         <Editor />

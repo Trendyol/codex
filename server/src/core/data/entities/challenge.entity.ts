@@ -7,4 +7,5 @@ export class ChallengeEntity {
   teamSize: number;
   duration: number;
   date: Date;
+  problem: string;
 }

@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsString } from 'class-validator';
+
+import { Difficulty } from '../models/enums';
 
 export class CreateProblemDto {
   @ApiProperty()
@@ -12,5 +14,5 @@ export class CreateProblemDto {
 
   @ApiProperty()
   @IsNumber()
-  readonly difficulty: number;
+  readonly difficulty: Difficulty;
 }

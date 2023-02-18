@@ -1,5 +1,4 @@
 import Countdown from '@components/shared/Countdown';
-import Card from '@components/ui/Card';
 import { useChallenge, useLobby } from '@hooks/data';
 import { User } from '@hooks/data/models/types';
 import { useMe } from '@hooks/data/useMe';
