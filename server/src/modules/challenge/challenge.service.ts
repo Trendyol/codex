@@ -37,7 +37,7 @@ export class ChallengeService {
   }
 
   async findById(challengeId: string, userId?: string) {
-    const challenge = await this.dataService.challenges.findById(challengeId);
+    const challenge = await this.dataService.challenges.findById(challengeId, { populate: '*' });
     return {
       ...challenge,
       question: challenge.status >= Status.ongoing && challenge.question,

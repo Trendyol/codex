@@ -1,7 +1,10 @@
+import { Difficulty } from '@models/enums';
+
 export type Challenge = {
   id: string;
   name: string;
   question: string;
+  problem: Problem;
   status: number;
   teamSize: number;
   participated: boolean;
@@ -15,7 +18,7 @@ export type Problem = {
   id: string;
   title: string;
   content: string;
-  difficulty: 0 | 1 | 2;
+  difficulty: Difficulty;
 };
 
 export type User = {

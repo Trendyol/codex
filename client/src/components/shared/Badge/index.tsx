@@ -9,9 +9,9 @@ type ButtonProps = {
 const badgeVariants = cva('text-xs font-medium mr-2 w-fit rounded', {
   variants: {
     intent: {
-      easy: ['bg-green-100', 'text-green-800'],
-      medium: ['bg-yellow-100', 'text-yellow-800'],
-      hard: ['bg-red-100', 'text-red-800'],
+      1: ['bg-green-100', 'text-green-800'],
+      2: ['bg-yellow-100', 'text-yellow-800'],
+      3: ['bg-red-100', 'text-red-800'],
     },
     size: {
       small: ['text-xs', ' px-2.5', 'py-0.5'],
@@ -19,7 +19,7 @@ const badgeVariants = cva('text-xs font-medium mr-2 w-fit rounded', {
     },
   },
   defaultVariants: {
-    intent: 'easy',
+    intent: 1,
     size: 'small',
   },
 });

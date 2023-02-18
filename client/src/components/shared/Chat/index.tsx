@@ -8,14 +8,12 @@ import { FC, useEffect, useRef, useState } from 'react';
 import Message from './Message';
 
 type ChatProps = {
-  messages: { user: User; message: string }[];
+  messages: { user?: User; message: string }[];
   sendMessage: (message: string) => void;
   className?: string;
 };
 
 const Chat: FC<ChatProps> = ({ messages, sendMessage, className }) => {
-  const { me } = useMe();
-
   const [message, setMessage] = useState<string>('');
   const messagesRef = useRef<HTMLDivElement>(null);
 
@@ -24,8 +22,6 @@ const Chat: FC<ChatProps> = ({ messages, sendMessage, className }) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!me) return;
-
     if (e.key === 'Enter' && message) {
       sendMessage(message);
       setMessage('');
