@@ -1,9 +1,7 @@
 import Card from '@components/ui/Card';
 import Input from '@components/ui/Input';
 import { User } from '@hooks/data/models/types';
-import { useMe } from '@hooks/data/useMe';
 import { cx } from 'class-variance-authority';
-import { useRouter } from 'next/router';
 import { FC, useEffect, useRef, useState } from 'react';
 import Message from './Message';
 

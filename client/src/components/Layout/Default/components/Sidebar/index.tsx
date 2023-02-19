@@ -1,7 +1,7 @@
 import { BOTTOM_MENU_ITEMS, MENU_ITEMS, USER_MENU_ITEMS } from './models/constants';
 import MenuItem from './components/MenuItem';
 import { useMe } from '@hooks/data/useMe';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { cx } from 'class-variance-authority';
 
 type SidebarProps = {
