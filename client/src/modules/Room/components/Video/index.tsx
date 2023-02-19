@@ -1,8 +1,13 @@
 import { useMe, useRoom } from '@hooks/data';
 import { useRouter } from 'next/router';
 import Peer from 'peerjs';
-import { FC, useEffect, useRef } from 'react';
-
+import { FC, useEffect, useRef, useState } from 'react';
+import {
+  BsCameraVideoFill,
+  BsCameraVideoOffFill,
+  BsFillMicFill,
+  BsFillMicMuteFill,
+} from 'react-icons/bs';
 type VideoProps = {};
 
 type VideoRef = {
@@ -18,8 +23,11 @@ const Video: FC<VideoProps> = () => {
   const videoRef = useRef<any>(null);
   const remoteVideoRefs = useRef<VideoRef>({});
   const participants = room?.team.participants.filter((participant) => participant.id !== me?.id);
+  const [muteVideo, setMuteVideo] = useState(false);
+  const [muteAudio, setMuteAudio] = useState(false);
 
   useEffect(() => {
+    console.log('whw');
     if (!me || !room || !participants) return;
 
     (async () => {
@@ -71,15 +79,35 @@ const Video: FC<VideoProps> = () => {
     });
   };
 
+  const handleMuteVideo = () => {
+    setMuteVideo((muteVideo) => !muteVideo);
+    const tracks = videoRef.current?.srcObject?.getVideoTracks();
+    tracks.forEach((track: MediaStreamTrack) => (track.enabled = !track.enabled));
+  };
+
+  const handleMuteAudio = () => {
+    setMuteAudio((muteAudio) => !muteAudio);
+    const tracks = videoRef.current?.srcObject?.getAudioTracks();
+    tracks.forEach((track: MediaStreamTrack) => (track.enabled = !track.enabled));
+  };
+
   return (
     <div className="w-full">
-      <div className="flex h-full w-full flex-col">
-        <video className="hidden" controls ref={videoRef} />
+      <div className="flex h-[40px] items-center justify-between border-b">
+        <div className="flex h-full w-full items-center justify-center" onClick={handleMuteVideo}>
+          {muteVideo ? <BsCameraVideoOffFill size={20} /> : <BsCameraVideoFill size={20} />}
+        </div>
+        <div className="flex h-full w-full items-center justify-center" onClick={handleMuteAudio}>
+          {muteAudio ? <BsFillMicMuteFill size={20} /> : <BsFillMicFill size={20} />}
+        </div>
+      </div>
+      <div className="flex h-[calc(100%-40px)] flex-col overflow-hidden">
+        <video muted className="hidden" controls ref={videoRef} />
         {participants?.map((participant: any, index: number) => (
           <video
-            className="h-1/2"
+            className="object-cover"
+            style={{ height: `${100 / participants.length}%` }}
             key={index}
-            width="100%"
             playsInline
             controls
             ref={(ref) => (remoteVideoRefs.current[participant.id] = ref)}
