@@ -27,7 +27,6 @@ const Video: FC<VideoProps> = () => {
   const [muteAudio, setMuteAudio] = useState(false);
 
   useEffect(() => {
-    console.log('whw');
     if (!me || !room || !participants) return;
 
     (async () => {
@@ -105,6 +104,7 @@ const Video: FC<VideoProps> = () => {
         <video muted className="hidden" controls ref={videoRef} />
         {participants?.map((participant: any, index: number) => (
           <video
+            muted
             className="object-cover"
             style={{ height: `${100 / participants.length}%` }}
             key={index}
