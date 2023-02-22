@@ -1,7 +1,6 @@
 import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
 import { FC } from 'react';
-import Spinner from '../Spinner';
 
 type SubmissionProps = {};
 
@@ -10,9 +9,13 @@ const Submission: FC<SubmissionProps> = () => {
     <Card>
       <div className="flex h-24 flex-col justify-between">
         <div></div>
-        <div className="flex justify-between">
-          <Spinner />
-          <Button size={'small'}>Submit</Button>
+        <div className="flex flex-row-reverse">
+          <Button className="" size={'small'}>
+            Submit
+          </Button>
+          <Button className="mr-2" intent={'secondary'} size={'small'}>
+            Run
+          </Button>
         </div>
       </div>
     </Card>

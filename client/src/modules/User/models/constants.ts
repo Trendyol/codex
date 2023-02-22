@@ -15,7 +15,7 @@ export const mockChallenges = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae ante eget quam volutpat luctus. Duis efficitur tristique leo in efficitur. Proin pellentesque luctus purus, ut sollicitudin ipsum. Cras lacinia lobortis tincidunt.',
   },
   {
-    id: '1',
+    id: '2',
     name: 'Weekly Challenge 2',
     ranking: 5,
     score: 330,
@@ -28,7 +28,7 @@ export const mockChallenges = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae ante eget quam volutpat luctus. Duis efficitur tristique leo in efficitur. Proin pellentesque luctus purus, ut sollicitudin ipsum. Cras lacinia lobortis tincidunt.',
   },
   {
-    id: '1',
+    id: '3',
     name: 'Weekly Challenge 3',
     ranking: 15,
     score: 330,
