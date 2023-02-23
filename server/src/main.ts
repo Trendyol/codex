@@ -46,7 +46,9 @@ const useHelmet = (app: INestApplication) => {
 };
 
 const useGlobalPipes = (app: INestApplication) => {
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({ transform: true, whitelist: true, forbidNonWhitelisted: true }),
+  );
 };
 
 const useCompression = (app: INestApplication) => {

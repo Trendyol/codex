@@ -27,6 +27,8 @@ export type User = {
   email: string;
   avatar: string;
   role: string;
+  bio?: string;
+  points: number;
 };
 
 export type Participant = {

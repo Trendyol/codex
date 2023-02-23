@@ -6,6 +6,7 @@ type ButtonProps = {
   className?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   fluid?: boolean;
+  disabled?: boolean;
 } & VariantProps<typeof buttonVariants>;
 
 const buttonVariants = cva('text-center font-medium box-border', {
@@ -25,11 +26,19 @@ const buttonVariants = cva('text-center font-medium box-border', {
   },
 });
 
-const Button: FC<ButtonProps> = ({ intent, size, fluid, className, children, ...props }) => {
+const Button: FC<ButtonProps> = ({
+  intent,
+  size,
+  fluid,
+  className,
+  disabled,
+  children,
+  ...props
+}) => {
   const buttonClasses = cx(buttonVariants({ intent, size, className }), fluid ? 'w-full' : '');
 
   return (
-    <button {...props} className={buttonClasses}>
+    <button {...props} disabled={disabled} className={buttonClasses}>
       {children}
     </button>
   );

@@ -22,6 +22,7 @@ const Lore: FC<LoreProps> = ({ onShowUpdatePopup }) => {
       >
         <div>
           <Image
+            priority
             className="absolute -bottom-[50px] left-8 flex items-center justify-center rounded-full ring-4 ring-white"
             alt="avatar"
             height={120}
@@ -40,15 +41,10 @@ const Lore: FC<LoreProps> = ({ onShowUpdatePopup }) => {
       </div>
       <div className="mt-12 p-6">
         <div className="flex items-baseline gap-3">
-          <span className="text-2xl font-semibold">John Doe</span>
+          <span className="text-2xl font-semibold">{user?.name}</span>
         </div>
         <div className="mt-2 text-sm text-secondary-100">720 Points - 15th</div>
-        <div className="mt-3 text-secondary-200">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae ante eget quam volutpat
-          luctus. Duis efficitur tristique leo in efficitur. Proin pellentesque luctus purus, ut
-          sollicitudin ipsum. Cras lacinia lobortis tincidunt. Vestibulum et ullamcorper sapien.
-          Mauris gravida velit nisl. Vivamus elit dui, lobortis a risus in, tempor
-        </div>
+        <div className="mt-3 text-secondary-200 whitespace-pre-wrap">{user?.bio}</div>
       </div>
     </Card>
   );
