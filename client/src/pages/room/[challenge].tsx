@@ -1,10 +1,8 @@
 import Head from 'next/head';
 import Room from '@modules/Room';
-import { SWRConfig } from 'swr';
 import { AppProps } from 'next/app';
 import { ReactElement } from 'react';
 import DefaultLayout from '@components/layout/Default';
-import { fetcher } from '@utils/fetcher';
 
 const RoomPage = () => {
   return (
@@ -22,9 +20,9 @@ const RoomPage = () => {
 
 RoomPage.getLayout = function getLayout(pageProps: AppProps, page: ReactElement) {
   return (
-    <SWRConfig value={{ fetcher }}>
-      <DefaultLayout showHeader showSidebar collapsed>{page}</DefaultLayout>
-    </SWRConfig>
+    <DefaultLayout showHeader showSidebar collapsed>
+      {page}
+    </DefaultLayout>
   );
 };
 

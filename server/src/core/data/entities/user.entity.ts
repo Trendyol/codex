@@ -4,4 +4,6 @@ export class UserEntity {
   name: string;
   avatar: string;
   role: string;
+  bio?: string;
+  points: number;
 }

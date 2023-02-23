@@ -5,4 +5,6 @@ export const userSchema = new Schema({
   name: String,
   avatar: String,
   role: String,
+  bio: String,
+  points: Number,
 });

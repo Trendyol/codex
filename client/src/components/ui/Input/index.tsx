@@ -1,16 +1,32 @@
+/* eslint-disable react/display-name */
 import { cva, cx, type VariantProps } from 'class-variance-authority';
-import { FC, ReactNode } from 'react';
+import { FC, forwardRef } from 'react';
 
 type InputProps = {
   label?: string;
   className?: string;
+  rows?: number;
+  error?: any;
 } & VariantProps<typeof inputVariants> &
-  React.InputHTMLAttributes<HTMLInputElement>;
+  React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement>;
 
-const inputVariants = cva('border w-full', {
+const inputVariants = cva('border w-full resize-none', {
   variants: {
     intent: {
-      primary: ['text-gray-900', 'border-gray-300', 'bg-gray-50', 'focus:border-primary-600'],
+      primary: [
+        'text-gray-900',
+        'border-gray-300',
+        'bg-gray-50',
+        'focus:border-primary-600',
+        'outline-primary-600',
+      ],
+      error: [
+        'text-red-600',
+        'border-red-600',
+        'bg-red-50',
+        'focus:border-red-600',
+        'outline-red-600',
+      ],
     },
     size: {
       medium: ['text-base', 'p-2.5', 'rounded-lg'],
@@ -22,15 +38,23 @@ const inputVariants = cva('border w-full', {
   },
 });
 
-const Input: FC<InputProps> = ({ intent, size, label, className, ...props }) => {
-  const inputClasses = cx(inputVariants({ intent, size, className }));
+const Input: FC<InputProps> = forwardRef<HTMLInputElement & HTMLTextAreaElement, InputProps>(
+  ({ intent, size, label, className, rows = 1, error, ...props }, ref) => {
+    intent = error ? 'error' : intent;
+    const inputClasses = cx(inputVariants({ intent, size, className }));
 
-  return (
-    <div>
-      {label && <label className="block mb-2 text-sm font-medium">{label}</label>}
-      <input className={inputClasses} {...props} />
-    </div>
-  );
-};
+    return (
+      <div>
+        {label && <label className="mb-2 block text-sm font-medium">{label}</label>}
+        {rows === 1 ? (
+          <input ref={ref} className={inputClasses} {...props} />
+        ) : (
+          <textarea ref={ref} className={inputClasses} rows={rows} {...props} />
+        )}
+        {error && <div className="mt-1 text-sm text-red-600">{error}</div>}
+      </div>
+    );
+  },
+);
 
 export default Input;

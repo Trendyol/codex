@@ -1,6 +1,6 @@
 import { FC, ReactNode, useRef } from 'react';
 import { IoMdClose } from 'react-icons/io';
-import { useClickAway } from 'react-use';
+import { useClickAway, useLockBodyScroll } from 'react-use';
 
 type PopupProps = {
   show: boolean;
@@ -12,9 +12,8 @@ type PopupProps = {
 
 const Pop: FC<PopupProps> = ({ show, onHide, title, children, footer }) => {
   const ref = useRef(null);
-  useClickAway(ref, () => {
-    onHide();
-  });
+  useLockBodyScroll(show);
+  useClickAway(ref, () => onHide());
 
   if (!show) return null;
   return (
@@ -30,9 +29,9 @@ const Pop: FC<PopupProps> = ({ show, onHide, title, children, footer }) => {
               <IoMdClose size={20} />
             </button>
           </div>
-          <div className="min-h-[280px] space-y-6 p-6">{children}</div>
+          <div className="max-h-[60vh] min-h-[280px] space-y-6 overflow-auto p-6">{children}</div>
           {footer && (
-            <div className="flex items-center space-x-2 rounded-b border-t border-gray-200 p-6">
+            <div className="flex w-full items-center space-x-2 rounded-b border-t border-gray-200 p-6">
               {footer}
             </div>
           )}
