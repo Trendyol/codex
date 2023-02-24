@@ -46,9 +46,11 @@ const Lore = () => {
       <div className="mt-12 p-6">
         <div className="flex items-center gap-3 text-2xl font-semibold">
           <span>{name}</span>
-          <Badge className="capitalize" intent={difficulty} size={'small'}>
-            {Difficulty[difficulty]}
-          </Badge>
+          {difficulty && (
+            <Badge className="capitalize" intent={difficulty} size={'small'}>
+              {Difficulty[difficulty]}
+            </Badge>
+          )}
         </div>
         <div className="mt-2 text-sm capitalize text-secondary-100">
           {formattedDate} - {Status[status]}

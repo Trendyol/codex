@@ -1,6 +1,7 @@
 import Button from '@components/ui/Button';
 import { useParticipate } from '@hooks/data';
 import { Status } from '@models/enums';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 
@@ -21,7 +22,8 @@ const Participate: FC<ParticipateProps> = ({
   const { push } = useRouter();
 
   if (status == Status.upcoming) {
-    if (userParticipant) return <div className="text-sm font-semibold mt-auto text-green-400">Registered</div>;
+    if (userParticipant)
+      return <div className="mt-auto text-sm font-semibold text-green-400">Registered</div>;
 
     return (
       <Button
@@ -40,16 +42,20 @@ const Participate: FC<ParticipateProps> = ({
 
   if (status == Status.pending)
     return (
-      <Button onClick={() => push(`/lobby/${id}`)} fluid={false} size={'small'} intent={'primary'}>
-        Join the lobby now
-      </Button>
+      <Link href={`/lobby/${id}`} onClick={(e) => e.stopPropagation()}>
+        <Button fluid={false} size={'small'} intent={'primary'}>
+          Join the lobby now
+        </Button>
+      </Link>
     );
 
   if (Status.ongoing && userActiveParticipant)
     return (
-      <Button onClick={() => push(`/room/${id}`)} fluid={false} size={'small'} intent={'primary'}>
-        Join now
-      </Button>
+      <Link href={`/room/${id}`} onClick={(e) => e.stopPropagation()}>
+        <Button fluid={false} size={'small'} intent={'primary'}>
+          Join now
+        </Button>
+      </Link>
     );
 
   return null;

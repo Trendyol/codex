@@ -21,7 +21,6 @@ export class OttomanQueries {
       parameters: { USER_ID: userId, CHALLENGE_ID: challengeId },
     });
 
-    console.log(result);
     result.rows.forEach((row) => {
       row.userParticipant = row.userParticipant[0]?.['$1'] === 'true';
       row.userActiveParticipant = row.userActiveParticipant[0]?.['$1'] === 'true';

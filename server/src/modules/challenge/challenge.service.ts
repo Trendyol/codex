@@ -58,6 +58,7 @@ export class ChallengeService {
 
   private async startChallenge(challengeId: string) {
     const activeParticipants = await this.lobbyService.findActiveParticipants(challengeId);
+
     await this.dataService.challenges.update(challengeId, {
       activeParticipants: activeParticipants?.map((ap) => ap.id),
     });
@@ -71,11 +72,11 @@ export class ChallengeService {
       status: { $lt: Status.finished },
     });
 
-    unfinishedChallenges.forEach(({ id, status, date, duration }) => {
+    unfinishedChallenges.forEach(async ({ id, status, date, duration }) => {
       const currentStatus = this.getCurrentStatus(date, duration);
 
       if (currentStatus != status) {
-        this.dataService.challenges.update(id, { status: currentStatus });
+        await this.dataService.challenges.update(id, { status: currentStatus });
         Logger.log(`Challenge status updated ${id}: ${Status[currentStatus]}`);
         if (currentStatus == Status.ongoing) this.startChallenge(id);
       }
