@@ -11,8 +11,8 @@ type LoreProps = {
 };
 
 const Lore: FC<LoreProps> = ({ onShowUpdatePopup }) => {
-  const router = useRouter();
-  const { user } = useUser(router.query.user as string | '');
+  const { query, isReady } = useRouter();
+  const { user } = useUser(query.user as string, isReady);
 
   return (
     <Card className="h-fit min-h-[500px] overflow-hidden rounded-xl p-0" space={false}>
@@ -44,7 +44,7 @@ const Lore: FC<LoreProps> = ({ onShowUpdatePopup }) => {
           <span className="text-2xl font-semibold">{user?.name}</span>
         </div>
         <div className="mt-2 text-sm text-secondary-100">720 Points - 15th</div>
-        <div className="mt-3 text-secondary-200 whitespace-pre-wrap">{user?.bio}</div>
+        <div className="mt-3 whitespace-pre-wrap text-secondary-200">{user?.bio}</div>
       </div>
     </Card>
   );

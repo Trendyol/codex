@@ -7,6 +7,7 @@ import { IDataService } from '@core/data/services/data.service';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { Ottoman } from 'ottoman';
 
+import { OttomanQueries } from './ottoman.queries';
 import { Document, OttomanGenericRepository } from './ottoman.repository';
 import { challengeSchema } from './schemas/challenge.schema';
 import { problemSchema } from './schemas/problem.schema';
@@ -21,6 +22,7 @@ export class OttomanDataService implements IDataService, OnModuleInit {
   challenges: OttomanGenericRepository<ChallengeEntity>;
   teams: OttomanGenericRepository<TeamEntity>;
   problems: OttomanGenericRepository<ProblemEntity>;
+  queries: OttomanQueries;
 
   async onModuleInit() {
     const ottoman = new Ottoman({
@@ -43,6 +45,8 @@ export class OttomanDataService implements IDataService, OnModuleInit {
     } catch (error) {
       Logger.error('Error connecting to Couchbase', error);
     }
+
+    this.queries = new OttomanQueries(ottoman.query.bind(ottoman));
 
     const userModel = ottoman.model<UserEntity, Document<UserEntity>>('user', userSchema);
     this.users = new OttomanGenericRepository<UserEntity>(userModel);
