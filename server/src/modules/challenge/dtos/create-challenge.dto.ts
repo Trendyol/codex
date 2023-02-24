@@ -8,7 +8,7 @@ export class CreateChallengeDto {
 
   @ApiProperty()
   @IsString()
-  readonly question: string;
+  readonly description: string;
 
   @ApiProperty()
   @IsString()

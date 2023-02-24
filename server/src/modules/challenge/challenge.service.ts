@@ -21,6 +21,7 @@ export class ChallengeService {
     const challenge = await this.dataService.challenges.create({
       ...createChallengeDto,
       participants: [],
+      activeParticipants: [],
       status: Status.upcoming,
     });
 
@@ -28,26 +29,18 @@ export class ChallengeService {
   }
 
   async findAll(userId?: string) {
-    const challenges = await this.dataService.challenges.find({});
-    return challenges.map((challenge) => ({
-      ...challenge,
-      question: challenge.status >= Status.ongoing && challenge.question,
-      participated: challenge.participants.includes(userId),
-    }));
+    const challenges = await this.dataService.queries.findChallenges(userId);
+    return challenges;
   }
 
   async findById(challengeId: string, userId?: string) {
-    const challenge = await this.dataService.challenges.findById(challengeId, { populate: '*' });
-    return {
-      ...challenge,
-      question: challenge.status >= Status.ongoing && challenge.question,
-      participated: challenge.participants.includes(userId),
-    };
+    const challenge = await this.dataService.queries.findChallenge(challengeId, userId);
+    return challenge;
   }
 
   async participate(userId: string, challengeId: string) {
-    const { status, participants } = await this.dataService.challenges.findById(challengeId);
-
+    const challenge = await this.dataService.challenges.findById(challengeId);
+    const { status, participants } = challenge;
     if (status != Status.pending && status != Status.upcoming) {
       throw new BadRequestException(`Can't participate to ${Status[status]} challenge`);
     }
@@ -59,10 +52,15 @@ export class ChallengeService {
     await this.dataService.challenges.update(challengeId, {
       participants: [...participants, userId],
     });
+
+    return challenge;
   }
 
   private async startChallenge(challengeId: string) {
     const activeParticipants = await this.lobbyService.findActiveParticipants(challengeId);
+    await this.dataService.challenges.update(challengeId, {
+      activeParticipants: activeParticipants?.map((ap) => ap.id),
+    });
     await this.teamService.setupTeams(challengeId, activeParticipants);
     this.lobbyService.changeStatus(challengeId, Status.ongoing);
   }

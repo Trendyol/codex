@@ -8,7 +8,7 @@ export class ChallengeDto {
 
   @ApiProperty()
   @IsAlphanumeric()
-  readonly question: string;
+  readonly description: string;
 
   @ApiProperty()
   @IsDateString()

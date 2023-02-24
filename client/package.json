@@ -22,6 +22,7 @@
     "eslint-config-next": "13.1.2",
     "flowbite": "^1.6.3",
     "flowbite-react": "^0.3.8",
+    "luxon": "^3.2.1",
     "next": "13.1.2",
     "peerjs": "^1.4.7",
     "random-gradient": "^0.0.2",
@@ -42,6 +43,7 @@
     "yup": "^1.0.0"
   },
   "devDependencies": {
+    "@types/luxon": "^3.2.0",
     "@types/random-gradient": "^0.0.0",
     "@types/react-syntax-highlighter": "^15.5.6",
     "autoprefixer": "^10.4.13",

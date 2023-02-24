@@ -7,7 +7,10 @@ export const useParticipate = () => {
     'participate',
     (_, { arg }) => axios.post(`/challenge/${arg}/participate`),
     {
-      onSuccess: () => mutate('/challenge'),
+      onSuccess: ({ data }) => {
+        mutate('/challenge');
+        mutate(`/challenge/${data.id}`);
+      },
     },
   );
 

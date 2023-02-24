@@ -1,3 +1,5 @@
+import { OttomanQueries } from '@ottoman/ottoman.queries';
+
 import { SubmissionEntity } from '../entities';
 import { ChallengeEntity } from '../entities/challenge.entity';
 import { ProblemEntity } from '../entities/problem.entity';
@@ -13,4 +15,5 @@ export abstract class IDataService {
   abstract challenges: IGenericRepository<Pure<ChallengeEntity>, ChallengeEntity>;
   abstract teams: IGenericRepository<Pure<TeamEntity>, TeamEntity>;
   abstract problems: IGenericRepository<Pure<ProblemEntity>, ProblemEntity>;
+  abstract queries: OttomanQueries;
 }

@@ -1,44 +1,59 @@
 import Badge from '@components/shared/Badge';
-import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
 import { useChallenge } from '@hooks/data';
 import { useRouter } from 'next/router';
 import randomGradient from 'random-gradient';
 import { BsFillTrophyFill } from 'react-icons/bs';
+import { DateTime } from 'luxon';
+import { Difficulty, Status } from '@models/enums';
+import Participate from '@components/shared/Participate';
 
 const Lore = () => {
   const router = useRouter();
   const { challenge } = useChallenge(router.query.challenge as string);
 
   if (!challenge) return <></>;
-
-  const { name, teamSize, question, date, status } = challenge;
+  const {
+    id,
+    name,
+    description,
+    date,
+    status,
+    difficulty,
+    userParticipant,
+    userActiveParticipant,
+  } = challenge;
+  const formattedDate = DateTime.fromISO(date).toFormat('dd LLL yyyy');
 
   return (
-    <Card className="p-0 rounded-xl overflow-hidden h-fit min-h-[500px]" space={false}>
+    <Card className="h-fit min-h-[500px] overflow-hidden rounded-xl p-0" space={false}>
       <div
-        className="h-48 w-full relative bg-white"
+        className="relative h-48 w-full bg-white"
         style={{ background: randomGradient(challenge.id) }}
       >
-        <div className="w-[120px] h-[120px] bg-[#9694ff] absolute -bottom-[50px] left-8 rounded-full ring-4 ring-white flex items-center justify-center">
+        <div className="absolute -bottom-[50px] left-8 flex h-[120px] w-[120px] items-center justify-center rounded-full bg-[#9694ff] ring-4 ring-white">
           <BsFillTrophyFill color="white" size={60} />
         </div>
-        <Button size={'small'} intent="secondary" className="top-[220px] right-8 absolute">
-          Participate
-        </Button>
+        <div className="absolute top-[220px] right-8">
+          <Participate
+            id={id}
+            userParticipant={userParticipant}
+            userActiveParticipant={userActiveParticipant}
+            status={status}
+          />
+        </div>
       </div>
       <div className="mt-12 p-6">
-        <div className="text-2xl font-semibold flex items-center gap-3">
+        <div className="flex items-center gap-3 text-2xl font-semibold">
           <span>{name}</span>
-          <Badge size={'small'}>Easy</Badge>
+          <Badge className="capitalize" intent={difficulty} size={'small'}>
+            {Difficulty[difficulty]}
+          </Badge>
         </div>
-        <div className="text-secondary-100 text-sm mt-2">27 Jan 2023 - Upcoming</div>
-        <div className="text-secondary-200 mt-3">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae ante eget quam volutpat
-          luctus. Duis efficitur tristique leo in efficitur. Proin pellentesque luctus purus, ut
-          sollicitudin ipsum. Cras lacinia lobortis tincidunt. Vestibulum et ullamcorper sapien.
-          Mauris gravida velit nisl. Vivamus elit dui, lobortis a risus in, tempor
+        <div className="mt-2 text-sm capitalize text-secondary-100">
+          {formattedDate} - {Status[status]}
         </div>
+        <div className="mt-3 whitespace-pre-wrap text-secondary-200">{description}</div>
       </div>
     </Card>
   );

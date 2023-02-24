@@ -24,7 +24,7 @@ module.exports = {
         header: '70px',
       },
       width: {
-        sidebar: '300px',
+        sidebar: '320px',
       },
     },
     screens: {
