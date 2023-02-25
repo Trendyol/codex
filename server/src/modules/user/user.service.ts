@@ -23,4 +23,14 @@ export class UserService {
   async updateProfile(id: string, updateProfileDto: UpdateProfileDto) {
     return this.dataService.users.update(id, updateProfileDto);
   }
+
+  async find({ orderBy, order, limit }) {
+    const filter = {
+      orderBy: orderBy || {},
+      order: order || 'desc',
+      limit: limit || 20,
+    };
+
+    return this.dataService.users.find({}, filter);
+  }
 }

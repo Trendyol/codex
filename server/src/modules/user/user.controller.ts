@@ -1,6 +1,6 @@
 import { UserEntity } from '@core/data/entities';
 import { User } from '@core/decorators/user.decorator';
-import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { JwtGuard } from '../auth/guards/jwt.guard';
@@ -14,11 +14,11 @@ export class UserController {
   @Get('/me')
   @UseGuards(JwtGuard)
   async getUser(@User() user: UserEntity) {
-    const { id, name, email, avatar, bio, role } = await this.userService.findOne({
+    const { id, name, email, avatar, points, bio, role } = await this.userService.findOne({
       email: user.email,
     });
 
-    return { id, name, email, avatar, bio, role };
+    return { id, name, email, avatar, points, bio, role };
   }
 
   @Get(':id')
@@ -36,5 +36,15 @@ export class UserController {
   ) {
     const updatedUser = await this.userService.updateProfile(user.id, updateProfileDto);
     return updatedUser;
+  }
+
+  @Get()
+  @UseGuards(JwtGuard)
+  async find(@Query('orderBy') orderBy?: string,
+  @Query('order') order?: string,
+  @Query('limit') limit?: number
+  ) {
+    const users = await this.userService.find({ orderBy, order, limit});
+    return users;
   }
 }

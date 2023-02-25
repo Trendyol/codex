@@ -27,7 +27,7 @@ const Lore: FC<LoreProps> = ({ onShowUpdatePopup }) => {
             alt="avatar"
             height={120}
             width={120}
-            src="https://lh3.googleusercontent.com/a/AEdFTp4mrIOqg46bY8tJ1pdxSxGJsOP_Fp61S7IAkLd4qw=s96-c"
+            src={user?.avatar || "https://lh3.googleusercontent.com/a/AEdFTp4mrIOqg46bY8tJ1pdxSxGJsOP_Fp61S7IAkLd4qw=s96-c"}
           />
         </div>
         <Button
@@ -43,7 +43,7 @@ const Lore: FC<LoreProps> = ({ onShowUpdatePopup }) => {
         <div className="flex items-baseline gap-3">
           <span className="text-2xl font-semibold">{user?.name}</span>
         </div>
-        <div className="mt-2 text-sm text-secondary-100">720 Points - 15th</div>
+        <div className="mt-2 text-sm text-secondary-100">{user?.points} Points - 15th</div>
         <div className="mt-3 whitespace-pre-wrap text-secondary-200">{user?.bio}</div>
       </div>
     </Card>
