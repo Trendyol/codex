@@ -61,3 +61,9 @@ export type Room = {
   };
   date: string;
 };
+
+export type Order = {
+  orderBy?: string;
+  order?: string;
+  limit?: string;
+}

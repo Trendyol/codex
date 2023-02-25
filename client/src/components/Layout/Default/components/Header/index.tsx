@@ -17,7 +17,7 @@ const Header = () => {
       </div>
       <div className="flex items-center">
         {me ? (
-          <Avatar id={me.id} name={me.name} avatar={me.avatar} points={3250} truncate />
+          <Avatar id={me.id} name={me.name} avatar={me.avatar} points={me.points} truncate />
         ) : (
           <>
             <Link href={'/login'}>
