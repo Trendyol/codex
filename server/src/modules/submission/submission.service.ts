@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { DateTime } from 'luxon';
 
+import { RoomGateway } from '../room/room.gateway';
 import { SubmissionStatus, SubmissionTypes } from './models/enums';
 
 type SubmissionResult = {
@@ -19,7 +20,10 @@ type SubmissionResult = {
 };
 @Injectable()
 export class SubmissionService {
-  constructor(private readonly dataService: IDataService) {}
+  constructor(
+    private readonly dataService: IDataService,
+    private readonly roomGateway: RoomGateway,
+  ) {}
   async run(code: string, language: number, testcaseId: string) {
     const { stdin, expected_output } = await this.dataService.testcases.findById(testcaseId);
     const result = await this.execute(code, language, stdin, expected_output);
@@ -47,7 +51,7 @@ export class SubmissionService {
         // Check that if challenge still ongoing and team exists in challenge
         throw new Error('Challenge not found');
       }
-      time = DateTime.fromISO(challenge.date.toISOString()).diffNow().as('seconds');
+      time = DateTime.fromISO(challenge.date.toString()).diffNow().as('seconds');
     }
 
     const testcases = await this.dataService.testcases.find({ problemId });
@@ -146,7 +150,7 @@ export class SubmissionService {
         runtime: time,
       };
     } catch (error) {
-      console.log('err', error);
+      console.error(error);
     }
   }
 }

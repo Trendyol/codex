@@ -1,7 +1,7 @@
+import { SubmissionTypes, SubmissionStatus } from '@models/enums';
 import { decodeBase64 } from '@utils/converter';
 import { cx } from 'class-variance-authority';
 import { FC } from 'react';
-import { SubmissionStatus, SubmissionTypes } from '../../models/enums';
 
 type ResultProps = {
   created_at: string;

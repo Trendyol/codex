@@ -13,7 +13,6 @@ export class TestcaseController {
   @Post()
   @UseGuards(JwtGuard, AdminGuard)
   create(@Body() createTestcaseDto: CreateTestcaseDto) {
-    console.log(createTestcaseDto)
     return this.testcaseService.create(createTestcaseDto);
   }
 

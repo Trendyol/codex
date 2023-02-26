@@ -2,15 +2,17 @@ import Chat from '@components/shared/Chat';
 import Countdown from '@components/shared/Countdown';
 import Description from '@components/shared/Description';
 import Editor from '@components/shared/Editor';
-import Submission from '@components/shared/Submission';
 import TabsGroup from '@components/shared/TabsGroup';
 import { useChallenge, useRoom } from '@hooks/data';
 import { User } from '@hooks/data/models/types';
 import { useMe } from '@hooks/data/useMe';
+import { Language } from '@models/enums';
 import { joinRoom, sendMessage } from '@services/room';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Submission from './components/Submission';
 import Video from './components/Video';
+import { Action } from './models/types';
 
 const Room = () => {
   const router = useRouter();
@@ -19,12 +21,15 @@ const Room = () => {
   const { challenge } = useChallenge(router.query.challenge as string);
   const { room } = useRoom(router.query.challenge as string);
   const { me } = useMe();
+  const [action, setAction] = useState<Action>();
 
   useEffect(() => {
     if (!room || !me) return;
 
-    joinRoom(room.team.id, (user, message) =>
-      setMessages((messages) => [...messages, { user, message }]),
+    joinRoom(
+      room.team.id,
+      (user, message) => setMessages((messages) => [...messages, { user, message }]),
+      (user, key, data) => setAction({ key, data }),
     );
   }, [room, me]);
 
@@ -41,7 +46,16 @@ const Room = () => {
       </div>
       <div className="flex flex-1 flex-col gap-6">
         <Editor />
-        <Submission />
+        {challenge?.problem && room?.team && (
+          <Submission
+            action={action}
+            problemId={challenge?.problem.id}
+            challengeId={challenge?.id}
+            teamId={room?.team.id}
+            code=""
+            language={Language.javascript}
+          />
+        )}
       </div>
       <div className="flex h-full w-[320px] shrink-0 flex-col gap-6 md:hidden">
         <Countdown date={challenge?.date} />

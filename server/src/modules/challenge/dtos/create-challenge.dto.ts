@@ -12,7 +12,7 @@ export class CreateChallengeDto {
 
   @ApiProperty()
   @IsString()
-  readonly problem: string;
+  readonly problemId: string;
 
   @ApiProperty()
   @IsNumber()

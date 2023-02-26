@@ -2,14 +2,13 @@ import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
 import { useRun } from '@hooks/data/useRun';
 import { useSubmission } from '@hooks/data/useSubmission';
-import { Language } from '@models/enums';
+import { Language, SubmissionStatus, SubmissionTabs, SubmissionTypes } from '@models/enums';
+import { SubmissionResult } from '@models/types';
 import { cx } from 'class-variance-authority';
 import { FC, useEffect, useState } from 'react';
-import Spinner from '../Spinner';
-import Result from './components/Result';
-import Testcase from './components/Testcase';
-import { SubmissionStatus, SubmissionTabs, SubmissionTypes } from './models/enums';
-import { SubmissionResult } from './models/types';
+import Spinner from '../../../../components/shared/Spinner';
+import Result from '../Result';
+import Testcase from '../Testcase';
 
 type SubmissionProps = {
   problemId: string;

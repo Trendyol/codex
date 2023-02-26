@@ -29,7 +29,7 @@ export class ChallengeService {
   }
 
   async findAll(userId?: string) {
-    const challenges = await this.dataService.challenges.find({});
+    const challenges = await this.dataService.queries.findChallenges(userId);
     return challenges;
   }
 

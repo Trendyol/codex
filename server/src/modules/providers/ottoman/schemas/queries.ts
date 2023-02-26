@@ -5,7 +5,6 @@ q1.description,
 q1.duration,
 q1.name,
 q1.participants,
-q1.problem,
 q1.status,
 q1.teamSize,
 userActiveParticipant,
@@ -35,8 +34,7 @@ GROUP BY q1.id,
   q1.status,
   q1.teamSize,
   userActiveParticipant,
-  userParticipant
-ORDER by q1.date desc`;
+  userParticipant`;
 
 const findChallenge = `
 SELECT q1.id,
@@ -46,12 +44,12 @@ SELECT q1.id,
        q1.duration,
        q1.name,
        q1.participants,
-       q1.problem,
+       q1.problemId,
        q1.status,
        q1.teamSize,
        userActiveParticipant,
        userParticipant,
-       difficulty
+       problem
 FROM default q1
 LET userActiveParticipant = (
     SELECT "true"
@@ -65,11 +63,11 @@ userParticipant = (
     WHERE q3.type = 'challenge'
         AND q3.id == q1.id
         AND $USER_ID IN q3.participants),
-difficulty = (
-    SELECT q4.difficulty
-    FROM default q4
-    WHERE q4.type = 'problem'
-        AND q4.id == q1.problem)
+problem = (
+  SELECT *
+  FROM default q4
+  WHERE q4.type = 'problem'
+      AND q4.id == q1.problemId)
 WHERE q1.type = 'challenge'
     AND q1.id = $CHALLENGE_ID
 GROUP BY q1.id,
@@ -79,14 +77,15 @@ GROUP BY q1.id,
          q1.duration,
          q1.name,
          q1.participants,
-         q1.problem,
+         q1.problemId,
          q1.status,
          q1.teamSize,
          userActiveParticipant,
          userParticipant,
-         difficulty`;
+         difficulty,
+         problem`;
 
 export const queries = {
   findChallenges,
-  findChallenge
+  findChallenge,
 };

@@ -20,7 +20,7 @@ import { RoomService } from './room.service';
       }),
     }),
   ],
-  exports: [RoomService],
+  exports: [RoomService, RoomGateway],
   providers: [RoomGateway, RoomService],
   controllers: [RoomController],
 })

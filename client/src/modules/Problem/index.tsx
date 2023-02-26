@@ -1,7 +1,7 @@
 import Chat from '@components/shared/Chat';
 import Description from '@components/shared/Description';
 import Editor from '@components/shared/Editor';
-import Submission from '@components/shared/Submission';
+import Submission from '@modules/Problem/components/Submission';
 import TabsGroup from '@components/shared/TabsGroup';
 import { useProblem } from '@hooks/data';
 import { Language } from '@models/enums';

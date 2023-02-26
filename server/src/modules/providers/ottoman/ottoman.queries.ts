@@ -21,11 +21,13 @@ export class OttomanQueries {
       parameters: { USER_ID: userId, CHALLENGE_ID: challengeId },
     });
 
+
     result.rows.forEach((row) => {
       row.userParticipant = row.userParticipant[0]?.['$1'] === 'true';
       row.userActiveParticipant = row.userActiveParticipant[0]?.['$1'] === 'true';
-      row.difficulty = row.difficulty[0]?.['difficulty'];
+      row.problem = row.problem[0]["q4"]
     });
+
     return result.rows[0];
   }
 }
