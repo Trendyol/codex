@@ -17,6 +17,12 @@ export type Challenge = {
   userActiveParticipant: boolean;
 };
 
+export type Testcase = {
+  id: string;
+  expected_output: string;
+  stdin: string;
+};
+
 export type Problem = {
   id: string;
   title: string;

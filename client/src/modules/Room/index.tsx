@@ -30,7 +30,7 @@ const Room = () => {
 
   return (
     <div className="flex h-[calc(100vh-94px)] gap-6 pb-6">
-      <div className="h-full w-[350px] overflow-auto">
+      <div className="h-full w-[320px] overflow-auto">
         {challenge?.problem && (
           <Description
             title={challenge?.problem.title}

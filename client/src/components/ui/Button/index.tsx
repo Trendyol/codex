@@ -35,7 +35,11 @@ const Button: FC<ButtonProps> = ({
   children,
   ...props
 }) => {
-  const buttonClasses = cx(buttonVariants({ intent, size, className }), fluid ? 'w-full' : '');
+  const buttonClasses = cx(
+    buttonVariants({ intent, size, className }),
+    fluid ? 'w-full' : '',
+    disabled ? 'opacity-60 cursor-not-allowed' : '',
+  );
 
   return (
     <button {...props} disabled={disabled} className={buttonClasses}>

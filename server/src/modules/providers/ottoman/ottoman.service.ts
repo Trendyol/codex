@@ -3,6 +3,7 @@ import { SubmissionEntity, UserEntity } from '@core/data/entities';
 import { ChallengeEntity } from '@core/data/entities/challenge.entity';
 import { ProblemEntity } from '@core/data/entities/problem.entity';
 import { TeamEntity } from '@core/data/entities/team.entity';
+import { TestcaseEntity } from '@core/data/entities/testcase.entity';
 import { IDataService } from '@core/data/services/data.service';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { Ottoman } from 'ottoman';
@@ -13,6 +14,7 @@ import { challengeSchema } from './schemas/challenge.schema';
 import { problemSchema } from './schemas/problem.schema';
 import { submissionSchema } from './schemas/submission.schema';
 import { teamSchema } from './schemas/team.schema';
+import { testcaseSchema } from './schemas/testcase.schema';
 import { userSchema } from './schemas/user.schema';
 
 @Injectable()
@@ -22,6 +24,7 @@ export class OttomanDataService implements IDataService, OnModuleInit {
   challenges: OttomanGenericRepository<ChallengeEntity>;
   teams: OttomanGenericRepository<TeamEntity>;
   problems: OttomanGenericRepository<ProblemEntity>;
+  testcases: OttomanGenericRepository<TestcaseEntity>;
   queries: OttomanQueries;
 
   async onModuleInit() {
@@ -71,5 +74,11 @@ export class OttomanDataService implements IDataService, OnModuleInit {
       problemSchema,
     );
     this.problems = new OttomanGenericRepository<ProblemEntity>(problemModel);
+
+    const testcaseModel = ottoman.model<TestcaseEntity, Document<ProblemEntity>>(
+      'testcase',
+      testcaseSchema,
+    );
+    this.testcases = new OttomanGenericRepository<TestcaseEntity>(testcaseModel);
   }
 }

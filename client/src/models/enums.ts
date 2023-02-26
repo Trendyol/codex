@@ -10,3 +10,7 @@ export enum Difficulty {
   medium = 2,
   hard = 3,
 }
+
+export enum Language {
+  javascript = 63,
+}
