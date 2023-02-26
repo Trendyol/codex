@@ -32,6 +32,7 @@ export type User = {
   role: string;
   bio?: string;
   points: number;
+  rank: number;
 };
 
 export type Participant = {

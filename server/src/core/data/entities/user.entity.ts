@@ -6,4 +6,5 @@ export class UserEntity {
   role: string;
   bio?: string;
   points: number;
+  rank: number;
 }

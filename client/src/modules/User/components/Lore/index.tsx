@@ -43,7 +43,7 @@ const Lore: FC<LoreProps> = ({ onShowUpdatePopup }) => {
         <div className="flex items-baseline gap-3">
           <span className="text-2xl font-semibold">{user?.name}</span>
         </div>
-        <div className="mt-2 text-sm text-secondary-100">{user?.points} Points - 15th</div>
+        <div className="mt-2 text-sm text-secondary-100">{user?.points} Points - {user?.rank}th</div>
         <div className="mt-3 whitespace-pre-wrap text-secondary-200">{user?.bio}</div>
       </div>
     </Card>

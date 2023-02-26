@@ -4,9 +4,13 @@ import { IsString } from 'class-validator';
 export class UpdateProfileDto {
   @ApiProperty()
   @IsString()
-  readonly name: string;
+  readonly name?: string;
 
   @ApiProperty()
   @IsString()
-  readonly bio: string;
+  readonly bio?: string;
+
+  @ApiProperty()
+  @IsString()
+  readonly rank?: number;
 }
