@@ -7,4 +7,5 @@ export const userSchema = new Schema({
   role: String,
   bio: String,
   points: Number,
+  rank: Number,
 });

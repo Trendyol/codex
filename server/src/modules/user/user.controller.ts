@@ -14,11 +14,11 @@ export class UserController {
   @Get('/me')
   @UseGuards(JwtGuard)
   async getUser(@User() user: UserEntity) {
-    const { id, name, email, avatar, points, bio, role } = await this.userService.findOne({
+    const { id, name, email, avatar, points, bio, role, rank } = await this.userService.findOne({
       email: user.email,
     });
 
-    return { id, name, email, avatar, points, bio, role };
+    return { id, name, email, avatar, points, bio, role, rank };
   }
 
   @Get(':id')
@@ -46,5 +46,16 @@ export class UserController {
   ) {
     const users = await this.userService.find({ orderBy, order, limit});
     return users;
+  }
+
+  @Get('/rank/update')
+  @UseGuards(JwtGuard)
+  async updateRank() {
+    const users = await this.userService.find({ orderBy: 'points', order: 'desc', limit: 1000 });
+    const updatedUsers = await Promise.all(users.map(async (user, index) => {
+      const updatedUser = await this.userService.updateProfile(user.id, { rank: index + 1 });
+      return updatedUser;
+    }));
+    return updatedUsers;
   }
 }

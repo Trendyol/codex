@@ -9,7 +9,14 @@ export class UserService {
   constructor(private readonly dataService: IDataService) {}
 
   async create(name: string, email: string, avatar: string) {
-    return this.dataService.users.create({ name, email, avatar, points: 0, role: Roles.USER });
+    return this.dataService.users.create({
+      name,
+      email,
+      avatar,
+      points: 0,
+      role: Roles.USER,
+      rank: 0,
+    });
   }
 
   async findOne(filter: any) {
@@ -25,12 +32,13 @@ export class UserService {
   }
 
   async find({ orderBy, order, limit }) {
-    const filter = {
-      orderBy: orderBy || {},
-      order: order || 'desc',
-      limit: limit || 20,
-    };
-
+    const filter = {}
+    if (orderBy && order) {
+      filter['sort'] = { [orderBy]: order }
+    }
+    if (limit) {
+      filter['limit'] = limit
+    }
     return this.dataService.users.find({}, filter);
   }
 }
