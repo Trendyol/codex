@@ -1,6 +1,8 @@
+import { AnonymousGuard } from '@auth/guards/anonymous.guard';
 import { JwtGuard } from '@auth/guards/jwt.guard';
+import { UserEntity } from '@core/data/entities';
 import { User } from '@core/decorators/user.decorator';
-import { Body, Controller, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { RunDto } from './dtos/run.dto';
@@ -23,10 +25,10 @@ export class SubmissionController {
   @UseGuards(JwtGuard)
   submission(
     @Body() createSubmissionDto: SubmissionDto,
+    @User() user,
     @Param('problemId') problemId: string,
     @Query('teamId') teamId: string,
     @Query('challengeId') challengeId: string,
-    @User() user,
   ) {
     const { code, language } = createSubmissionDto;
     return this.submissionService.submission(
@@ -37,5 +39,15 @@ export class SubmissionController {
       teamId,
       challengeId,
     );
+  }
+
+  @Get()
+  @UseGuards(AnonymousGuard)
+  findSubmissions(
+    @User() user: UserEntity,
+    @Query('problemId') problemId: string,
+    @Query('teamId') teamId: string,
+  ) {
+    return this.submissionService.findSubmissions(user.id, problemId, teamId);
   }
 }

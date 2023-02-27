@@ -25,7 +25,7 @@ export class OttomanQueries {
     result.rows.forEach((row) => {
       row.userParticipant = row.userParticipant[0]?.['$1'] === 'true';
       row.userActiveParticipant = row.userActiveParticipant[0]?.['$1'] === 'true';
-      row.problem = row.problem[0]["q4"]
+      row.problem = row.problem?.[0]?.["q4"]
     });
 
     return result.rows[0];

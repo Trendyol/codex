@@ -26,6 +26,6 @@ export enum SubmissionTypes {
 }
 
 export enum SubmissionTabs {
-  Testcase,
-  Result,
+  Testcase = 'Testcase',
+  Result = 'Result',
 }

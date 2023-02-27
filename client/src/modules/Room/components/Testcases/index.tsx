@@ -4,19 +4,21 @@ import { decodeBase64 } from '@utils/converter';
 import { cx } from 'class-variance-authority';
 import { FC, useEffect } from 'react';
 
-type TestcaseProps = {
+type TestcasesProps = {
   problemId: string;
   selectedTestcase?: Testcase;
   onSelectedTestcaseChange: (testcase: Testcase) => void;
 };
 
-const Testcase: FC<TestcaseProps> = ({ problemId, selectedTestcase, onSelectedTestcaseChange }) => {
+const Testcases: FC<TestcasesProps> = ({
+  problemId,
+  selectedTestcase,
+  onSelectedTestcaseChange,
+}) => {
   const { testcases } = useTestcases(problemId);
 
   useEffect(() => {
-    if (testcases?.length) {
-      onSelectedTestcaseChange(testcases[0]);
-    }
+    if (testcases?.length) onSelectedTestcaseChange(testcases[0]);
   }, [testcases, onSelectedTestcaseChange]);
 
   return (
@@ -27,8 +29,8 @@ const Testcase: FC<TestcaseProps> = ({ problemId, selectedTestcase, onSelectedTe
             key={testcase.id}
             onClick={() => onSelectedTestcaseChange(testcase)}
             className={cx(
-              'cursor-pointer whitespace-nowrap rounded-xl p-2 text-[10px] hover:bg-gray-200 h-[32px]',
-              testcase?.id == selectedTestcase?.id ? 'bg-gray-200' : 'bg-gray-50 bg-opacity-90',
+              'h-[32px] cursor-pointer whitespace-nowrap rounded-xl p-2 text-[10px] hover:bg-gray-200',
+              selectedTestcase?.id == testcase?.id ? 'bg-gray-200' : 'bg-gray-50 bg-opacity-90',
             )}
           >
             Testcase {index + 1}
@@ -39,13 +41,13 @@ const Testcase: FC<TestcaseProps> = ({ problemId, selectedTestcase, onSelectedTe
         <div>
           <div className="mb-1 text-xs text-black">Input</div>
           <div className="rounded-md bg-gray-50 px-2 py-1 text-sm">
-            {decodeBase64(selectedTestcase?.stdin || '')}
+            {decodeBase64(selectedTestcase?.stdin)}
           </div>
         </div>
         <div className="mt-2">
           <div className="mb-1 text-xs text-black">Expected Output</div>
           <div className="rounded-md bg-gray-50 px-2 py-1 text-sm">
-            {decodeBase64(selectedTestcase?.expected_output || '')}
+            {decodeBase64(selectedTestcase?.expected_output)}
           </div>
         </div>
       </div>
@@ -53,4 +55,4 @@ const Testcase: FC<TestcaseProps> = ({ problemId, selectedTestcase, onSelectedTe
   );
 };
 
-export default Testcase;
+export default Testcases;

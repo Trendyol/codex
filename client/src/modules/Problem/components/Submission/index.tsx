@@ -1,14 +1,15 @@
 import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
+import { Testcase } from '@hooks/data/models/types';
 import { useRun } from '@hooks/data/useRun';
 import { useSubmission } from '@hooks/data/useSubmission';
 import { Language, SubmissionStatus, SubmissionTabs, SubmissionTypes } from '@models/enums';
 import { SubmissionResult } from '@models/types';
 import { cx } from 'class-variance-authority';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import Spinner from '../../../../components/shared/Spinner';
 import Result from '../Result';
-import Testcase from '../Testcase';
+import Testcases from '../Testcases';
 
 type SubmissionProps = {
   problemId: string;
@@ -17,45 +18,34 @@ type SubmissionProps = {
 };
 
 const Submission: FC<SubmissionProps> = ({ problemId, code, language }) => {
+  const [activeTab, setActiveTab] = useState<SubmissionTabs>(SubmissionTabs.Testcase);
   const [selectedTestcase, setSelectedTestcase] = useState<Testcase>();
-  const [activeSubmissionTab, setActiveSubmissionTab] = useState<SubmissionTabs>(
-    SubmissionTabs.Testcase,
-  );
+
   const [result, setResult] = useState<SubmissionResult>();
-  const { runTrigger, run, runLoading } = useRun();
-  const { submissionTrigger, submission, submissionLoading } = useSubmission();
+  const { runTrigger, runLoading } = useRun((result) => setResult(result));
+  const { submissionTrigger, submissionLoading } = useSubmission((result) => setResult(result));
 
   const handleRun = () => {
-    setActiveSubmissionTab(SubmissionTabs.Result);
+    setActiveTab(SubmissionTabs.Result);
     runTrigger({ problemId, code, language, testcaseId: selectedTestcase?.id });
   };
 
   const handleSubmission = () => {
-    setActiveSubmissionTab(SubmissionTabs.Result);
+    setActiveTab(SubmissionTabs.Result);
     submissionTrigger({ problemId, code, language });
   };
 
-  useEffect(() => {
-    setResult(run?.data);
-  }, [run]);
-
-  useEffect(() => {
-    setResult(submission?.data);
-  }, [submission]);
-
-  const handleActiveSubmissionTabChange = () => {
-    setActiveSubmissionTab((activeSubmissionTab) =>
-      activeSubmissionTab == SubmissionTabs.Testcase
-        ? SubmissionTabs.Result
-        : SubmissionTabs.Testcase,
+  const handleActiveTabChange = () => {
+    setActiveTab((activeTab) =>
+      activeTab == SubmissionTabs.Testcase ? SubmissionTabs.Result : SubmissionTabs.Testcase,
     );
   };
 
   const loading = runLoading || submissionLoading;
   const accepted = result?.status == SubmissionStatus.Accepted;
   const isSubmission = result?.type == SubmissionTypes.Submission;
-  const showResult = activeSubmissionTab == SubmissionTabs.Result && result && !loading;
-  const showTestcase = activeSubmissionTab == SubmissionTabs.Testcase && !loading;
+  const showResult = activeTab == SubmissionTabs.Result && result && !loading;
+  const showTestcase = activeTab == SubmissionTabs.Testcase && !loading;
   const showComplete = accepted && isSubmission;
 
   return (
@@ -63,23 +53,23 @@ const Submission: FC<SubmissionProps> = ({ problemId, code, language }) => {
       <div className="flex h-48 flex-col justify-between">
         {loading && <Spinner />}
         {showTestcase && (
-          <Testcase
+          <Testcases
             selectedTestcase={selectedTestcase}
             onSelectedTestcaseChange={setSelectedTestcase}
             problemId={problemId}
           />
         )}
-        {showResult && <Result {...result} />}
+        {showResult && <Result result={result} />}
         {result && (
           <button
             disabled={loading}
-            onClick={handleActiveSubmissionTabChange}
+            onClick={handleActiveTabChange}
             className={cx(
               'absolute top-6 right-6 ml-auto cursor-pointer whitespace-nowrap rounded-xl bg-gray-50 bg-opacity-90 p-2 text-[10px] first-letter:cursor-pointer  hover:bg-gray-200',
               loading ? 'cursor-not-allowed opacity-60' : '',
             )}
           >
-            {activeSubmissionTab == SubmissionTabs.Testcase ? 'Result' : 'Testcase'}
+            {activeTab == SubmissionTabs.Testcase ? SubmissionTabs.Result : SubmissionTabs.Testcase}
           </button>
         )}
         <div className="flex">

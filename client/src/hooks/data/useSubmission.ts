@@ -1,7 +1,7 @@
 import useMutation from 'swr/mutation';
 import axios from 'axios';
 
-export const useSubmission = () => {
+export const useSubmission = (successCallback?: (data: any) => void) => {
   const code = 'Y29uc29sZS5sb2coIkhpIGFsbCIpOw==';
   const { trigger, isMutating, data } = useMutation(
     'submission',
@@ -12,12 +12,14 @@ export const useSubmission = () => {
       }
 
       return axios.post(url, {
-        code:  code || arg.code,
+        code: code || arg.code,
         language: arg.language,
         team: arg.team,
       });
     },
-    {},
+    {
+      onSuccess: ({ data }) => successCallback?.(data),
+    },
   );
 
   return {

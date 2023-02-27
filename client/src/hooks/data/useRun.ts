@@ -1,7 +1,7 @@
 import useMutation from 'swr/mutation';
 import axios from 'axios';
 
-export const useRun = () => {
+export const useRun = (successCallback?: (data: any) => void) => {
   const { trigger, isMutating, data } = useMutation(
     'run',
     (_, { arg }) =>
@@ -10,6 +10,9 @@ export const useRun = () => {
         language: arg.language,
         problemId: arg.problemId,
       }),
+    {
+      onSuccess: ({ data }) => successCallback?.(data),
+    },
   );
 
   return {

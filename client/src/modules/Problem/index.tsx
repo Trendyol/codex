@@ -7,6 +7,7 @@ import { useProblem } from '@hooks/data';
 import { Language } from '@models/enums';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import Submissions from './components/Submissions';
 
 const Problem = () => {
   const { query } = useRouter();
@@ -17,11 +18,14 @@ const Problem = () => {
     <div className="flex h-[calc(100vh-94px)] gap-6 pb-6">
       <div className="h-full w-[320px] overflow-auto">
         {problem && (
-          <Description
-            title={problem.title}
-            content={problem.content}
-            difficulty={problem.difficulty}
-          />
+          <TabsGroup tabs={['Description', 'Submissions']} className="h-full">
+            <Description
+              title={problem.title}
+              content={problem.content}
+              difficulty={problem.difficulty}
+            />
+            <Submissions problemId={problem.id} />
+          </TabsGroup>
         )}
       </div>
       <div className="flex flex-1 flex-col gap-6">

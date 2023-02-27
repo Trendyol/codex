@@ -30,6 +30,20 @@ export type Problem = {
   difficulty: Difficulty;
 };
 
+export type Submission = {
+  challengeId?: string;
+  code: string;
+  date: string;
+  id: string;
+  memory: number;
+  problemId: string;
+  runtime: number;
+  status: number;
+  teamId?: string;
+  time?: number;
+  userId: string;
+};
+
 export type User = {
   id: string;
   name: string;
@@ -72,4 +86,4 @@ export type Order = {
   orderBy?: string;
   order?: string;
   limit?: string;
-}
+};

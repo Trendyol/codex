@@ -1,6 +1,7 @@
 import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
 import { useRoom } from '@hooks/data';
+import { Testcase } from '@hooks/data/models/types';
 import { useRun } from '@hooks/data/useRun';
 import { useSubmission } from '@hooks/data/useSubmission';
 import { Language, SubmissionStatus, SubmissionTabs, SubmissionTypes } from '@models/enums';
@@ -13,7 +14,7 @@ import { useRouter } from 'next/router';
 import { FC, useEffect, useState } from 'react';
 import Spinner from '../../../../components/shared/Spinner';
 import Result from '../Result';
-import Testcase from '../Testcase';
+import Testcases from '../Testcases';
 
 type SubmissionProps = {
   problemId: string;
@@ -21,7 +22,7 @@ type SubmissionProps = {
   teamId: string;
   code: string;
   language: Language;
-  action: Action;
+  action?: Action;
 };
 
 const Submission: FC<SubmissionProps> = ({
@@ -32,67 +33,56 @@ const Submission: FC<SubmissionProps> = ({
   language,
   action,
 }) => {
+  const [selectedTestcase, setSelectedTestcase] = useState<Testcase>();
+  const [activeTab, setActiveTab] = useState<SubmissionTabs>(SubmissionTabs.Testcase);
+  const [result, setResult] = useState<SubmissionResult>();
+  const [actionLoading, setActionLoading] = useState(false);
+
   const { query } = useRouter();
   const { room } = useRoom(query.challenge as string);
-  const [selectedTestcase, setSelectedTestcase] = useState<Testcase>();
-  const [activeSubmissionTab, setActiveSubmissionTab] = useState<SubmissionTabs>(
-    SubmissionTabs.Testcase,
-  );
-  const [result, setResult] = useState<SubmissionResult>();
-  const { runTrigger, run, runLoading } = useRun();
-  const { submissionTrigger, submission, submissionLoading } = useSubmission();
-  const [actionLoading, setActionLoading] = useState(false);
+  const { runTrigger, runLoading } = useRun((result) => setResult(result));
+  const { submissionTrigger, submissionLoading } = useSubmission((result) => setResult(result));
 
   const handleRun = () => {
     if (room?.team.id) sendAction(room?.team.id, ActionTypes.run);
-    setActiveSubmissionTab(SubmissionTabs.Result);
+    setActiveTab(SubmissionTabs.Result);
     runTrigger({ problemId, code, language, testcaseId: selectedTestcase?.id });
   };
 
   const handleSubmission = () => {
     if (room?.team.id) sendAction(room?.team.id, ActionTypes.submission);
-    setActiveSubmissionTab(SubmissionTabs.Result);
+    setActiveTab(SubmissionTabs.Result);
     submissionTrigger({ problemId, challengeId, teamId, code, language });
   };
 
   useEffect(() => {
-    if (room?.team.id) sendAction(room?.team.id, ActionTypes.runResult, run?.data);
-    setResult(run?.data);
-  }, [run, room?.team.id]);
-
-  useEffect(() => {
-    if (room?.team.id) sendAction(room?.team.id, ActionTypes.submissionResult, submission?.data);
-    setResult(submission?.data);
-  }, [submission, room?.team.id]);
+    if (room?.team.id) sendAction(room?.team.id, ActionTypes.result, result);
+  }, [result, room?.team.id]);
 
   const handleActiveSubmissionTabChange = () => {
-    setActiveSubmissionTab((activeSubmissionTab) =>
-      activeSubmissionTab == SubmissionTabs.Testcase
-        ? SubmissionTabs.Result
-        : SubmissionTabs.Testcase,
+    setActiveTab((activeTab) =>
+      activeTab == SubmissionTabs.Testcase ? SubmissionTabs.Result : SubmissionTabs.Testcase,
     );
   };
 
   useEffect(() => {
-    console.log('action', action);
     switch (action?.key) {
       case ActionTypes.run:
       case ActionTypes.submission:
-        setActiveSubmissionTab(SubmissionTabs.Result);
+        setActiveTab(SubmissionTabs.Result);
         setActionLoading(true);
         break;
-      case ActionTypes.runResult:
-      case ActionTypes.submissionResult:
+      case ActionTypes.result:
         setActionLoading(false);
         setResult(action.data);
     }
-  }, [action]);
+  }, [action?.key]);
 
   const loading = actionLoading || runLoading || submissionLoading;
   const accepted = result?.status == SubmissionStatus.Accepted;
   const isSubmission = result?.type == SubmissionTypes.Submission;
-  const showResult = activeSubmissionTab == SubmissionTabs.Result && result && !loading;
-  const showTestcase = activeSubmissionTab == SubmissionTabs.Testcase && !loading;
+  const showResult = activeTab == SubmissionTabs.Result && result && !loading;
+  const showTestcase = activeTab == SubmissionTabs.Testcase && !loading;
   const showComplete = accepted && isSubmission;
 
   return (
@@ -100,13 +90,13 @@ const Submission: FC<SubmissionProps> = ({
       <div className="flex h-48 flex-col justify-between">
         {loading && <Spinner />}
         {showTestcase && (
-          <Testcase
+          <Testcases
             selectedTestcase={selectedTestcase}
             onSelectedTestcaseChange={setSelectedTestcase}
             problemId={problemId}
           />
         )}
-        {showResult && <Result {...result} />}
+        {showResult && <Result result={result} />}
         {result && (
           <button
             disabled={loading}
@@ -116,7 +106,7 @@ const Submission: FC<SubmissionProps> = ({
               loading ? 'cursor-not-allowed opacity-60' : '',
             )}
           >
-            {activeSubmissionTab == SubmissionTabs.Testcase ? 'Result' : 'Testcase'}
+            {activeTab == SubmissionTabs.Testcase ? 'Result' : 'Testcase'}
           </button>
         )}
         <div className="flex">

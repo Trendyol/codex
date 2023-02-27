@@ -46,9 +46,9 @@ export class SubmissionService {
   ) {
     let time: number;
     if (challengeId) {
+      // TODO: Check the challenge and team status with an JWT Token if possible
       const challenge = await this.dataService.challenges.findById(challengeId);
       if (!challenge && challenge.status == Status.ongoing) {
-        // Check that if challenge still ongoing and team exists in challenge
         throw new Error('Challenge not found');
       }
       time = DateTime.fromISO(challenge.date.toString()).diffNow().as('seconds');
@@ -65,7 +65,7 @@ export class SubmissionService {
       totalMemory += result.memory;
 
       if (result.status.id !== SubmissionStatus.Accepted) {
-        this.dataService.submissions.create({
+        this.dataService.submissions.create({ // Error
           code,
           userId,
           problemId,
@@ -134,7 +134,7 @@ export class SubmissionService {
         },
         data,
       };
-
+      
       const { time, memory, status, created_at, stdout } = (await axios.request(options))
         .data as SubmissionResult;
 
@@ -152,5 +152,10 @@ export class SubmissionService {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  findSubmissions(userId: string, problemId: string, teamId?: string) {
+    const filter = { problemId, ...(teamId ? { teamId } : { userId }) };
+    return this.dataService.submissions.find(filter, { limit: 20 });
   }
 }

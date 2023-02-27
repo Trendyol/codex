@@ -1,38 +1,29 @@
 import { SubmissionTypes, SubmissionStatus } from '@models/enums';
+import { SubmissionResult } from '@models/types';
 import { decodeBase64 } from '@utils/converter';
 import { cx } from 'class-variance-authority';
 import { FC } from 'react';
 
 type ResultProps = {
-  created_at: string;
-  expected_output: string;
-  stdin: string;
-  language: number;
-  memory: number;
-  code: string;
-  status: number;
-  runtime: number;
-  stdout: string;
-  totalTestcases?: number;
-  passedTestcases?: number;
-  type: SubmissionTypes;
+  result: SubmissionResult;
 };
 
-const Result: FC<ResultProps> = ({
-  status,
-  runtime,
-  memory,
-  stdin,
-  stdout,
-  expected_output,
-  type,
-  passedTestcases,
-  totalTestcases,
-}) => {
+const Result: FC<ResultProps> = ({ result }) => {
+  const {
+    status,
+    runtime,
+    memory,
+    stdin,
+    stdout,
+    expected_output,
+    type,
+    passedTestcases,
+    totalTestcases,
+  } = result;
+
   const accepted = status == SubmissionStatus.Accepted;
   const isRun = type == SubmissionTypes.Run;
   const isSubmission = type == SubmissionTypes.Submission;
-
   const showValues = (accepted && !isSubmission) || !accepted;
   const showCongrats = accepted && isSubmission;
 
