@@ -4,13 +4,14 @@ import { Children, FC, ReactNode, useState } from 'react';
 type TabsProps = {
   children: ReactNode | ReactNode[];
   tabs: string[];
+  className?: string;
 };
 
-const TabsGroup: FC<TabsProps> = ({ children, tabs }) => {
+const TabsGroup: FC<TabsProps> = ({ children, tabs, className }) => {
   const [activeTab, setActiveTab] = useState<number>(0);
 
   return (
-    <div className="flex flex-1 flex-col overflow-auto rounded-lg border bg-white">
+    <div className={cx('flex flex-1 flex-col overflow-auto rounded-lg border bg-white', className)}>
       <div className="flex items-center">
         {tabs.map((tab, index) => (
           <div

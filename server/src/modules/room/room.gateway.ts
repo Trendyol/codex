@@ -14,6 +14,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
+import { ActionRoomMessage } from './messages/action-room.message';
 import { JoinRoomMessage } from './messages/join-room.message';
 import { MessageRoomMessage } from './messages/message-room.message';
 
@@ -49,5 +50,15 @@ export class RoomGateway implements OnGatewayInit {
   ) {
     client.emit('message_room', { user, message });
     client.to(roomId).emit('message_room', { user, message });
+  }
+
+  @UseGuards(WsGuard)
+  @SubscribeMessage('send_action_room')
+  action(
+    @User() user: UserEntity,
+    @ConnectedSocket() client: Socket,
+    @MessageBody() { roomId, key, data }: ActionRoomMessage,
+  ) {
+    client.to(roomId).emit('action_room', { user, key, data });
   }
 }

@@ -5,6 +5,7 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
 import { TeamModule } from '../team/team.module';
+import { RoomController } from './room.controller';
 import { RoomGateway } from './room.gateway';
 import { RoomService } from './room.service';
 
@@ -19,7 +20,8 @@ import { RoomService } from './room.service';
       }),
     }),
   ],
-  exports: [RoomService],
+  exports: [RoomService, RoomGateway],
   providers: [RoomGateway, RoomService],
+  controllers: [RoomController],
 })
 export class RoomModule {}

@@ -19,7 +19,7 @@ const Lore = () => {
     description,
     date,
     status,
-    difficulty,
+    problem,
     userParticipant,
     userActiveParticipant,
   } = challenge;
@@ -46,9 +46,9 @@ const Lore = () => {
       <div className="mt-12 p-6">
         <div className="flex items-center gap-3 text-2xl font-semibold">
           <span>{name}</span>
-          {difficulty && (
-            <Badge className="capitalize" intent={difficulty} size={'small'}>
-              {Difficulty[difficulty]}
+          {problem && (
+            <Badge className="capitalize" intent={problem.difficulty} size={'small'}>
+              {Difficulty[problem.difficulty]}
             </Badge>
           )}
         </div>

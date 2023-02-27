@@ -17,11 +17,31 @@ export type Challenge = {
   userActiveParticipant: boolean;
 };
 
+export type Testcase = {
+  id: string;
+  expected_output: string;
+  stdin: string;
+};
+
 export type Problem = {
   id: string;
   title: string;
   content: string;
   difficulty: Difficulty;
+};
+
+export type Submission = {
+  challengeId?: string;
+  code: string;
+  date: string;
+  id: string;
+  memory: number;
+  problemId: string;
+  runtime: number;
+  status: number;
+  teamId?: string;
+  time?: number;
+  userId: string;
 };
 
 export type User = {
@@ -67,4 +87,4 @@ export type Order = {
   orderBy?: string;
   order?: string;
   limit?: string;
-}
+};

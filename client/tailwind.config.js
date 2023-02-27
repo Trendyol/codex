@@ -19,6 +19,8 @@ module.exports = {
         },
         background: '#F3F7FF',
         accent: '#1f2937',
+        success: '#10B981',
+        error: '#EF4444',
       },
       height: {
         header: '70px',
