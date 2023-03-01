@@ -9,8 +9,4 @@ export class UpdateProfileDto {
   @ApiProperty()
   @IsString()
   readonly bio?: string;
-
-  @ApiProperty()
-  @IsString()
-  readonly rank?: number;
 }

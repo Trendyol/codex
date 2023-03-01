@@ -2,7 +2,6 @@ import { Roles } from '@auth/models/constants';
 import { IDataService } from '@core/data/services/data.service';
 import { Injectable } from '@nestjs/common';
 
-import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @Injectable()
 export class UserService {
@@ -27,17 +26,20 @@ export class UserService {
     return this.dataService.users.findById(id);
   }
 
-  async updateProfile(id: string, updateProfileDto: UpdateProfileDto) {
+  async updateProfile(
+    id: string,
+    updateProfileDto: { name?: string; bio?: string; rank?: number },
+  ) {
     return this.dataService.users.update(id, updateProfileDto);
   }
 
   async find({ orderBy, order, limit }) {
-    const filter = {}
+    const filter = {};
     if (orderBy && order) {
-      filter['sort'] = { [orderBy]: order }
+      filter['sort'] = { [orderBy]: order };
     }
     if (limit) {
-      filter['limit'] = limit
+      filter['limit'] = limit;
     }
     return this.dataService.users.find({}, filter);
   }
