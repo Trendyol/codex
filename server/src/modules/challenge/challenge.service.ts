@@ -29,13 +29,13 @@ export class ChallengeService {
   }
 
   async findAll(userId?: string) {
-    const challenges = await this.dataService.queries.findChallenges(userId);
-    return challenges;
+    if (userId) return await this.dataService.queries.findChallenges(userId);
+    return await this.dataService.challenges.find({});
   }
 
   async findById(challengeId: string, userId?: string) {
-    const challenge = await this.dataService.queries.findChallenge(challengeId, userId);
-    return challenge;
+    if (userId) return await this.dataService.queries.findChallenge(challengeId, userId);
+    return await this.dataService.challenges.findById(challengeId)
   }
 
   async participate(userId: string, challengeId: string) {
