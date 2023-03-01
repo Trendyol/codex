@@ -20,7 +20,7 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({
       {showHeader && <Header />}
       <div className="flex">
         {showSidebar && <Sidebar collapsed={collapsed} />}
-        <div className="mt-6 flex-1 px-8 md:px-4">{children}</div>
+        <div className="mt-6 flex-1 px-6 md:px-4">{children}</div>
       </div>
     </div>
   );
