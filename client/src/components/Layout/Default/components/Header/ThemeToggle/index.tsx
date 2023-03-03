@@ -1,4 +1,4 @@
-import { ThemeContext } from '@contexts/themeContext';
+import { ThemeContext } from '@contexts/ThemeContext';
 import { FC, useContext } from 'react';
 import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md';
 
