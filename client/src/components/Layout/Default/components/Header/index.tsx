@@ -8,7 +8,7 @@ import Logo from '../Logo';
 const Header = () => {
   const { me } = useMe();
   return (
-    <div className="h-header border-b flex items-center gap-5 px-8 bg-white justify-between w-full sticky top-0 md:px-4 z-50">
+    <div className="sticky top-0 z-50 flex h-header w-full items-center justify-between gap-5 border-b bg-white px-8 md:px-4">
       <div className="flex items-center ">
         <Logo />
         <div className="w-[440px] lg:w-[300px] md:w-[260px] sm:w-[140px] xs:w-[90px]">
@@ -16,6 +16,7 @@ const Header = () => {
         </div>
       </div>
       <div className="flex items-center">
+        {/* <ThemeToggle /> */}
         {me ? (
           <Avatar id={me.id} name={me.name} avatar={me.avatar} points={me.points} truncate />
         ) : (
