@@ -1,12 +1,13 @@
 import '@styles/globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 import type { AppProps } from 'next/app';
 import { SWRConfig } from 'swr';
 import DefaultLayout from '@components/layout/Default';
 import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { fetcher } from '@utils/fetcher';
+import ThemeProvider from '@contexts/ThemeContext';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (pageProps: AppProps, page: ReactElement) => ReactNode;
@@ -20,18 +21,22 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   if (Component.getLayout) {
     return (
       <SWRConfig value={{ fetcher }}>
-        {Component.getLayout(pageProps, <Component {...pageProps} />)}
-        <ToastContainer autoClose={2000} />
+        <ThemeProvider>
+          {Component.getLayout(pageProps, <Component {...pageProps} />)}
+          <ToastContainer autoClose={2000} />
+        </ThemeProvider>
       </SWRConfig>
     );
   }
 
   return (
     <SWRConfig value={{ fetcher }}>
-      <DefaultLayout showHeader showSidebar>
-        <Component {...pageProps} />
-        <ToastContainer autoClose={2000} />
-      </DefaultLayout>
+      <ThemeProvider>
+        <DefaultLayout showHeader showSidebar>
+          <Component {...pageProps} />
+          <ToastContainer autoClose={2000} />
+        </DefaultLayout>
+      </ThemeProvider>
     </SWRConfig>
   );
 };
