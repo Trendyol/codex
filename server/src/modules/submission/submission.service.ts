@@ -1,9 +1,7 @@
-import { Status } from '@challenge/models/enums';
 import { config } from '@core/config/configuration';
 import { IDataService } from '@core/data/services/data.service';
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { DateTime } from 'luxon';
 
 import { RoomGateway } from '../room/room.gateway';
 import { SubmissionStatus, SubmissionTypes } from './models/enums';
@@ -44,20 +42,12 @@ export class SubmissionService {
     teamId?: string,
     challengeId?: string,
   ) {
-    let time: number;
-    if (challengeId) {
-      // TODO: Check the challenge and team status with an JWT Token if possible
-      const challenge = await this.dataService.challenges.findById(challengeId);
-      if (!challenge && challenge.status == Status.ongoing) {
-        throw new Error('Challenge not found');
-      }
-      time = DateTime.fromISO(challenge.date.toString()).diffNow().as('seconds');
-    }
-
+    // TODO: If team and challenge parameters are provided, check that the team and the challenge are valid
     const testcases = await this.dataService.testcases.find({ problemId });
     let passedTestcases = 0;
     let totalRuntime = 0;
     let totalMemory = 0;
+    const date = new Date();
 
     for (const { stdin, expected_output } of testcases) {
       const result = await this.execute(code, language, stdin, expected_output);
@@ -65,15 +55,14 @@ export class SubmissionService {
       totalMemory += result.memory;
 
       if (result.status.id !== SubmissionStatus.Accepted) {
-        this.dataService.submissions.create({ // Error
+        this.dataService.submissions.create({
           code,
           userId,
           problemId,
           teamId,
-          time,
           challengeId,
+          date,
           status: result.status.id,
-          date: new Date(),
         });
 
         return {
@@ -96,11 +85,10 @@ export class SubmissionService {
       problemId,
       teamId,
       challengeId,
-      time,
       runtime,
       memory,
+      date,
       status: SubmissionStatus.Accepted,
-      date: new Date(),
     });
 
     return {
@@ -110,7 +98,6 @@ export class SubmissionService {
       totalTestcases: testcases.length,
       runtime,
       memory,
-      time,
     };
   }
 
@@ -122,19 +109,18 @@ export class SubmissionService {
         stdin,
         expected_output,
       };
-
       const options = {
         method: 'POST',
-        url: 'https://judge0-ce.p.rapidapi.com/submissions',
+        url: config.judge0.url,
         params: { base64_encoded: 'true', wait: 'true', fields: '*' },
         headers: {
           'Content-Type': 'application/json',
-          'X-RapidAPI-Key': config.judge0.rapidApiKey,
+          'X-RapidAPI-Key': config.judge0.key,
           'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com',
         },
         data,
       };
-      
+
       const { time, memory, status, created_at, stdout } = (await axios.request(options))
         .data as SubmissionResult;
 

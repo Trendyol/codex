@@ -25,7 +25,8 @@ export interface Config {
   redirectUrl: string;
   clientUrl: string;
   judge0: {
-    rapidApiKey: string;
+    url: string;
+    key: string;
   };
 }
 
@@ -51,7 +52,8 @@ export const config = {
   redirectUrl: process.env.REDIRECT_URL,
   clientUrl: process.env.CLIENT_URL,
   judge0: {
-    rapidApiKey: process.env.RAPID_API_JUDGE0_KEY2,
+    url: process.env.JUDGE0_URL,
+    key: process.env.JUDGE0_KEY,
   },
 };
 
