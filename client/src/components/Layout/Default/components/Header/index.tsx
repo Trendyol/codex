@@ -4,15 +4,44 @@ import Input from '@components/ui/Input';
 import { useMe } from '@hooks/data/useMe';
 import Link from 'next/link';
 import Logo from '../Logo';
+import { User } from '@hooks/data/models/types';
+import { useSearch } from '@hooks/data/useSearch';
+import { useState } from 'react';
 
 const Header = () => {
   const { me } = useMe();
+  const [search, setSearch] = useState<string>('');
+  const { users } = useSearch(search);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <div className="sticky top-0 z-50 flex h-header w-full items-center justify-between gap-5 border-b bg-white px-8 md:px-4">
       <div className="flex items-center ">
         <Logo />
-        <div className="w-[440px] lg:w-[300px] md:w-[260px] sm:w-[140px] xs:w-[90px]">
-          <Input placeholder="Search..." />
+        <div className="relative">
+          <div className="w-[440px] lg:w-[300px] md:w-[260px] sm:w-[140px] xs:w-[90px]">
+            <Input
+              placeholder="Search..."
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearch(e)}
+            />
+          </div>
+          {users?.length > 0 && (
+            <div className="absolute mt-1 flex w-[440px] flex-col rounded border shadow-lg lg:w-[300px] md:w-[260px] sm:w-[140px] xs:w-[90px]">
+              {users?.map((user: User) => (
+                <Avatar
+                  key={user.id}
+                  id={user.id}
+                  name={user.name}
+                  avatar={user.avatar}
+                  points={user.points}
+                  truncate
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <div className="flex items-center">
