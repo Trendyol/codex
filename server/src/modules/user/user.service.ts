@@ -43,4 +43,8 @@ export class UserService {
     }
     return this.dataService.users.find({}, filter);
   }
+
+  async search(name: string) {
+    return this.dataService.users.find({ name: { $like: `%${name}%` } });
+  }
 }

@@ -58,4 +58,11 @@ export class UserController {
     }));
     return updatedUsers;
   }
+
+  @Get('/search/:name')
+  @UseGuards(JwtGuard)
+  async search(@Param('name') name: string) {
+    const users = await this.userService.search(name);
+    return users;
+  }
 }
