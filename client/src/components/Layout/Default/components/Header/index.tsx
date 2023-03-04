@@ -7,15 +7,25 @@ import Logo from '../Logo';
 import { User } from '@hooks/data/models/types';
 import { useSearch } from '@hooks/data/useSearch';
 import { useState } from 'react';
+import { useDebounce } from 'react-use';
 
 const Header = () => {
-  const { me } = useMe();
   const [search, setSearch] = useState<string>('');
-  const { users } = useSearch(search);
+  const [debouncedValue, setDebouncedValue] = useState('');
+  const { me } = useMe();
+  const { users } = useSearch(debouncedValue);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
+
+  const [, cancel] = useDebounce(
+    () => {
+      setDebouncedValue(search);
+    },
+    1000,
+    [search],
+  );
 
   return (
     <div className="sticky top-0 z-50 flex h-header w-full items-center justify-between gap-5 border-b bg-white px-8 md:px-4">
