@@ -2,12 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --color-primary-50: #7c8db5;
+    --color-primary-100: #3b82f6;
+    --color-primary-200: #2563eb;
+    --color-primary-300: #435ebe;
+    --color-primary-400: #29386b;
+    --color-primary-500: #25396f;
+
+    --color-secondary-100: #6b7280;
+    --color-primary-200: #4b5563;
+
+    --color-background: #f3f7ff;
+    --color-accent: #1f2937;
+    --color-success: #10b981;
+    --color-error: #ef4444;
+    --color-white: #ffffff;
+  }
+
+  :root[class='dark'] {
+  }
+}
+
 @layer components {
   pre {
-    @apply p-2.5 bg-[#eff1f6] text-[#262626] rounded-md whitespace-pre-wrap;
+    @apply whitespace-pre-wrap rounded-md bg-[#eff1f6] p-2.5 text-[#262626];
   }
 
   code {
-    @apply p-0.5 bg-[#eff1f6] text-[#262626] rounded-md;
+    @apply rounded-md bg-[#eff1f6] p-0.5 text-[#262626];
   }
 }

@@ -5,23 +5,24 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        black: '#1B1212',
+        white: 'var(--color-white)',
+        black: 'var(--color-black)',
         primary: {
-          50: '#7c8db5',
-          100: '#3b82f6',
-          200: '#2563eb',
-          300: '#435ebe',
-          400: '#29386B',
-          500: '#25396f',
+          50: 'var(--color-primary-50)',
+          100: 'var(--color-primary-100)',
+          200: 'var(--color-primary-200)',
+          300: 'var(--color-primary-300)',
+          400: 'var(--color-primary-400)',
+          500: 'var(--color-primary-500)',
         },
         secondary: {
-          100: '#6b7280',
-          200: '#4b5563',
+          100: 'var(--color-secondary-100)',
+          200: 'var(--color-secondary-200)',
         },
-        background: '#F3F7FF',
-        accent: '#1f2937',
-        success: '#10B981',
-        error: '#EF4444',
+        background: 'var(--color-background)',
+        accent: 'var(--color-accent)',
+        success: 'var(--color-success)',
+        error: 'var(--color-error)',
       },
       height: {
         header: '70px',
