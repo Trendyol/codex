@@ -49,7 +49,7 @@ const Participate: FC<ParticipateProps> = ({
       </Link>
     );
 
-  if (Status.ongoing && userActiveParticipant)
+  if (status == Status.ongoing && userActiveParticipant)
     return (
       <Link href={`/room/${id}`} onClick={(e) => e.stopPropagation()}>
         <Button fluid={false} size={'small'} intent={'primary'}>

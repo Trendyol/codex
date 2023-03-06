@@ -9,11 +9,12 @@ import { useMe } from '@hooks/data/useMe';
 import { Language } from '@models/enums';
 import { joinRoom, sendMessage } from '@services/room';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Submission from './components/Submission';
 import Submissions from './components/Submissions';
 import Video from './components/Video';
 import { Action } from './models/types';
+import { DateTime } from 'luxon';
 
 const Room = () => {
   const router = useRouter();
@@ -33,6 +34,13 @@ const Room = () => {
       (_, key, data) => setAction({ key, data }),
     );
   }, [room, me]);
+
+  const countdownDate = useMemo(
+    () =>
+      challenge?.date &&
+      DateTime.fromISO(challenge.date).plus({ minutes: challenge.duration }).toString(),
+    [challenge?.date, challenge?.duration],
+  );
 
   return (
     <div className="flex h-[calc(100vh-94px)] gap-6 pb-6">
@@ -62,7 +70,7 @@ const Room = () => {
         )}
       </div>
       <div className="flex h-full w-[320px] shrink-0 flex-col gap-6 md:hidden">
-        <Countdown date={challenge?.date} />
+        <Countdown date={countdownDate} />
         <TabsGroup tabs={['Video', 'Chat', 'Note']}>
           <Video />
           <Chat
