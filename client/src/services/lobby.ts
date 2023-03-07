@@ -30,3 +30,7 @@ export const joinLobby = (
 export const sendMessage = (lobbyId?: string, message?: string) => {
   socket.emit('send_message_lobby', { lobbyId, message });
 };
+
+export const disconnectSocket = () => {
+  socket.disconnect();
+};

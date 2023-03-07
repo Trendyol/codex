@@ -9,4 +9,8 @@ export class ChallengeEntity {
   duration: number;
   date: Date;
   problemId: string;
+  winners?: {
+    teamId: string;
+    runtime: number;
+  }[];
 }

@@ -35,7 +35,7 @@ export class ChallengeService {
 
   async findById(challengeId: string, userId?: string) {
     if (userId) return await this.dataService.queries.findChallenge(challengeId, userId);
-    return await this.dataService.challenges.findById(challengeId)
+    return await this.dataService.challenges.findById(challengeId);
   }
 
   async participate(userId: string, challengeId: string) {
@@ -66,6 +66,12 @@ export class ChallengeService {
     this.lobbyService.changeStatus(challengeId, Status.ongoing);
   }
 
+  private async finishChallenge(challengeId: string) {
+    const winners = await this.dataService.queries.findWinners(challengeId);
+
+    await this.dataService.challenges.update(challengeId, { winners });
+  }
+
   @Interval(STATUS_INTERVAL)
   async handleStatusUpdate() {
     const unfinishedChallenges = await this.dataService.challenges.find({
@@ -79,6 +85,7 @@ export class ChallengeService {
         await this.dataService.challenges.update(id, { status: currentStatus });
         Logger.log(`Challenge status updated ${id}: ${Status[currentStatus]}`);
         if (currentStatus == Status.ongoing) this.startChallenge(id);
+        if (currentStatus == Status.finished) this.finishChallenge(id);
       }
     });
   }

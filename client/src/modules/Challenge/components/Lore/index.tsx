@@ -13,16 +13,8 @@ const Lore = () => {
   const { challenge } = useChallenge(router.query.challenge as string);
 
   if (!challenge) return <></>;
-  const {
-    id,
-    name,
-    description,
-    date,
-    status,
-    problem,
-    userParticipant,
-    userActiveParticipant,
-  } = challenge;
+  const { id, name, description, date, status, problem, userParticipant, userActiveParticipant } =
+    challenge;
   const formattedDate = DateTime.fromISO(date).toFormat('dd LLL yyyy');
 
   return (

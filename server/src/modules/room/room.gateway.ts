@@ -1,4 +1,5 @@
 import { WsGuard } from '@auth/guards/ws.guard';
+import { Status } from '@challenge/models/enums';
 import config from '@core/config/configuration';
 import { UserEntity } from '@core/data/entities';
 import { IDataService } from '@core/data/services/data.service';
@@ -60,5 +61,9 @@ export class RoomGateway implements OnGatewayInit {
     @MessageBody() { roomId, key, data }: ActionRoomMessage,
   ) {
     client.to(roomId).emit('action_room', { user, key, data });
+  }
+
+  changeStatus(roomId: string, status: Status) {
+    this.wss.to(roomId).emit('change_status', status);
   }
 }

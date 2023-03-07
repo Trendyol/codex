@@ -15,6 +15,7 @@ import Submissions from './components/Submissions';
 import Video from './components/Video';
 import { Action } from './models/types';
 import { DateTime } from 'luxon';
+import { disconnectSocket } from '@services/lobby';
 
 const Room = () => {
   const router = useRouter();
@@ -25,6 +26,10 @@ const Room = () => {
   const { me } = useMe();
   const [action, setAction] = useState<Action>();
 
+  const handleDashboardNavigation = () => {
+    router.push('/');
+  };
+
   useEffect(() => {
     if (!room || !me) return;
 
@@ -33,6 +38,8 @@ const Room = () => {
       (user, message) => setMessages((messages) => [...messages, { user, message }]),
       (_, key, data) => setAction({ key, data }),
     );
+
+    return () => disconnectSocket();
   }, [room, me]);
 
   const countdownDate = useMemo(
@@ -70,7 +77,7 @@ const Room = () => {
         )}
       </div>
       <div className="flex h-full w-[320px] shrink-0 flex-col gap-6 md:hidden">
-        <Countdown date={countdownDate} />
+        <Countdown date={countdownDate} onComplete={handleDashboardNavigation} />
         <TabsGroup tabs={['Video', 'Chat', 'Note']}>
           <Video />
           <Chat

@@ -30,4 +30,12 @@ export class OttomanQueries {
 
     return result.rows[0];
   }
+
+  async findWinners(challengeId: string) {
+    const result = await this._query(queries.findWinners, {
+      parameters: { CHALLENGE_ID: challengeId },
+    });
+
+    return result.rows;
+  }
 }

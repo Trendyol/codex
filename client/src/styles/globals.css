@@ -12,13 +12,14 @@
     --color-primary-500: #25396f;
 
     --color-secondary-100: #6b7280;
-    --color-primary-200: #4b5563;
+    --color-secondary-200: #4b5563;
 
     --color-background: #f3f7ff;
     --color-accent: #1f2937;
     --color-success: #10b981;
     --color-error: #ef4444;
     --color-white: #ffffff;
+    --color-black: #333333;
   }
 
   :root[class='dark'] {

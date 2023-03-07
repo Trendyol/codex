@@ -85,7 +85,13 @@ GROUP BY q1.id,
          difficulty,
          problem`;
 
+const findWinners = `
+SELECT MAX([runtime, teamId])[0] as runtime, MAX([runtime, teamId])[1] as teamId FROM default
+where type = 'submission' and challengeId = $CHALLENGE_ID
+group by teamId order by runtime desc limit 3`;
+
 export const queries = {
   findChallenges,
   findChallenge,
+  findWinners,
 };

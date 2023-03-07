@@ -1,4 +1,3 @@
-import { ChallengeModule } from '@challenge/challenge.module';
 import config from '@core/config/configuration';
 import { DataModule } from '@data/data.module';
 import { Module } from '@nestjs/common';
@@ -13,15 +12,14 @@ import { RoomService } from './room.service';
   imports: [
     DataModule,
     TeamModule,
-    ChallengeModule,
     JwtModule.registerAsync({
       useFactory: async () => ({
         secret: config.jwt.secret,
       }),
     }),
   ],
-  exports: [RoomService, RoomGateway],
   providers: [RoomGateway, RoomService],
   controllers: [RoomController],
+  exports: [RoomService, RoomGateway],
 })
 export class RoomModule {}

@@ -29,3 +29,7 @@ export const sendMessage = (roomId?: string, message?: string) => {
 export const sendAction = (roomId: string, key: ActionTypes, data?: any) => {
   socket.emit('send_action_room', { roomId, key, data });
 };
+
+export const disconnectSocket = () => {
+  socket.disconnect();
+};

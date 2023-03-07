@@ -12,4 +12,10 @@ export const challengeSchema = new Schema({
   activeParticipants: [{ type: userSchema, ref: 'user' }],
   duration: Number,
   date: String,
+  winners: [
+    {
+      teamId: { type: String, ref: 'team' },
+      runtime: Number,
+    },
+  ],
 });

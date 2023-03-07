@@ -2,7 +2,7 @@ import Countdown from '@components/shared/Countdown';
 import { useChallenge, useLobby } from '@hooks/data';
 import { User } from '@hooks/data/models/types';
 import { useMe } from '@hooks/data/useMe';
-import { joinLobby, sendMessage } from '@services/lobby';
+import { disconnectSocket, joinLobby, sendMessage } from '@services/lobby';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Chat from '../../components/shared/Chat';
@@ -32,6 +32,8 @@ const Lobby = () => {
       (user, message) => setMessages((messages) => [...messages, { user, message }]),
       () => handleRoomNavigation(),
     );
+
+    return () => disconnectSocket();
   }, [lobby, me]);
 
   return (
