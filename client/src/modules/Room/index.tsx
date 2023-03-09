@@ -64,7 +64,7 @@ const Room = () => {
         )}
       </div>
       <div className="flex flex-1 flex-col gap-6">
-        <Editor />
+        {room?.team.id && <Editor roomId={room?.team.id}/>}
         {challenge?.problem && room?.team && (
           <Submission
             action={action}

@@ -6,6 +6,7 @@ export interface Config {
   ports: {
     app: number;
     peer: number;
+    monacoSync: number;
   };
   jwt: {
     secret: string;

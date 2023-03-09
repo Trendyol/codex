@@ -7,7 +7,9 @@ import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
 import helmet from 'helmet';
 import * as http from 'http';
+import { Socket } from 'net';
 import { ExpressPeerServer } from 'peer';
+import { Server as WebSocketServer } from 'ws';
 
 import { AppModule } from './app.module';
 
@@ -26,6 +28,11 @@ const bootstrap = async () => {
     Logger.log(`Peer Server listening on ${config.ports.peer}`);
   });
 
+  const monacoSyncServer = createMonacoSyncServer(app);
+  monacoSyncServer.listen(3004, () => {
+    Logger.log(`Monaco Sync Server listening on 3004`);
+  });
+
   await app.listen(config.ports.app, () => {
     Logger.log(`Nest Application Server listening on ${config.ports.app}`);
   });
@@ -38,6 +45,19 @@ const createPeerServer = () => {
     path: '/',
   });
   app.use('/peerjs', peerServer);
+  return server;
+};
+
+const createMonacoSyncServer = (app: INestApplication) => {
+  const server = http.createServer(app.getHttpServer());
+  const wss = new WebSocketServer({ noServer: true });
+  // wss.on('connection', setupWSConnection);
+  server.on('upgrade', (request, socket, head) => {
+    const handleAuth = (ws) => {
+      wss.emit('connection', ws, request);
+    };
+    wss.handleUpgrade(request, socket as Socket, head, handleAuth);
+  });
   return server;
 };
 
