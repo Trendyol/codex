@@ -15,9 +15,9 @@ type VideoRef = {
 };
 
 const Video: FC<VideoProps> = () => {
-  const router = useRouter();
+  const { query, isReady } = useRouter();
   const { me } = useMe();
-  const { room } = useRoom(router.query.challenge as string);
+  const { room } = useRoom(query.challenge as string, isReady);
 
   const peerInstance = useRef<Peer>();
   const videoRef = useRef<any>(null);

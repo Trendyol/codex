@@ -6,6 +6,7 @@ export interface Config {
   ports: {
     app: number;
     peer: number;
+    monacoSync: number;
   };
   jwt: {
     secret: string;
@@ -34,6 +35,7 @@ export const config = {
   ports: {
     app: Number(process.env.PORT) || 4000,
     peer: Number(process.env.PORT_PEER) || 4001,
+    monacoSync: Number(process.env.PORT_MONACO_SYNC) || 4002,
   },
   jwt: {
     secret: process.env.JWT_SECRET,
