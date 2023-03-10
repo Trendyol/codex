@@ -3,22 +3,22 @@ import { WebsocketProvider } from 'y-websocket';
 import { MonacoBinding } from './compiled/y-monaco';
 import { editor } from 'monaco-editor';
 import { Monaco } from '@monaco-editor/react';
-import { WebrtcProvider } from 'y-webrtc';
 
 export class MonacoController {
   yDoc: Y.Doc;
-  provider: WebsocketProvider | WebrtcProvider;
-  monacoBinding!: import('y-monaco').MonacoBinding;
+  provider: WebsocketProvider;
+  monacoBinding: MonacoBinding;
   private constructor(
     public monaco: Monaco,
     public editor: editor.IStandaloneCodeEditor,
     public roomId: string,
   ) {
     this.yDoc = new Y.Doc();
-    console.log('roomId', this.roomId);
-    this.provider = new WebsocketProvider('ws://localhost:3004', this.roomId, this.yDoc);
-
-    // this.provider = new WebrtcProvider(this.roomId, this.yDoc);
+    this.provider = new WebsocketProvider(
+      process.env.NEXT_PUBLIC_MONACO_SYNC_WS_URL as string,
+      this.roomId,
+      this.yDoc,
+    );
 
     this.monacoBinding = new MonacoBinding(
       this.monaco,
