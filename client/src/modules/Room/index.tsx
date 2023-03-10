@@ -18,16 +18,16 @@ import { DateTime } from 'luxon';
 import { disconnectSocket } from '@services/lobby';
 
 const Room = () => {
-  const router = useRouter();
+  const { push, query, isReady } = useRouter();
   const [messages, setMessages] = useState<{ user: User; message: string }[]>([]);
   const [notes, setNotes] = useState<{ user: User; message: string }[]>([]);
-  const { challenge } = useChallenge(router.query.challenge as string);
-  const { room } = useRoom(router.query.challenge as string);
+  const { challenge } = useChallenge(query.challenge as string, isReady);
+  const { room } = useRoom(query.challenge as string, isReady);
   const { me } = useMe();
   const [action, setAction] = useState<Action>();
 
   const handleDashboardNavigation = () => {
-    router.push('/');
+    push('/');
   };
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const Room = () => {
         )}
       </div>
       <div className="flex flex-1 flex-col gap-6">
-        {room?.team.id && <Editor roomId={room?.team.id}/>}
+        {room?.team.id && <Editor roomId={room?.team.id} />}
         {challenge?.problem && room?.team && (
           <Submission
             action={action}

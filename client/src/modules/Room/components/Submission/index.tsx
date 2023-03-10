@@ -38,8 +38,8 @@ const Submission: FC<SubmissionProps> = ({
   const [result, setResult] = useState<SubmissionResult>();
   const [actionLoading, setActionLoading] = useState(false);
 
-  const { query } = useRouter();
-  const { room } = useRoom(query.challenge as string);
+  const { query, isReady } = useRouter();
+  const { room } = useRoom(query.challenge as string, isReady);
   const { runTrigger, runLoading } = useRun((result) => setResult(result));
   const { submissionTrigger, submissionLoading } = useSubmission((result) => setResult(result));
 

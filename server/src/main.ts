@@ -51,11 +51,29 @@ const createPeerServer = () => {
 const createMonacoSyncServer = (app: INestApplication) => {
   const server = http.createServer(app.getHttpServer());
   const wss = new WebSocketServer({ noServer: true });
-  // wss.on('connection', setupWSConnection);
   server.on('upgrade', (request, socket, head) => {
     const handleAuth = (ws) => {
+      console.log('ws');
       wss.emit('connection', ws, request);
     };
+    wss.on('connection', (cb) => {
+      console.log('connected');
+    });
+    wss.on('close', () => {
+      console.log('close');
+    });
+
+    wss.on('error', (cb) => {
+      console.log('error');
+    });
+
+    wss.on('dc8a1095-56ac-431c-ab14-e159a1709c84', () => {
+      console.log('message');
+    });
+
+    wss.on('C30NPYAmlH65ukyH51elgg==', () => {
+      console.log('message 2');
+    });
     wss.handleUpgrade(request, socket as Socket, head, handleAuth);
   });
   return server;
