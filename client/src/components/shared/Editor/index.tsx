@@ -14,7 +14,6 @@ const Editor: FC<EditorProps> = ({ roomId }) => {
       defaultLanguage="javascript"
       defaultValue="// some comment"
       onMount={async (editor, monaco) => {
-        console.log('onMount monaco', monaco, roomId);
         if (roomId) await MonacoController.init(monaco, editor, roomId);
       }}
       loading={
