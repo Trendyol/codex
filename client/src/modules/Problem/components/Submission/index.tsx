@@ -1,3 +1,4 @@
+import Testcases from '@components/shared/Testcases';
 import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
 import { Testcase } from '@hooks/data/models/types';
@@ -9,7 +10,6 @@ import { cx } from 'class-variance-authority';
 import { FC, useState } from 'react';
 import Spinner from '../../../../components/shared/Spinner';
 import Result from '../Result';
-import Testcases from '../Testcases';
 
 type SubmissionProps = {
   problemId: string;

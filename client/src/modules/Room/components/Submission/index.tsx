@@ -1,3 +1,4 @@
+import Testcases from '@components/shared/Testcases';
 import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
 import { useRoom } from '@hooks/data';
@@ -14,7 +15,6 @@ import { useRouter } from 'next/router';
 import { FC, useEffect, useState } from 'react';
 import Spinner from '../../../../components/shared/Spinner';
 import Result from '../Result';
-import Testcases from '../Testcases';
 
 type SubmissionProps = {
   problemId: string;
