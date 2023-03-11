@@ -22,19 +22,21 @@ const Video: FC<VideoProps> = () => {
   const peerInstance = useRef<Peer>();
   const videoRef = useRef<any>(null);
   const remoteVideoRefs = useRef<VideoRef>({});
+  const hasInitialized = useRef(false);
   const participants = room?.team.participants.filter((participant) => participant.id !== me?.id);
   const [muteVideo, setMuteVideo] = useState(false);
   const [muteAudio, setMuteAudio] = useState(false);
 
   useEffect(() => {
-    if (!me || !room || !participants) return;
+    if (!me || !room || !participants || peerInstance.current || hasInitialized.current) return;
 
     (async () => {
+      hasInitialized.current = true;
       const { Peer } = await import('peerjs');
       const peer = new Peer(me.id, {
-        host: 'localhost',
+        host: process.env.NEXT_PUBLIC_PEERJS_HOST,
         path: '/peerjs',
-        port: 4001,
+        port: Number(process.env.NEXT_PUBLIC_PEERJS_URL),
       });
       peerInstance.current = peer;
       peer.on('error', (error: Error) => {});
@@ -60,6 +62,12 @@ const Video: FC<VideoProps> = () => {
       });
     })();
   }, [me, room, participants]);
+
+  useEffect(() => {
+    return () => {
+      peerInstance.current?.destroy();
+    };
+  }, []);
 
   const call = (remotePeerId: string) => {
     const getUserMedia =

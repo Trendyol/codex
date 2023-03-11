@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import MonacoEditor from '@monaco-editor/react';
 import Spinner from '@components/shared/Spinner';
 import { MonacoController } from '@utils/monaco/monaco.service';
@@ -15,6 +15,10 @@ const Editor: FC<EditorProps> = ({ roomId, onChange, defaultValue }) => {
     const editorValue = editor.getValue();
     if (!editorValue && defaultValue) editor.setValue(defaultValue);
   };
+
+  useEffect(() => {
+    return () => MonacoController.dispose();
+  });
 
   return (
     <MonacoEditor

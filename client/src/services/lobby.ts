@@ -12,6 +12,8 @@ export const joinLobby = (
   messageCallback: (user: User, message: string) => any,
   changeStatusCallback: () => any,
 ) => {
+  socket.connect();
+
   socket.emit('join_lobby', { lobbyId, participantId });
 
   socket.on('joined_lobby', (activeParticipants) => {
