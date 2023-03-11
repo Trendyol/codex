@@ -50,7 +50,7 @@ const Header = () => {
               placeholder="Search..."
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearch(e)}
             />
-            <Button onClick={() => handleSearchClick()} className="hidden sm:block">
+            <Button onClick={() => handleSearchClick()} className="hidden sm:block bg-primary-300">
               <FaSearch />
             </Button>
           </div>
