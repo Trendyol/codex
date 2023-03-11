@@ -13,7 +13,7 @@ import Testcases from '../Testcases';
 
 type SubmissionProps = {
   problemId: string;
-  code: string;
+  code?: string;
   language: Language;
 };
 

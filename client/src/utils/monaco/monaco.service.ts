@@ -8,10 +8,13 @@ export class MonacoController {
   yDoc: Y.Doc;
   provider: WebsocketProvider;
   monacoBinding: MonacoBinding;
+
   private constructor(
     public monaco: Monaco,
     public editor: editor.IStandaloneCodeEditor,
     public roomId: string,
+
+    onSynced: () => void,
   ) {
     this.yDoc = new Y.Doc();
     this.provider = new WebsocketProvider(
@@ -29,10 +32,17 @@ export class MonacoController {
     );
 
     this.provider.shouldConnect && this.provider.connect();
+
+    this.provider.on('synced', () => onSynced?.());
   }
 
   private static instance: MonacoController;
-  static async init(monaco: Monaco, editorDiv: editor.IStandaloneCodeEditor, roomId: string) {
+  static async init(
+    monaco: Monaco,
+    editorDiv: editor.IStandaloneCodeEditor,
+    roomId: string,
+    onSynced: () => void,
+  ) {
     if (MonacoController.instance) return;
     if (!window.MonacoEnvironment) window.MonacoEnvironment = {};
     window.MonacoEnvironment.getWorkerUrl = (_moduleId: string, label: string) => {
@@ -42,7 +52,7 @@ export class MonacoController {
       if (label === 'typescript' || label === 'javascript') return '/_next/static/ts.worker.js';
       return '/_next/static/editor.worker.js';
     };
-    MonacoController.instance = new MonacoController(monaco, editorDiv, roomId);
+    MonacoController.instance = new MonacoController(monaco, editorDiv, roomId, onSynced);
   }
   static getInstance() {
     if (MonacoController.instance) {

@@ -12,6 +12,7 @@ const badgeVariants = cva('text-xs font-medium mr-2 w-fit rounded', {
       1: ['bg-green-100', 'text-green-800'],
       2: ['bg-yellow-100', 'text-yellow-800'],
       3: ['bg-red-100', 'text-red-800'],
+      4: ['bg-blue-100', 'text-blue-800'],
     },
     size: {
       small: ['text-xs', ' px-2.5', 'py-0.5'],

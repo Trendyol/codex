@@ -22,4 +22,13 @@ export class ProblemService {
 
     return problem;
   }
+
+  async findDefaultCode(id: string, language: number) {
+    const problem = await this.dataService.problems.findById(id);
+    const defaultCode = problem.defaultCodes.find(
+      (defaultCode) => defaultCode.language == language,
+    ).defaultCode;
+
+    return defaultCode;
+  }
 }

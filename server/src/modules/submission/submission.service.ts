@@ -3,7 +3,6 @@ import { IDataService } from '@core/data/services/data.service';
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 
-import { RoomGateway } from '../room/room.gateway';
 import { SubmissionStatus, SubmissionTypes } from './models/enums';
 
 type SubmissionResult = {
@@ -18,17 +17,16 @@ type SubmissionResult = {
 };
 @Injectable()
 export class SubmissionService {
-  constructor(
-    private readonly dataService: IDataService,
-    private readonly roomGateway: RoomGateway,
-  ) {}
+  constructor(private readonly dataService: IDataService) {}
   async run(code: string, language: number, testcaseId: string) {
     const { stdin, expected_output } = await this.dataService.testcases.findById(testcaseId);
     const result = await this.execute(code, language, stdin, expected_output);
+    const passed = result.status.id == SubmissionStatus.Accepted;
+
     return {
       ...result,
       status: result.status.id,
-      passedTestcases: 1,
+      passedTestcases: passed ? 1 : 0,
       totalTestcases: 1,
       type: SubmissionTypes.Run,
     };
@@ -45,39 +43,25 @@ export class SubmissionService {
     // TODO: If team and challenge parameters are provided, check that the team and the challenge are valid
     const testcases = await this.dataService.testcases.find({ problemId });
     let passedTestcases = 0;
-    let totalRuntime = 0;
-    let totalMemory = 0;
+    let runtime = 0;
+    let memory = 0;
+    let status = 0;
     const date = new Date();
+    let latestTestcaseResult: SubmissionResult;
 
     for (const { stdin, expected_output } of testcases) {
       const result = await this.execute(code, language, stdin, expected_output);
-      totalRuntime += result.runtime;
-      totalMemory += result.memory;
 
-      if (result.status.id !== SubmissionStatus.Accepted) {
-        this.dataService.submissions.create({
-          code,
-          userId,
-          problemId,
-          teamId,
-          challengeId,
-          date,
-          status: result.status.id,
-        });
+      runtime += result.time;
+      memory += result.memory;
+      status = result.status.id;
 
-        return {
-          ...result,
-          status: result.status.id,
-          passedTestcases,
-          totalTestcases: testcases.length,
-          type: SubmissionTypes.Submission,
-        };
-      }
+      latestTestcaseResult = result;
+      const passed = status == SubmissionStatus.Accepted;
+      if (!passed) break;
+
       passedTestcases++;
     }
-
-    const runtime = totalRuntime / testcases.length;
-    const memory = totalMemory / testcases.length;
 
     this.dataService.submissions.create({
       code,
@@ -87,17 +71,18 @@ export class SubmissionService {
       challengeId,
       runtime,
       memory,
+      status,
       date,
-      status: SubmissionStatus.Accepted,
     });
 
     return {
-      status: SubmissionStatus.Accepted,
-      type: SubmissionTypes.Submission,
+      ...latestTestcaseResult,
+      status,
       passedTestcases,
-      totalTestcases: testcases.length,
       runtime,
       memory,
+      totalTestcases: testcases.length,
+      type: SubmissionTypes.Submission,
     };
   }
 
@@ -121,19 +106,14 @@ export class SubmissionService {
         data,
       };
 
-      const { time, memory, status, created_at, stdout } = (await axios.request(options))
-        .data as SubmissionResult;
+      const result = (await axios.request(options)).data as SubmissionResult;
 
       return {
-        memory,
+        ...result,
         language,
         code,
         stdin,
         expected_output,
-        status,
-        stdout,
-        created_at,
-        runtime: time,
       };
     } catch (error) {
       console.error(error);
