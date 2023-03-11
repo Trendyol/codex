@@ -1,8 +1,8 @@
 import useMutation from 'swr/mutation';
 import axios from 'axios';
+import { encodeBase64 } from '@utils/converter';
 
 export const useSubmission = (successCallback?: (data: any) => void) => {
-  const code = 'Y29uc29sZS5sb2coIkhpIGFsbCIpOw==';
   const { trigger, isMutating, data } = useMutation(
     'submission',
     (_, { arg }) => {
@@ -12,7 +12,7 @@ export const useSubmission = (successCallback?: (data: any) => void) => {
       }
 
       return axios.post(url, {
-        code: code || arg.code,
+        code: encodeBase64(arg.code),
         language: arg.language,
         team: arg.team,
       });

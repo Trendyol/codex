@@ -28,4 +28,10 @@ export class ProblemController {
   findAll() {
     return this.problemService.findAll();
   }
+
+  @Get(':id/default-code/:language')
+  @UseGuards(JwtGuard)
+  findDefaultCode(@Param('id') id: string, @Param('language') language: number) {
+    return this.problemService.findDefaultCode(id, language);
+  }
 }

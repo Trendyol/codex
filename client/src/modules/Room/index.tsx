@@ -1,7 +1,6 @@
 import Chat from '@components/shared/Chat';
 import Countdown from '@components/shared/Countdown';
 import Description from '@components/shared/Description';
-import Editor from '@components/shared/Editor';
 import TabsGroup from '@components/shared/TabsGroup';
 import { useChallenge, useRoom } from '@hooks/data';
 import { User } from '@hooks/data/models/types';
@@ -16,6 +15,9 @@ import Video from './components/Video';
 import { Action } from './models/types';
 import { DateTime } from 'luxon';
 import { disconnectSocket } from '@services/lobby';
+import { useDefaultCode } from '@hooks/data/useDefaultCode';
+import { decodeBase64 } from '@utils/converter';
+import Editor from '@components/shared/Editor';
 
 const Room = () => {
   const { push, query, isReady } = useRouter();
@@ -23,11 +25,17 @@ const Room = () => {
   const [notes, setNotes] = useState<{ user: User; message: string }[]>([]);
   const { challenge } = useChallenge(query.challenge as string, isReady);
   const { room } = useRoom(query.challenge as string, isReady);
+  const { defaultCode } = useDefaultCode(challenge?.problem.id, 3, !!challenge?.problem.id);
   const { me } = useMe();
   const [action, setAction] = useState<Action>();
+  const [code, setCode] = useState<string>();
 
   const handleDashboardNavigation = () => {
     push('/');
+  };
+
+  const handleCodeChange = (code?: string) => {
+    setCode(code);
   };
 
   useEffect(() => {
@@ -64,14 +72,20 @@ const Room = () => {
         )}
       </div>
       <div className="flex flex-1 flex-col gap-6">
-        {room?.team.id && <Editor roomId={room?.team.id} />}
+        {room?.team.id && defaultCode && (
+          <Editor
+            roomId={room?.team.id}
+            onChange={handleCodeChange}
+            defaultValue={decodeBase64(defaultCode)}
+          />
+        )}
         {challenge?.problem && room?.team && (
           <Submission
             action={action}
             problemId={challenge?.problem.id}
             challengeId={challenge?.id}
             teamId={room?.team.id}
-            code=""
+            code={code}
             language={Language.javascript}
           />
         )}

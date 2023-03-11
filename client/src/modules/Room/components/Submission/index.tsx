@@ -20,8 +20,8 @@ type SubmissionProps = {
   problemId: string;
   challengeId: string;
   teamId: string;
-  code: string;
   language: Language;
+  code?: string;
   action?: Action;
 };
 

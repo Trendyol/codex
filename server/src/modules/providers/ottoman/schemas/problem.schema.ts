@@ -3,5 +3,6 @@ import { Schema } from 'ottoman';
 export const problemSchema = new Schema({
   title: String,
   content: String,
-  difficulty: Number
+  difficulty: Number,
+  defaultCodes: [{ type: Object }],
 });
