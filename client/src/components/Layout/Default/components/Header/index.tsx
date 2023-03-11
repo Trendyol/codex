@@ -8,6 +8,7 @@ import { User } from '@hooks/data/models/types';
 import { useSearch } from '@hooks/data/useSearch';
 import { useState } from 'react';
 import { useDebounce } from 'react-use';
+import { FaSearch } from 'react-icons/fa';
 
 const Header = () => {
   const [search, setSearch] = useState<string>('');
@@ -27,19 +28,34 @@ const Header = () => {
     [search],
   );
 
+  // when click handleSearchClick go to search page
+  const handleSearchClick = () => {
+    cancel();
+    if (search) {
+      window.location.href = `/search?query=${search}`;
+    } else {
+      window.location.href = `/search`;
+    }
+  };
+
   return (
     <div className="sticky top-0 z-50 flex h-header w-full items-center justify-between gap-5 border-b bg-white px-8 md:px-4">
-      <div className="flex items-center ">
-        <Logo />
+      <Logo />
+      <div className="flex items-center">
+        {/* <ThemeToggle /> */}
         <div className="relative">
-          <div className="w-[440px] lg:w-[300px] md:w-[260px] sm:w-[140px] xs:w-[90px]">
+          <div className="w-[440px] lg:w-[300px] md:w-[260px] sm:w-[60px]">
             <Input
+              className="sm:hidden"
               placeholder="Search..."
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearch(e)}
             />
+            <Button onClick={() => handleSearchClick()} className="hidden sm:block">
+              <FaSearch />
+            </Button>
           </div>
           {users?.length > 0 && (
-            <div className="absolute mt-1 flex w-[440px] flex-col rounded border shadow-lg lg:w-[300px] md:w-[260px] sm:w-[140px] xs:w-[90px]">
+            <div className="absolute mt-1 flex w-[440px] flex-col rounded border shadow-lg lg:w-[300px] md:w-[260px] sm:hidden">
               {users?.map((user: User) => (
                 <Avatar
                   key={user.id}
@@ -47,17 +63,13 @@ const Header = () => {
                   name={user.name}
                   avatar={user.avatar}
                   points={user.points}
-                  truncate
                 />
               ))}
             </div>
           )}
         </div>
-      </div>
-      <div className="flex items-center">
-        {/* <ThemeToggle /> */}
         {me ? (
-          <Avatar id={me.id} name={me.name} avatar={me.avatar} points={me.points} truncate />
+          <Avatar id={me.id} name={me.name} avatar={me.avatar} points={me.points} hideText />
         ) : (
           <>
             <Link href={'/login'}>
