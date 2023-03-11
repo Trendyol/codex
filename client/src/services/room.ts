@@ -11,6 +11,8 @@ export const joinRoom = (
   messageCallback: (user: User, message: string) => void,
   actionCallback: (user: User, key: ActionTypes, data?: any) => void,
 ) => {
+  socket.connect();
+
   socket.emit('join_room', { roomId });
 
   socket.on('message_room', ({ user, message }) => {

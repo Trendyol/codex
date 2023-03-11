@@ -46,9 +46,11 @@ const Room = () => {
       (user, message) => setMessages((messages) => [...messages, { user, message }]),
       (_, key, data) => setAction({ key, data }),
     );
-
-    return () => disconnectSocket();
   }, [room, me]);
+
+  useEffect(() => {
+    return () => disconnectSocket();
+  }, []);
 
   const countdownDate = useMemo(
     () =>

@@ -32,9 +32,11 @@ const Lobby = () => {
       (user, message) => setMessages((messages) => [...messages, { user, message }]),
       () => handleRoomNavigation(),
     );
-
-    return () => disconnectSocket();
   }, [lobby, me]);
+
+  useEffect(() => {
+    return () => disconnectSocket();
+  }, []);
 
   return (
     <div className="flex h-[calc(100vh-94px)] gap-6 pb-6">

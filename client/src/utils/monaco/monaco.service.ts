@@ -36,7 +36,7 @@ export class MonacoController {
     this.provider.on('synced', () => onSynced?.());
   }
 
-  private static instance: MonacoController;
+  private static instance?: MonacoController;
   static async init(
     monaco: Monaco,
     editorDiv: editor.IStandaloneCodeEditor,
@@ -59,5 +59,9 @@ export class MonacoController {
       return MonacoController.instance;
     }
     throw new Error('Cannot get uninitialized MonacoController!');
+  }
+
+  static dispose() {
+    MonacoController.instance = undefined;
   }
 }
