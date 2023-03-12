@@ -31,7 +31,7 @@ const Search = () => {
         />
       </div>
       <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-4 w-[440px] lg:w-[300px] md:w-[260px]">
+        <div className="flex items-center flex-col gap-4 w-[440px] lg:w-[300px] md:w-[260px] mt-2">
           {users?.map((user: any) => (
             <Avatar
               key={user.id}

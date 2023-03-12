@@ -40,9 +40,8 @@ const Header = () => {
 
   return (
     <div className="sticky top-0 z-50 flex h-header w-full items-center justify-between gap-5 border-b bg-white px-8 md:px-4">
-      <Logo />
-      <div className="flex items-center">
-        {/* <ThemeToggle /> */}
+      <div className="item-center flex">
+        <Logo />
         <div className="relative">
           <div className="w-[440px] lg:w-[300px] md:w-[260px] sm:w-[60px]">
             <Input
@@ -50,12 +49,9 @@ const Header = () => {
               placeholder="Search..."
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearch(e)}
             />
-            <Button onClick={() => handleSearchClick()} className="hidden sm:block bg-primary-300">
-              <FaSearch />
-            </Button>
           </div>
           {users?.length > 0 && (
-            <div className="absolute mt-1 flex w-[440px] flex-col rounded border shadow-lg lg:w-[300px] md:w-[260px] sm:hidden">
+            <div className="absolute mt-1 flex w-[440px] flex-col rounded border shadow-lg bg-white lg:w-[300px] md:w-[260px] sm:hidden">
               {users?.map((user: User) => (
                 <Avatar
                   key={user.id}
@@ -68,6 +64,13 @@ const Header = () => {
             </div>
           )}
         </div>
+      </div>
+
+      <div className="flex items-center gap-2">
+        {/* <ThemeToggle /> */}
+        <Button onClick={() => handleSearchClick()} className="hidden bg-primary-300 sm:block pl-3 pr-3">
+          <FaSearch />
+        </Button>
         {me ? (
           <Avatar id={me.id} name={me.name} avatar={me.avatar} points={me.points} hideText />
         ) : (
