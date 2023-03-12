@@ -16,7 +16,7 @@ const Leaderboard = () => {
   return (
     <>
       <div className="flex flex-1 gap-6">
-        <Card className="h-fit min-h-[600px] overflow-x-auto rounded-xl">
+        <Card className="h-fit min-h-[600px] overflow-x-auto rounded-lg">
           <div className="text-xl font-semibold text-primary-400">Leaderboard</div>
           <div className="mt-3 flex flex-col gap-4">
             {users.map((user: User) => (

@@ -6,10 +6,10 @@ import { useMe, useProblem } from '@hooks/data';
 import { Language } from '@models/enums';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import Submissions from './components/Submissions';
 import Editor from '@components/shared/Editor';
 import { decodeBase64 } from '@utils/converter';
 import { useDefaultCode } from '@hooks/data/useDefaultCode';
+import Submissions from '@components/shared/Submissions';
 
 const Problem = () => {
   const [notes, setNotes] = useState<{ message: string }[]>([]);

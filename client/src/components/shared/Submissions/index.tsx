@@ -6,18 +6,17 @@ import { FC } from 'react';
 
 type SubmissionsProps = {
   problemId: string;
-  teamId: string;
+  teamId?: string;
 };
 
 const Submissions: FC<SubmissionsProps> = ({ problemId, teamId }) => {
   const { submissions } = useSubmissions(problemId, teamId);
-
   return (
     <div className="flex flex-1 flex-col">
       {submissions?.map(({ id, status, date, runtime, memory }) => {
         const accepted = status == SubmissionStatus.Accepted;
         return (
-          <div className="w-full border-b p-2" key={id}>
+          <div className="w-full border-b border-border p-2" key={id}>
             <div className={cx('flex text-lg', accepted ? 'text-success' : 'text-error')}>
               {accepted ? 'Accepted' : 'Wrong Answer'}
             </div>

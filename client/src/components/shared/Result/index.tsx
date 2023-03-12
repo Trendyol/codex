@@ -29,17 +29,17 @@ const Result: FC<ResultProps> = ({ result }) => {
 
   return (
     <div>
-      <div className={cx('h-[32px] text-lg', accepted ? 'text-green-400' : 'text-red-600')}>
+      <div className={cx('h-[32px] text-lg', accepted ? 'text-success' : 'text-error')}>
         <span>{accepted ? 'Accepted' : 'Wrong Answer'}</span>
         <span className="ml-1 text-xs">{isRun && '(Testcase)'}</span>
-        <span className="ml-2 text-xs text-gray-500">
-          <span className="text-gray-800">{runtime}</span> seconds
+        <span className="ml-2 text-xs text-secondary-100">
+          <span className="text-secondary-200">{runtime}</span> seconds
         </span>
-        <span className="ml-2 text-xs text-gray-500">
-          <span className="text-gray-800">{memory}</span> kb
+        <span className="ml-2 text-xs text-secondary-100">
+          <span className="text-secondary-200">{memory}</span> kb
         </span>
-        <span className="ml-2 text-xs text-gray-500">
-          <span className="mr-1 text-gray-800">
+        <span className="ml-2 text-xs text-secondary-100">
+          <span className="mr-1 text-secondary-200">
             {passedTestcases}/{totalTestcases}
           </span>
           testcases passed
@@ -56,16 +56,16 @@ const Result: FC<ResultProps> = ({ result }) => {
       {showValues && (
         <div className="mt-3 h-[100px] overflow-auto">
           <div>
-            <div className="mb-1 text-xs text-black">Input</div>
-            <div className="rounded-md bg-gray-50 px-2 py-1 text-sm">{decodeBase64(stdin)}</div>
+            <div className="mb-1 text-xs">Input</div>
+            <div className="rounded-md bg-background-50 px-2 py-1 text-sm">{decodeBase64(stdin)}</div>
           </div>
           <div className="mt-2">
-            <div className="mb-1 text-xs text-black">Output</div>
-            <div className="rounded-md bg-gray-50 px-2 py-1 text-sm">{decodeBase64(stdout)}</div>
+            <div className="mb-1 text-xs">Output</div>
+            <div className="rounded-md bg-background-50 px-2 py-1 text-sm">{decodeBase64(stdout)}</div>
           </div>
           <div className="mt-2">
-            <div className="mb-1 text-xs text-black">Expected Output</div>
-            <div className="rounded-md bg-gray-50 px-2 py-1 text-sm">
+            <div className="mb-1 text-xs">Expected Output</div>
+            <div className="rounded-md bg-background-50 px-2 py-1 text-sm">
               {decodeBase64(expected_output)}
             </div>
           </div>

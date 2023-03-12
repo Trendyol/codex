@@ -14,7 +14,7 @@ const User = () => {
 
   return (
     <div className="flex gap-6">
-      <div className="flex flex-1 flex-col space-y-4">
+      <div className="flex flex-1 flex-col space-y-4 overflow-x-auto">
         <Lore onShowUpdatePopup={handleShowUpdatePopup} />
         <Challenges />
         {/* <Questions /> */}

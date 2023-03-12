@@ -10,7 +10,7 @@ const Question = () => {
   if (!challenge) return <></>;
 
   return (
-    <Card className="rounded-xl overflow-hidden h-fit min-h-[300px]">
+    <Card className="rounded-lg overflow-hidden h-fit min-h-[300px]">
       <div className="text-2xl font-semibold">Question</div>
       <div className="space-y-4 text-lg mb-2 mt-3 font-semibold">Two Sum</div>
       <div className="text-secondary-200">

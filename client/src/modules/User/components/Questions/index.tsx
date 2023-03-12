@@ -6,7 +6,7 @@ const challengeTableFields: Partial<keyof Challenge>[] = ['name', 'score', 'rank
 
 const Questions = () => {
   return (
-    <Card className="p-0 rounded-xl overflow-x-auto h-fit min-h-[300px] ">
+    <Card className="p-0 rounded-lg overflow-x-auto h-fit min-h-[300px] ">
       <div className="p-8 relative">
         <div className="text-2xl font-semibold">Questions</div>
       </div>

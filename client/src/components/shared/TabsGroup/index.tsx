@@ -11,7 +11,7 @@ const TabsGroup: FC<TabsProps> = ({ children, tabs, className }) => {
   const [activeTab, setActiveTab] = useState<number>(0);
 
   return (
-    <div className={cx('flex flex-1 flex-col overflow-auto rounded-lg border bg-white', className)}>
+    <div className={cx('flex flex-1 flex-col overflow-auto rounded-lg border border-border bg-background-200', className)}>
       <div className="flex items-center">
         {tabs.map((tab, index) => (
           <div
