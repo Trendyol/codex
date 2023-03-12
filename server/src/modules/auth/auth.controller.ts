@@ -7,6 +7,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
 import { GoogleGuard } from './guards/google.guard';
+import { JwtGuard } from './guards/jwt.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -19,6 +20,13 @@ export class AuthController {
     const token = await this.authService.handleAuth(user);
 
     response.cookie(ACCESS_TOKEN, token, { httpOnly: true });
+    return response.redirect(config.redirectUrl);
+  }
+
+  @Get('logout')
+  @UseGuards(JwtGuard)
+  async logout(@Res() response) {
+    response.clearCookie(ACCESS_TOKEN);
     return response.redirect(config.redirectUrl);
   }
 }
