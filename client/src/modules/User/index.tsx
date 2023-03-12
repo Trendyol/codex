@@ -19,7 +19,7 @@ const User = () => {
         <Challenges />
         {/* <Questions /> */}
       </div>
-      <div className="flex w-sidebar flex-shrink-0 flex-col gap-4 xl:w-[270px] md:hidden">
+      <div className="flex flex-col gap-6 flex-shrink-0 w-sidebar xl:w-[270px] md:hidden">
         <Leaderboard />
         <Community />
         <Suggestion />
