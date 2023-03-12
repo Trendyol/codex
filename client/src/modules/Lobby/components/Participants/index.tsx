@@ -1,12 +1,12 @@
 import Card from '@components/ui/Card';
 import { User } from '@hooks/data/models/types';
 import Image from 'next/image';
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { Tooltip } from 'flowbite-react';
 import { cx } from 'class-variance-authority';
 import { MAX_PARTICIPANT_DISPLAY } from '@modules/Lobby/models/constants';
 import { useRouter } from 'next/router';
-import { useChallenge } from '@hooks/data';
+import { ThemeContext } from '@contexts/ThemeContext';
 
 type ParticipantsProps = {
   activeParticipants: User[];
@@ -14,7 +14,7 @@ type ParticipantsProps = {
 
 const Participants: FC<ParticipantsProps> = ({ activeParticipants }) => {
   const router = useRouter();
-  const { challenge } = useChallenge(router.query.challenge as string);
+  const { theme } = useContext(ThemeContext);
 
   const [expand, setExpand] = useState(false);
   const [delayHandler, setDelayHandler] = useState<NodeJS.Timeout>();
@@ -34,11 +34,11 @@ const Participants: FC<ParticipantsProps> = ({ activeParticipants }) => {
 
   return (
     <Card>
-      <div className="mb-3 text-md text-primary-500 font-semibold">
+      <div className="text-md mb-3 font-semibold text-primary-500">
         Participants ({activeParticipants.length}/60)
       </div>
       <div
-        className="-space-x-4 h-14"
+        className="h-14 -space-x-4"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -48,16 +48,16 @@ const Participants: FC<ParticipantsProps> = ({ activeParticipants }) => {
             .map(({ id, name, avatar }) => (
               <div key={id} className="shrink-0 overflow-scroll hover:z-50">
                 <Tooltip
-                  style="light"
+                  style={theme}
                   content={
                     <div>
-                      <div className="text-sm text-primary-500 font-semibold">{name}</div>
-                      <div className="text-xs text-secondary-100 font-normal">360 Points</div>
+                      <div className="text-sm font-semibold text-primary-500">{name}</div>
+                      <div className="text-xs font-normal text-secondary-100">360 Points</div>
                     </div>
                   }
                 >
                   <Image
-                    className={cx('border-2 border-white rounded-full')}
+                    className={cx('rounded-full border-2 border-border')}
                     alt={name}
                     src={avatar}
                     width={56}
@@ -67,7 +67,7 @@ const Participants: FC<ParticipantsProps> = ({ activeParticipants }) => {
               </div>
             ))}
           {!expand && activeParticipants.length > MAX_PARTICIPANT_DISPLAY && (
-            <div className="flex items-center justify-center w-14 h-14 text-xs font-medium text-white bg-gray-700 border-2 border-white rounded-full">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-border bg-gray-700 text-xs font-medium text-white">
               +99
             </div>
           )}

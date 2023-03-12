@@ -9,11 +9,11 @@ type ButtonProps = {
   disabled?: boolean;
 } & VariantProps<typeof buttonVariants>;
 
-const buttonVariants = cva('text-center font-medium box-border', {
+const buttonVariants = cva('text-center font-medium box-border border-border', {
   variants: {
     intent: {
       primary: ['bg-primary-100', 'hover:bg-primary-200', 'text-white'],
-      secondary: ['bg-white', 'border', 'border-gray-400', 'hover:bg-gray-100'],
+      secondary: ['bg-background-200', 'border', 'border-secondary-100', 'hover:bg-background-50', ,],
     },
     size: {
       small: ['text-sm', 'py-2 h-[36px]', 'px-3', 'rounded-lg'],

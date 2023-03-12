@@ -12,7 +12,7 @@ const Placement = () => {
   if (!challenge) return <></>;
 
   return (
-    <Card className="rounded-xl overflow-hidden h-fit min-h-[400px]">
+    <Card className="rounded-lg overflow-hidden h-fit min-h-[400px]">
       <div className="text-2xl font-semibold">Placements</div>
       <div className="mt-3 space-y-4">
         {mockPlacements.map(({ id, participants }, index) => {

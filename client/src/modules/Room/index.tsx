@@ -10,7 +10,6 @@ import { joinRoom, sendMessage } from '@services/room';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import Submission from './components/Submission';
-import Submissions from './components/Submissions';
 import Video from './components/Video';
 import { Action } from './models/types';
 import { DateTime } from 'luxon';
@@ -18,6 +17,7 @@ import { disconnectSocket } from '@services/lobby';
 import { useDefaultCode } from '@hooks/data/useDefaultCode';
 import { decodeBase64 } from '@utils/converter';
 import Editor from '@components/shared/Editor';
+import Submissions from '@components/shared/Submissions';
 
 const Room = () => {
   const { push, query, isReady } = useRouter();

@@ -16,11 +16,11 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({
   collapsed = false,
 }) => {
   return (
-    <div className="min-h-screen w-full bg-background">
+    <div className="min-h-screen w-full bg-background-100 text-text">
       {showHeader && <Header />}
       <div className="flex">
         {showSidebar && <Sidebar collapsed={collapsed} />}
-        <div className="mt-6 flex-1 px-6 md:px-4">{children}</div>
+        <div className="mt-6 flex-1 px-6 md:px-4 overflow-x-auto">{children}</div>
       </div>
     </div>
   );

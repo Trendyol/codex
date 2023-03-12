@@ -1,4 +1,3 @@
-import Avatar from '@components/ui/Avatar';
 import { User } from '@hooks/data/models/types';
 import Image from 'next/image';
 import { FC } from 'react';
@@ -11,7 +10,7 @@ type MessageProps = {
 const Message: FC<MessageProps> = ({ user, message }) => {
   const { name, avatar } = user || {};
   return (
-    <div className="flex rounded-md bg-gray-50 p-2">
+    <div className="flex rounded-md bg-background-50 p-2">
       {avatar && (
         <Image className="self-start rounded-md" alt="avatar" width={32} height={32} src={avatar} />
       )}

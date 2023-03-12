@@ -6,10 +6,10 @@ import { FcGoogle } from 'react-icons/fc';
 
 const LoginForm = () => {
   return (
-    <section className="bg-background">
+    <section className="bg-background-100">
       <div className="flex flex-col items-center justify-center px-6 mx-auto h-screen py-0">
-        <div className="flex items-center mb-6 text-4xl font-semibold text-black">Codex</div>
-        <div className="w-full rounded-lg shadow border mt-0 max-w-md p-0 bg-white">
+        <div className="flex items-center mb-6 text-4xl font-semibold text">Codex</div>
+        <div className="w-full rounded-lg shadow border mt-0 max-w-md p-0 bg-background-12">
           <div className="space-y-3 p-8">
             <div className="space-y-6">
               <Input label="Email" type="email" name="email" placeholder="name@company.com" />

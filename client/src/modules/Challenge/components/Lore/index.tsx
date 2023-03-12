@@ -18,7 +18,7 @@ const Lore = () => {
   const formattedDate = DateTime.fromISO(date).toFormat('dd LLL yyyy');
 
   return (
-    <Card className="h-fit min-h-[500px] overflow-hidden rounded-xl p-0" space={false}>
+    <Card className="h-fit min-h-[500px] overflow-hidden rounded-lg p-0" space={false}>
       <div
         className="relative h-48 w-full bg-white"
         style={{ background: randomGradient(challenge.id) }}

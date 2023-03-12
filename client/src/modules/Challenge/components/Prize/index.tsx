@@ -11,7 +11,7 @@ const Prize = () => {
   if (!challenge) return <></>;
 
   return (
-    <Card className="rounded-xl overflow-hidden h-fit min-h-[300px]">
+    <Card className="rounded-lg overflow-hidden h-fit min-h-[300px]">
       <div className="text-2xl font-semibold">Prizes</div>
       <div className="space-y-4 text-lg mt-3 sm:text-sm">
         {mockPrizes.map(({ id, name, points, extra }) => (

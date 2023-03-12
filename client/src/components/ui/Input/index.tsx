@@ -10,15 +10,14 @@ type InputProps = {
 } & VariantProps<typeof inputVariants> &
   React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement>;
 
-const inputVariants = cva('border w-full resize-none', {
+const inputVariants = cva('border border-border w-full resize-none', {
   variants: {
     intent: {
       primary: [
-        'text-gray-900',
-        'border-gray-300',
-        'bg-gray-50',
-        'focus:border-primary-600',
-        'outline-primary-600',
+        'border-secondary-100',
+        'bg-background-100',
+        'focus:border-primary-100',
+        'outline-primary-100',
       ],
       error: [
         'text-red-600',

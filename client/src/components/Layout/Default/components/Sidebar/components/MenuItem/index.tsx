@@ -26,7 +26,7 @@ const MenuItem: FC<MenuItemProps> = ({ path, title, Icon, disabled, collapse }) 
       <div
         className={cx(
           'flex h-[48px] items-center gap-4 rounded-lg  p-3 transition-colors ',
-          isActive ? 'bg-primary-300 text-white' : 'text-primary-300 hover:bg-gray-100',
+          isActive ? 'bg-primary-300 text-white' : 'text-primary-300 hover:bg-background-50',
           disabled ? 'cursor-not-allowed' : '',
           collapse ? 'w-full gap-0 xl:w-full' : 'w-[250px] xl:w-[180px] lg:w-full lg:gap-0',
         )}

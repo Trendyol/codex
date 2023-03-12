@@ -16,7 +16,7 @@ const Sidebar: FC<SidebarProps> = ({ collapsed }) => {
   return (
     <div
       className={cx(
-        'sticky top-[70px] h-[calc(100vh-70px)] flex-shrink-0 bg-white pt-2 lg:px-3',
+        'sticky top-[70px] h-[calc(100vh-70px)] flex-shrink-0 border-r border-border bg-background-200 pt-2 lg:px-3',
         collapsed ? 'px-3' : 'px-6',
       )}
     >

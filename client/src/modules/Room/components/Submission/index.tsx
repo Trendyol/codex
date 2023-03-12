@@ -1,3 +1,4 @@
+import Result from '@components/shared/Result';
 import Testcases from '@components/shared/Testcases';
 import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
@@ -14,7 +15,6 @@ import { cx } from 'class-variance-authority';
 import { useRouter } from 'next/router';
 import { FC, useEffect, useState } from 'react';
 import Spinner from '../../../../components/shared/Spinner';
-import Result from '../Result';
 
 type SubmissionProps = {
   problemId: string;
@@ -102,7 +102,7 @@ const Submission: FC<SubmissionProps> = ({
             disabled={loading}
             onClick={handleActiveSubmissionTabChange}
             className={cx(
-              'absolute top-6 right-6 ml-auto cursor-pointer whitespace-nowrap rounded-xl bg-gray-50 bg-opacity-90 p-2 text-[10px] first-letter:cursor-pointer  hover:bg-gray-200',
+              'absolute top-6 right-6 ml-auto cursor-pointer whitespace-nowrap rounded-lg bg-background-200 bg-opacity-90 p-2 text-[10px] first-letter:cursor-pointer  hover:bg-background-100',
               loading ? 'cursor-not-allowed opacity-60' : '',
             )}
           >

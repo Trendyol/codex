@@ -9,7 +9,7 @@ const Practice = () => {
     <>
       <div className="flex gap-6 flex-1">
         <Problems />
-        <div className="flex flex-col gap-4 flex-shrink-0 w-sidebar xl:w-[270px] md:hidden">
+        <div className="flex flex-col gap-6 flex-shrink-0 w-sidebar xl:w-[270px] md:hidden">
           <Leaderboard />
           <Community />
           <Suggestion />

@@ -17,7 +17,7 @@ const Avatar: FC<AvatarProps> = ({ id, name, avatar, points, truncate, className
     <Link
       href={`/user/${id}`}
       className={cx(
-        'flex items-center gap-4 w-full hover:bg-gray-100 p-2 cursor-pointer rounded-md text-ellipsis overflow-hidden',
+        'flex items-center gap-4 w-full hover:bg-background-50 p-2 cursor-pointer rounded-md text-ellipsis overflow-hidden',
         className,
       )}
     >
