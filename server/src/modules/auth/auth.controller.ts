@@ -27,6 +27,6 @@ export class AuthController {
   @UseGuards(JwtGuard)
   async logout(@Res() response) {
     response.clearCookie(ACCESS_TOKEN);
-    return response.redirect(config.redirectUrl);
+    return response.send().status(200);
   }
 }
