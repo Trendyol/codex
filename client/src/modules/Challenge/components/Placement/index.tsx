@@ -1,7 +1,6 @@
 import Avatar from '@components/ui/Avatar';
 import Card from '@components/ui/Card';
 import { useChallenge } from '@hooks/data';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { mockPlacements } from '../../models/constants';
 

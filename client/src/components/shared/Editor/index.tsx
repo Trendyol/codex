@@ -25,7 +25,7 @@ const Editor: FC<EditorProps> = ({ roomId, onChange, defaultValue }) => {
 
   const editorTheme = theme === 'light' ? 'vs' : 'dark';
 
-  const darkTheme = {
+  const darkTheme: editor.IStandaloneThemeData = {
     base: 'vs-dark',
     inherit: true,
     rules: [],
@@ -33,6 +33,7 @@ const Editor: FC<EditorProps> = ({ roomId, onChange, defaultValue }) => {
       'editor.background': '#0E1116',
     },
   };
+
   return (
     <MonacoEditor
       className="flex flex-1 overflow-hidden rounded-lg border border-border bg-white"

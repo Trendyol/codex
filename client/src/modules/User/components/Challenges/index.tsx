@@ -3,9 +3,9 @@ import { challengeTableFields, mockChallenges } from '@modules/User/models/const
 
 const Challenges = () => {
   return (
-    <Card className="rounded-lg overflow-x-auto min-h-[250px]">
+    <Card className="min-h-[250px] overflow-x-auto rounded-lg">
       <div className="text-2xl font-semibold">Challenges</div>
-      <table className="w-full overflow-x-scroll text-sm text-left mt-3">
+      <table className="mt-3 w-full overflow-x-scroll text-left text-sm">
         <thead className="text-xs uppercase">
           <tr>
             {challengeTableFields.map((field) => (
@@ -16,13 +16,13 @@ const Challenges = () => {
           </tr>
         </thead>
         <tbody>
-          {mockChallenges.map((challenge) => (
+          {mockChallenges.map((challenge: any) => (
             <tr
               key={challenge.id}
-              className="border-t border-border cursor-pointer hover:bg-background-50"
+              className="cursor-pointer border-t border-border hover:bg-background-50"
             >
               {challengeTableFields.map((field) => (
-                <td key={field} className="py-2.5 whitespace-nowrap">
+                <td key={field} className="whitespace-nowrap py-2.5">
                   {challenge[field]}
                 </td>
               ))}

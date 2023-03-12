@@ -17,7 +17,6 @@ const User = () => {
       <div className="flex flex-1 flex-col space-y-4 overflow-x-auto">
         <Lore onShowUpdatePopup={handleShowUpdatePopup} />
         <Challenges />
-        {/* <Questions /> */}
       </div>
       <div className="flex flex-col gap-6 flex-shrink-0 w-sidebar xl:w-[270px] md:hidden">
         <Leaderboard />
