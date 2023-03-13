@@ -38,8 +38,8 @@ export class OttomanQueries {
     return result.rows;
   }
 
-  async findChallengeTeamFinishRanking(challengeId: string) {
-    const result = await this._query(queries.findChallengeTeamFinishRanking, {
+  async findChallengeTeamFinishRankings(challengeId: string) {
+    const result = await this._query(queries.findChallengeTeamFinishRankings, {
       parameters: { CHALLENGE_ID: challengeId },
     });
 
@@ -52,5 +52,24 @@ export class OttomanQueries {
     await this._query(queries.addPointsToUser, {
       parameters: { USER_ID: userId, POINTS: points },
     });
+  }
+
+  async findChallengePlacements(challengeId: string) {
+    const result = await this._query(queries.findChallengePlacements, {
+      parameters: { CHALLENGE_ID: challengeId },
+    });
+
+    const placements = [];
+
+    result.rows.forEach((row) => {
+      const participants = row.participants.map((participant) => participant.default);
+      placements.push({
+        date: row.date,
+        teamId: row.teamId,
+        participants: participants,
+      });
+    });
+
+    return placements;
   }
 }

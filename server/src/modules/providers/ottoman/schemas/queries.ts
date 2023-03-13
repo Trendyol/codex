@@ -91,7 +91,7 @@ SELECT MAX([runtime, teamId])[0] as runtime, MAX([runtime, teamId])[1] as teamId
 where type = 'submission' and challengeId = $CHALLENGE_ID
 group by teamId order by runtime desc limit 3`;
 
-const findChallengeTeamFinishRanking = `
+const findChallengeTeamFinishRankings = `
 SELECT MIN([date, teamId])[0] as date, MIN([date, teamId])[1] as teamId FROM default
 where type = 'submission' and status = 3 and challengeId = $CHALLENGE_ID
 group by teamId order by date asc
@@ -103,10 +103,32 @@ SET points = points + $POINTS
 WHERE type = 'user' and id = $USER_ID
 `;
 
+const findChallengePlacements = `
+SELECT MIN([date, teamId])[0] AS date,
+       MIN([date, teamId])[1] AS teamId,
+       participants
+FROM default q1
+LET team = (
+    SELECT participants
+    FROM default q2
+    WHERE type = 'team'
+        AND id = q1.teamId),
+participants = (
+    SELECT *
+    FROM default  where type = 'user' and id in team[0].participants)
+WHERE type = 'submission'
+    AND status = 3
+    AND challengeId = $CHALLENGE_ID
+GROUP BY teamId,
+         participants
+ORDER BY date ASC
+`;
+
 export const queries = {
   findChallenges,
   findChallenge,
   findWinners,
-  findChallengeTeamFinishRanking,
+  findChallengeTeamFinishRankings,
   addPointsToUser,
+  findChallengePlacements
 };

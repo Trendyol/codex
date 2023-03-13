@@ -45,6 +45,10 @@ export class ChallengeService {
     return await this.dataService.challenges.findById(challengeId);
   }
 
+  async getPlacements(challengeId: string) {
+    return await this.dataService.queries.findChallengePlacements(challengeId);
+  }
+
   async participate(userId: string, challengeId: string) {
     const challenge = await this.dataService.challenges.findById(challengeId);
     const { status, participants } = challenge;
@@ -75,7 +79,7 @@ export class ChallengeService {
 
   private async finishChallenge(challengeId: string) {
     const challenge = await this.dataService.challenges.findById(challengeId);
-    const teamFinishRankings = await this.dataService.queries.findChallengeTeamFinishRanking(
+    const teamFinishRankings = await this.dataService.queries.findChallengeTeamFinishRankings(
       challengeId,
     );
 
