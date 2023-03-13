@@ -37,4 +37,10 @@ export class ChallengeController {
   participate(@User() user: UserEntity, @Param('challengeId') challengeId: string) {
     return this.challengeService.participate(user.id, challengeId);
   }
+
+  @Get(':challengeId/placements')
+  @UseGuards(AnonymousGuard)
+  getPlacements(@Param('challengeId') challengeId: string) {
+    return this.challengeService.getPlacements(challengeId);
+  }
 }

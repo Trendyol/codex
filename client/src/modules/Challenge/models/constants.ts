@@ -88,7 +88,7 @@ export const mockPrizes = [
   },
   {
     id: 3,
-    name: '🏅 4 - 15th Prize',
+    name: '🏅 4 - 14th Prize',
     points: "850 - 300",
   },
   {

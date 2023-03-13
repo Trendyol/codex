@@ -1,28 +1,32 @@
 import Avatar from '@components/ui/Avatar';
 import Card from '@components/ui/Card';
 import { useChallenge } from '@hooks/data';
+import { usePlacements } from '@hooks/data/usePlacements';
+import { DateTime } from 'luxon';
 import { useRouter } from 'next/router';
-import { mockPlacements } from '../../models/constants';
 
 const Placement = () => {
-  const router = useRouter();
-  const { challenge } = useChallenge(router.query.challenge as string);
-
-  if (!challenge) return <></>;
+  const { query, isReady } = useRouter();
+  const { challenge } = useChallenge(query.challenge as string);
+  const { placements } = usePlacements(query.challenge as string, isReady);
+  if (!challenge || !placements || !placements.length) return <></>;
 
   return (
-    <Card className="rounded-lg overflow-hidden h-fit min-h-[400px]">
+    <Card className="h-fit min-h-[400px] overflow-hidden rounded-lg">
       <div className="text-2xl font-semibold">Placements</div>
       <div className="mt-3 space-y-4">
-        {mockPlacements.map(({ id, participants }, index) => {
+        {placements.slice(0, 3).map(({ teamId, participants, date }, index) => {
+          const finishTime = DateTime.fromISO(date)
+            .diff(DateTime.fromISO(challenge.date))
+            .toFormat('hh:mm:ss');
           return (
-            <div key={id}>
-              <div className="font-semibold mb-1 text-primary-400">Team {index + 1} </div>
-              <div className="text-xs mb-2 text-secondary-200">Time: 13:49・Score: 759 </div>
+            <div key={teamId}>
+              <div className="mb-1 font-semibold text-primary-400">Team {index + 1} </div>
+              <div className="mb-2 text-xs text-secondary-200">Time: {finishTime}</div>
               <div className="flex flex-wrap gap-4">
                 {participants.map(({ id, name, avatar, points }) => (
                   <Avatar
-                    className="gap-4 w-52"
+                    className="w-52 gap-4"
                     key={id}
                     id={id}
                     name={name}

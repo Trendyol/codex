@@ -89,3 +89,9 @@ export type Order = {
   order?: string;
   limit?: string;
 };
+
+export type Placement = {
+  date: string;
+  teamId: string;
+  participants: User[];
+};
