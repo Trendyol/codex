@@ -9,6 +9,7 @@ import { CreateChallengeDto } from './dtos/create-challenge.dto';
 import {
   MAX_POINTS,
   MIN_POINTS,
+  PARTICIPANT_POINTS,
   PENDING_DURATION,
   POINTS_GAP,
   STATUS_INTERVAL,
@@ -73,9 +74,14 @@ export class ChallengeService {
   }
 
   private async finishChallenge(challengeId: string) {
+    const challenge = await this.dataService.challenges.findById(challengeId);
     const teamFinishRankings = await this.dataService.queries.findChallengeTeamFinishRanking(
       challengeId,
     );
+
+    for (const userId of challenge.activeParticipants) {
+      await this.addPointsToUser(userId, PARTICIPANT_POINTS);
+    }
 
     let points = MAX_POINTS;
     for (const { teamId } of teamFinishRankings) {
@@ -86,7 +92,7 @@ export class ChallengeService {
   }
 
   private async addPointsToUser(userId: string, points: number) {
-    this.dataService.queries.addPointsToUser(userId, points);
+    await this.dataService.queries.addPointsToUser(userId, points);
   }
 
   @Interval(STATUS_INTERVAL)
