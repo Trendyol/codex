@@ -74,23 +74,22 @@ export const mockPrizes = [
   {
     id: 0,
     name: '🥇 First Prize',
-    points: '3000',
-    extra: 'Airpods second generation',
+    points: 1000,
   },
   {
     id: 1,
     name: '🥈 Second Prize',
-    points: 2500,
+    points: 950,
   },
   {
     id: 2,
     name: '🥉 Third Prize',
-    points: 2000,
+    points: 900,
   },
   {
     id: 3,
-    name: '🏅 4 - 51th Prize',
-    points: 1000,
+    name: '🏅 4 - 15th Prize',
+    points: "850 - 300",
   },
   {
     id: 4,

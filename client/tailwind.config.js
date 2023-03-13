@@ -36,7 +36,6 @@ module.exports = {
           100: 'var(--color-yellow-100)',
           800: 'var(--color-yellow-800)',
         },
-        accent: 'var(--color-accent)',
         success: 'var(--color-success)',
         error: 'var(--color-error)',
         text: 'var(--color-text)',
