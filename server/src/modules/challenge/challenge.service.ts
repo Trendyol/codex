@@ -6,7 +6,13 @@ import { DateTime } from 'luxon';
 import { LobbyService } from '../lobby/lobby.service';
 import { TeamService } from '../team/team.service';
 import { CreateChallengeDto } from './dtos/create-challenge.dto';
-import { PENDING_DURATION, STATUS_INTERVAL } from './models/constants';
+import {
+  MAX_POINTS,
+  MIN_POINTS,
+  PENDING_DURATION,
+  POINTS_GAP,
+  STATUS_INTERVAL,
+} from './models/constants';
 import { Status } from './models/enums';
 
 @Injectable()
@@ -67,9 +73,20 @@ export class ChallengeService {
   }
 
   private async finishChallenge(challengeId: string) {
-    const winners = await this.dataService.queries.findWinners(challengeId);
+    const teamFinishRankings = await this.dataService.queries.findChallengeTeamFinishRanking(
+      challengeId,
+    );
 
-    await this.dataService.challenges.update(challengeId, { winners });
+    let points = MAX_POINTS;
+    for (const { teamId } of teamFinishRankings) {
+      const team = await this.dataService.teams.findById(teamId);
+      team.participants.forEach((userId) => this.addPointsToUser(userId, points));
+      if (points > MIN_POINTS) points -= POINTS_GAP;
+    }
+  }
+
+  private async addPointsToUser(userId: string, points: number) {
+    this.dataService.queries.addPointsToUser(userId, points);
   }
 
   @Interval(STATUS_INTERVAL)

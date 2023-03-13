@@ -14,10 +14,9 @@ const Prize = () => {
     <Card className="rounded-lg overflow-hidden h-fit min-h-[300px]">
       <div className="text-2xl font-semibold">Prizes</div>
       <div className="space-y-4 text-lg mt-3 sm:text-sm">
-        {mockPrizes.map(({ id, name, points, extra }) => (
+        {mockPrizes.map(({ id, name, points }) => (
           <div key={id}>
             <span className="font-semibold text-xl mr-1 xs:text-lg"> {name}: </span> {points} Points
-            {extra && <span className="text xs:text-sm"> - {extra}</span>}
           </div>
         ))}
       </div>
