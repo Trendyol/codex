@@ -1,6 +1,6 @@
 import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
-import { useUser } from '@hooks/data';
+import { useMe, useUser } from '@hooks/data';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import randomGradient from 'random-gradient';
@@ -13,8 +13,10 @@ type LoreProps = {
 const Lore: FC<LoreProps> = ({ onShowUpdatePopup }) => {
   const { query, isReady } = useRouter();
   const { user } = useUser(query.user as string, isReady);
+  const { me } = useMe();
 
   if (!user) return <></>;
+  const self = user.id === me?.id;
 
   const avatar = `https://avatars.dicebear.com/api/avataaars/${user.id}.svg`;
 
@@ -27,21 +29,23 @@ const Lore: FC<LoreProps> = ({ onShowUpdatePopup }) => {
         <div>
           <Image
             priority
-            className="bg-error absolute -bottom-[50px] left-8 flex items-center justify-center rounded-full ring-4 ring-background-200"
+            className="absolute -bottom-[50px] left-8 flex items-center justify-center rounded-full bg-error ring-4 ring-background-200"
             alt="avatar"
             height={120}
             width={120}
             src={user?.avatar || avatar}
           />
         </div>
-        <Button
-          onClick={onShowUpdatePopup}
-          size={'small'}
-          intent="secondary"
-          className="absolute top-[220px] right-8"
-        >
-          Update
-        </Button>
+        {self && (
+          <Button
+            onClick={onShowUpdatePopup}
+            size={'small'}
+            intent="secondary"
+            className="absolute top-[220px] right-8"
+          >
+            Update
+          </Button>
+        )}
       </div>
       <div className="mt-12 p-6">
         <div className="flex items-baseline gap-3">

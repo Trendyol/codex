@@ -83,10 +83,6 @@ export class ChallengeService {
       challengeId,
     );
 
-    for (const userId of challenge.activeParticipants) {
-      await this.addPointsToUser(userId, PARTICIPANT_POINTS);
-    }
-
     await this.dataService.challenges.update(challengeId, { winners: teamFinishRankings });
     const finishedUserIds = [];
     let points = MAX_POINTS;
@@ -120,7 +116,7 @@ export class ChallengeService {
         id: challenge.id,
         ranking: 0,
       });
-      await this.addPointsToUser(userId, MIN_POINTS);
+      await this.addPointsToUser(userId, PARTICIPANT_POINTS);
     });
   }
 
