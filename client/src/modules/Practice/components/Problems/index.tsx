@@ -34,7 +34,7 @@ const Problems = () => {
               onClick={() => handleProblemNavigation(id)}
               className="cursor-pointer border-t border-border hover:bg-background-50"
             >
-              <td className="text whitespace-nowrap py-2.5">{title}</td>
+              <td className="text whitespace-nowrap py-3">{title}</td>
               <td className="">
                 <Badge className="capitalize" intent={difficulty}>
                   {Difficulty[difficulty]}
