@@ -8,4 +8,10 @@ export const userSchema = new Schema({
   bio: String,
   points: Number,
   rank: Number,
+  challenges: [
+    {
+      challenge: Object,
+      ranking: Number,
+    },
+  ],
 });

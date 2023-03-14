@@ -7,4 +7,7 @@ export class UserEntity {
   bio?: string;
   points: number;
   rank?: number;
+  challenges: UserChallenge[];
 }
+
+export type UserChallenge = { id: string; name: string; date: Date; ranking: number };

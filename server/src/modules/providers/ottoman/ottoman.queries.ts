@@ -1,3 +1,4 @@
+import { UserChallenge } from '@core/data/entities';
 import { QueryOptions, QueryResult } from 'couchbase';
 
 import { queries } from './schemas/queries';
@@ -71,5 +72,11 @@ export class OttomanQueries {
     });
 
     return placements;
+  }
+
+  async appendChallengeToUser(userId: string, challenge: UserChallenge) {
+    await this._query(queries.appendChallengeToUser, {
+      parameters: { USER_ID: userId, CHALLENGE: challenge },
+    });
   }
 }

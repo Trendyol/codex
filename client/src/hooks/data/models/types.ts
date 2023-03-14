@@ -54,6 +54,14 @@ export type User = {
   bio?: string;
   points: number;
   rank: number;
+  challenges: UserChallenge[];
+};
+
+export type UserChallenge = {
+  name: string;
+  id: string;
+  ranking: number;
+  date: string;
 };
 
 export type Participant = {

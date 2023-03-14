@@ -15,7 +15,7 @@ export const challengeSchema = new Schema({
   winners: [
     {
       teamId: { type: String, ref: 'team' },
-      runtime: Number,
+      date: Date,
     },
   ],
 });

@@ -1,6 +1,6 @@
 import Card from '@components/ui/Card';
 import { useChallenge } from '@hooks/data';
-import { mockPrizes } from '@modules/Challenge/models/constants';
+import { prizes } from '@modules/Challenge/models/constants';
 
 import { useRouter } from 'next/router';
 
@@ -11,12 +11,12 @@ const Prize = () => {
   if (!challenge) return <></>;
 
   return (
-    <Card className="rounded-lg overflow-hidden h-fit min-h-[300px]">
+    <Card className="h-fit min-h-[300px] overflow-hidden rounded-lg">
       <div className="text-2xl font-semibold">Prizes</div>
-      <div className="space-y-4 text-lg mt-3 sm:text-sm">
-        {mockPrizes.map(({ id, name, points }) => (
+      <div className="mt-3 space-y-4 text-lg sm:text-sm">
+        {prizes.map(({ id, name, points }) => (
           <div key={id}>
-            <span className="font-semibold text-xl mr-1 xs:text-lg"> {name}: </span> {points} Points
+            <span className="mr-1 text-xl font-semibold xs:text-lg"> {name}: </span> {points} Points
           </div>
         ))}
       </div>

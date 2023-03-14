@@ -124,11 +124,17 @@ GROUP BY teamId,
 ORDER BY date ASC
 `;
 
+const appendChallengeToUser = `
+Update default set challenges = ARRAY_APPEND(challenges, $CHALLENGE)
+where type = 'user' and id = $USER_ID
+`;
+
 export const queries = {
   findChallenges,
   findChallenge,
   findWinners,
   findChallengeTeamFinishRankings,
   addPointsToUser,
-  findChallengePlacements
+  findChallengePlacements,
+  appendChallengeToUser,
 };

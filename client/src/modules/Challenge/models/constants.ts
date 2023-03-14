@@ -1,76 +1,4 @@
-export const mockPlacements = [
-  {
-    id: 0,
-    participants: [
-      {
-        id: '0',
-        avatar: 'https://i.pravatar.cc/300?img=1',
-        name: 'John Doe',
-        points: 100,
-      },
-      {
-        id: '1',
-        avatar: 'https://i.pravatar.cc/300?img=2',
-        name: 'John Doe',
-        points: 100,
-      },
-      {
-        id: '2',
-        avatar: 'https://i.pravatar.cc/300?img=4',
-        name: 'John Doe',
-        points: 100,
-      },
-    ],
-  },
-  {
-    id: 1,
-    participants: [
-      {
-        id: '0',
-        avatar: 'https://i.pravatar.cc/300?img=1',
-        name: 'John Doe',
-        points: 100,
-      },
-      {
-        id: '1',
-        avatar: 'https://i.pravatar.cc/300?img=2',
-        name: 'John Doe',
-        points: 100,
-      },
-      {
-        id: '2',
-        avatar: 'https://i.pravatar.cc/300?img=4',
-        name: 'John Doe',
-        points: 100,
-      },
-    ],
-  },
-  {
-    id: 2,
-    participants: [
-      {
-        id: '0',
-        avatar: 'https://i.pravatar.cc/300?img=1',
-        name: 'John Doe',
-        points: 100,
-      },
-      {
-        id: '1',
-        avatar: 'https://i.pravatar.cc/300?img=2',
-        name: 'John Doe',
-        points: 100,
-      },
-      {
-        id: '2',
-        avatar: 'https://i.pravatar.cc/300?img=4',
-        name: 'John Doe',
-        points: 100,
-      },
-    ],
-  },
-];
-
-export const mockPrizes = [
+export const prizes = [
   {
     id: 0,
     name: '🥇 First Prize',
@@ -88,8 +16,8 @@ export const mockPrizes = [
   },
   {
     id: 3,
-    name: '🏅 4 - 14th Prize',
-    points: "850 - 300",
+    name: '🏅 4 - 13th Prize',
+    points: "850 - 400",
   },
   {
     id: 4,
