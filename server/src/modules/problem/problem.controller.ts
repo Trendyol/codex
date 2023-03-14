@@ -1,5 +1,8 @@
 import { AdminGuard } from '@auth/guards/admin.guard';
+import { AnonymousGuard } from '@auth/guards/anonymous.guard';
 import { JwtGuard } from '@auth/guards/jwt.guard';
+import { UserEntity } from '@core/data/entities';
+import { User } from '@core/decorators/user.decorator';
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -24,9 +27,9 @@ export class ProblemController {
   }
 
   @Get()
-  @UseGuards(JwtGuard)
-  findAll() {
-    return this.problemService.findAll();
+  @UseGuards(AnonymousGuard)
+  findAll(@User() user?: UserEntity) {
+    return this.problemService.findAll(user?.id);
   }
 
   @Get(':id/default-code/:language')

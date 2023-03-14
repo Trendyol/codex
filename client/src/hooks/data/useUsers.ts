@@ -9,12 +9,12 @@ export const useUsers = ({orderBy, order, limit}: Order) => {
   if (limit) {
     key += `&limit=${limit}`
   }
-  const { data, error, isLoading, mutate } = useSWR(key);
+  const { data, error, isLoading, mutate } = useSWR<User[]>(key);
 
   return {
     error,
     isLoading,
-    users: (data as User[]) ? data : [],
+    users: data,
     mutateUsers: mutate,
   };
 };

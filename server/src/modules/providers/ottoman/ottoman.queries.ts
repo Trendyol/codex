@@ -79,4 +79,21 @@ export class OttomanQueries {
       parameters: { USER_ID: userId, CHALLENGE: challenge },
     });
   }
+
+  async findProblems(userId: string) {
+    const result = await this._query(queries.findProblems, {
+      parameters: { USER_ID: userId },
+    });
+
+    const problems = [];
+
+    result.rows.forEach((row) => {
+      problems.push({
+        ...row["q1"],
+        solved: row.solved[0]?.['$1'],
+      });
+    });
+
+    return problems;
+  }
 }
