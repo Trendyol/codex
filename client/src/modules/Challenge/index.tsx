@@ -12,7 +12,6 @@ const Challenge = () => {
         <Lore />
         <Placement />
         <Prize />
-        {/* <Question /> */}
       </div>
       <div className="flex flex-col gap-6 flex-shrink-0 w-sidebar xl:w-[270px] md:hidden">
         <Leaderboard />

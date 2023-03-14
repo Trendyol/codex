@@ -43,4 +43,9 @@ export class ChallengeController {
   getPlacements(@Param('challengeId') challengeId: string) {
     return this.challengeService.getPlacements(challengeId);
   }
+
+  @Get('test/test/test')
+  test(){
+    return this.challengeService.finishChallenge("6a748a8d-06e5-40cd-a648-ad0feb493330")
+  }
 }

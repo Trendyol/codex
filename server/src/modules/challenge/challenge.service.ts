@@ -77,7 +77,7 @@ export class ChallengeService {
     this.lobbyService.changeStatus(challengeId, Status.ongoing);
   }
 
-  private async finishChallenge(challengeId: string) {
+  async finishChallenge(challengeId: string) {
     const challenge = await this.dataService.challenges.findById(challengeId);
     const teamFinishRankings = await this.dataService.queries.findChallengeTeamFinishRankings(
       challengeId,
@@ -87,12 +87,41 @@ export class ChallengeService {
       await this.addPointsToUser(userId, PARTICIPANT_POINTS);
     }
 
+    await this.dataService.challenges.update(challengeId, { winners: teamFinishRankings });
+    const finishedUserIds = [];
     let points = MAX_POINTS;
+    let ranking = 1;
     for (const { teamId } of teamFinishRankings) {
       const team = await this.dataService.teams.findById(teamId);
-      team.participants.forEach((userId) => this.addPointsToUser(userId, points));
+
+      for (const userId of team.participants) {
+        finishedUserIds.push(userId);
+        await this.dataService.queries.appendChallengeToUser(userId, {
+          ranking,
+          name: challenge.name,
+          date: challenge.date,
+          id: challenge.id,
+        });
+        await this.addPointsToUser(userId, points);
+      }
+
+      ranking++;
       if (points > MIN_POINTS) points -= POINTS_GAP;
     }
+
+    const remainingUsers = challenge.activeParticipants.filter(
+      (userId) => !finishedUserIds.includes(userId),
+    );
+
+    remainingUsers.forEach(async (userId) => {
+      await this.dataService.queries.appendChallengeToUser(userId, {
+        name: challenge.name,
+        date: challenge.date,
+        id: challenge.id,
+        ranking: 0,
+      });
+      await this.addPointsToUser(userId, MIN_POINTS);
+    });
   }
 
   private async addPointsToUser(userId: string, points: number) {

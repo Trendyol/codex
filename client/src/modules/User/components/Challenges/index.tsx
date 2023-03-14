@@ -1,7 +1,17 @@
 import Card from '@components/ui/Card';
-import { challengeTableFields, mockChallenges } from '@modules/User/models/constants';
+import { useUser } from '@hooks/data';
+import { challengeTableFields } from '@modules/User/models/constants';
+import { DateTime } from 'luxon';
+import { useRouter } from 'next/router';
 
 const Challenges = () => {
+  const { push, query, isReady } = useRouter();
+  const { user } = useUser(query.user as string, isReady);
+
+  const handleChallengeNavigation = (id: string) => {
+    push(`/challenge/${id}`);
+  };
+
   return (
     <Card className="min-h-[250px] overflow-x-auto rounded-lg">
       <div className="text-2xl font-semibold">Challenges</div>
@@ -16,16 +26,17 @@ const Challenges = () => {
           </tr>
         </thead>
         <tbody>
-          {mockChallenges.map((challenge: any) => (
+          {user?.challenges?.map(({ id, name, ranking, date }) => (
             <tr
-              key={challenge.id}
+              onClick={() => handleChallengeNavigation(id)}
+              key={id}
               className="cursor-pointer border-t border-border hover:bg-background-50"
             >
-              {challengeTableFields.map((field) => (
-                <td key={field} className="whitespace-nowrap py-2.5">
-                  {challenge[field]}
-                </td>
-              ))}
+              <td className="whitespace-nowrap py-2.5">{name}</td>
+              {<td className="whitespace-nowrap py-2.5">{ranking ? ranking : '-'}</td>}
+              <td className="whitespace-nowrap py-2.5">
+                {DateTime.fromISO(date).toFormat('dd LLL yyyy')}
+              </td>
             </tr>
           ))}
         </tbody>

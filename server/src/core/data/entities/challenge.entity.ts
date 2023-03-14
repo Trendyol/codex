@@ -11,6 +11,6 @@ export class ChallengeEntity {
   problemId: string;
   winners?: {
     teamId: string;
-    runtime: number;
+    date: Date;
   }[];
 }
