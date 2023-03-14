@@ -4,6 +4,7 @@ import { useProblems } from '@hooks/data/useProblems';
 import { Difficulty } from '@models/enums';
 import { problemTableFields } from '@modules/Practice/models';
 import { useRouter } from 'next/router';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
 
 const Problems = () => {
   const { problems } = useProblems();
@@ -27,18 +28,19 @@ const Problems = () => {
           </tr>
         </thead>
         <tbody>
-          {problems?.map(({ id, title, difficulty }) => (
+          {problems?.map(({ id, title, difficulty, solved }) => (
             <tr
-              onClick={() => handleProblemNavigation(id)}
               key={id}
+              onClick={() => handleProblemNavigation(id)}
               className="cursor-pointer border-t border-border hover:bg-background-50"
             >
               <td className="text whitespace-nowrap py-2.5">{title}</td>
-              <td className="whitespace-nowrap">
+              <td className="">
                 <Badge className="capitalize" intent={difficulty}>
                   {Difficulty[difficulty]}
                 </Badge>
               </td>
+              <td>{solved && <AiOutlineCheckCircle size={20} />}</td>
             </tr>
           ))}
         </tbody>

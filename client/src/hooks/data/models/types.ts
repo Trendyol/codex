@@ -29,6 +29,7 @@ export type Problem = {
   title: string;
   content: string;
   difficulty: Difficulty;
+  solved: boolean;
 };
 
 export type Submission = {

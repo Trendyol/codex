@@ -129,6 +129,20 @@ Update default set challenges = ARRAY_APPEND(challenges, $CHALLENGE)
 where type = 'user' and id = $USER_ID
 `;
 
+const findProblems = `
+SELECT *, solved
+FROM default q1
+LET solved = (
+    SELECT TRUE
+    FROM default q2
+    WHERE type = 'submission'
+        AND status = 3
+        AND userId = $USER_ID
+        AND q1.id = q2.problemId
+    LIMIT 1)
+WHERE type = 'problem'
+`;
+
 export const queries = {
   findChallenges,
   findChallenge,
@@ -137,4 +151,5 @@ export const queries = {
   addPointsToUser,
   findChallengePlacements,
   appendChallengeToUser,
+  findProblems
 };
