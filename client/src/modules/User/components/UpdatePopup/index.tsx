@@ -2,12 +2,14 @@ import Button from '@components/ui/Button';
 import Input from '@components/ui/Input';
 import Popup from '@components/ui/Popup';
 import { useMe } from '@hooks/data';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useUpdateProfile } from '@hooks/data/useUpdateProfile';
 import { toast } from 'react-toastify';
+import { useDropzone } from 'react-dropzone';
+import Image from 'next/image';
 
 type UpdatePopupProps = {
   show: boolean;
@@ -23,6 +25,30 @@ const schema = yup
 
 const UpdatePopup: FC<UpdatePopupProps> = ({ show, onHide }) => {
   const { me } = useMe();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    values: {
+      name: me?.name,
+      bio: me?.bio,
+      avatar: {} as any,
+    },
+    resolver: yupResolver(schema),
+  });
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    maxFiles: 1,
+    onDrop: (acceptedFiles) => {
+      setValue(
+        'avatar',
+        acceptedFiles[0]
+      );
+    },
+  });
+  const avatar = me && `https://avatars.dicebear.com/api/avataaars/${me.id}.svg`;
 
   const { updateProfile } = useUpdateProfile(
     () => {
@@ -33,17 +59,7 @@ const UpdatePopup: FC<UpdatePopupProps> = ({ show, onHide }) => {
       toast.error('Failed to update profile');
     },
   );
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    values: {
-      name: me?.name,
-      bio: me?.bio,
-    },
-    resolver: yupResolver(schema),
-  });
+
   return (
     <Popup
       show={show}
@@ -60,6 +76,19 @@ const UpdatePopup: FC<UpdatePopupProps> = ({ show, onHide }) => {
         </div>
       }
     >
+      <section {...getRootProps({ className: 'dropzone disabled flex justify-center' })}>
+        {
+          <Image
+            priority
+            className="-bottom-[50px] left-8 flex items-center justify-center rounded-full bg-error ring-4 ring-background-200"
+            alt="avatar"
+            height={120}
+            width={120}
+            src={  me?.avatar || ''}
+          />
+        }
+        <input {...getInputProps()} />
+      </section>
       <div className="space-y-6">
         <Input {...register('name')} label="Name" placeholder="Name" error={errors.name?.message} />
         <Input {...register('bio')} rows={4} label="Bio" placeholder="Bio" />

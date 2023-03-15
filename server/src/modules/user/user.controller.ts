@@ -1,11 +1,14 @@
 import { UserEntity } from '@core/data/entities';
 import { User } from '@core/decorators/user.decorator';
-import { Body, Controller, Get, Param, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Put, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { JwtGuard } from '../auth/guards/jwt.guard';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { UserService } from './user.service';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+
 @ApiTags('User')
 @Controller('user')
 export class UserController {
@@ -29,22 +32,32 @@ export class UserController {
 
   @UseGuards(JwtGuard)
   @Put(':id/profile')
-  async updateProfile(
+  @UseInterceptors(
+    FilesInterceptor('avatar', 1, {
+      storage: diskStorage({
+        destination: './uploads/',
+        filename: 'editFileName',
+      }),
+    //   fileFilter: imageFileFilter,
+    }),
+  )  async updateProfile(
     @Param('id') id: string,
     @User() user,
+    @UploadedFile() file,
     @Body() updateProfileDto: UpdateProfileDto,
   ) {
-    const updatedUser = await this.userService.updateProfile(user.id, updateProfileDto);
+    const updatedUser = await this.userService.updateProfile(user.id, updateProfileDto, file);
     return updatedUser;
   }
 
   @Get()
   @UseGuards(JwtGuard)
-  async find(@Query('orderBy') orderBy?: string,
-  @Query('order') order?: string,
-  @Query('limit') limit?: number
+  async find(
+    @Query('orderBy') orderBy?: string,
+    @Query('order') order?: string,
+    @Query('limit') limit?: number,
   ) {
-    const users = await this.userService.find({ orderBy, order, limit});
+    const users = await this.userService.find({ orderBy, order, limit });
     return users;
   }
 
@@ -52,10 +65,12 @@ export class UserController {
   @UseGuards(JwtGuard)
   async updateRank() {
     const users = await this.userService.find({ orderBy: 'points', order: 'desc', limit: 1000 });
-    const updatedUsers = await Promise.all(users.map(async (user, index) => {
-      const updatedUser = await this.userService.updateProfile(user.id, { rank: index + 1 });
-      return updatedUser;
-    }));
+    const updatedUsers = await Promise.all(
+      users.map(async (user, index) => {
+        const updatedUser = await this.userService.updateProfile(user.id, { rank: index + 1 });
+        return updatedUser;
+      }),
+    );
     return updatedUsers;
   }
 }
