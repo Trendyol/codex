@@ -29,6 +29,14 @@ export interface Config {
     url: string;
     key: string;
   };
+  storage: {
+    cdn: {
+      secret: string;
+      environment: string;
+      team: string;
+      path: string;
+    };
+  };
 }
 
 export const config = {
@@ -56,6 +64,14 @@ export const config = {
   judge0: {
     url: process.env.JUDGE0_URL,
     key: process.env.JUDGE0_KEY,
+  },
+  storage: {
+    cdn: {
+      secret: process.env.STORAGE_CDN_SECRET,
+      environment: process.env.STORAGE_CDN_ENVIRONMENT,
+      team: process.env.STORAGE_CDN_TEAM,
+      path: process.env.STORAGE_CDN_PATH,
+    },
   },
 };
 

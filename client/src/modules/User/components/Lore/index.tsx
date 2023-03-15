@@ -1,6 +1,7 @@
 import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
 import { useMe, useUser } from '@hooks/data';
+import { getHashAvatar } from '@utils/common';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import randomGradient from 'random-gradient';
@@ -18,22 +19,20 @@ const Lore: FC<LoreProps> = ({ onShowUpdatePopup }) => {
   if (!user) return <></>;
   const self = user.id === me?.id;
 
-  const avatar = `https://avatars.dicebear.com/api/avataaars/${user.id}.svg`;
-
   return (
     <Card className="h-fit min-h-[500px] overflow-hidden rounded-lg p-0" space={false}>
       <div
         className="relative h-48 w-full bg-white"
         style={{ background: randomGradient(user?.id) }}
       >
-        <div>
+        <div className="absolute -bottom-[50px] left-8 flex h-[120px] w-[120px] items-center justify-center overflow-hidden rounded-full bg-background-200 ring-4 ring-background-200">
           <Image
+            className="object-cover"
             priority
-            className="absolute -bottom-[50px] left-8 flex items-center justify-center rounded-full bg-error ring-4 ring-background-200"
             alt="avatar"
             height={120}
             width={120}
-            src={user?.avatar || avatar}
+            src={user?.avatar || getHashAvatar(user?.id)}
           />
         </div>
         {self && (

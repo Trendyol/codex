@@ -21,7 +21,15 @@ const Avatar: FC<AvatarProps> = ({ id, name, avatar, points, truncate, className
         className,
       )}
     >
-      <Image alt="avatar" className="rounded-md" width={40} height={40} src={avatar} />
+      <div className="h-[40px] w-[40px] overflow-hidden rounded-md">
+        <Image
+          className="object-cover"
+          alt="avatar"
+          width={40}
+          height={40}
+          src={avatar}
+        />
+      </div>
       <div className="flex flex-col">
         <div
           className={cx(

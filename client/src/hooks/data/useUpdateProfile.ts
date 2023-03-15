@@ -3,11 +3,16 @@ import axios from 'axios';
 import { mutate } from 'swr';
 import { jsonToFormData } from '@utils/converter';
 
+export type UpdateProfileValues = {
+  name: string;
+  bio: string;
+  avatar: File & { preview: string };
+};
+
 export const useUpdateProfile = (successCallback?: () => void, errorCallback?: () => void) => {
   const { trigger, error } = useMutation(
     'updateProfile',
     (_, { arg: { id, data } }) => {
-      console.log(data)
       const formData = jsonToFormData(data);
       return axios.put(`/user/${id}/profile`, formData);
     },

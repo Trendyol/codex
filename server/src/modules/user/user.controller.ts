@@ -1,14 +1,24 @@
 import { UserEntity } from '@core/data/entities';
 import { User } from '@core/decorators/user.decorator';
-import { Body, Controller, Get, Param, Put, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Put,
+  Query,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 import { JwtGuard } from '../auth/guards/jwt.guard';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { UserService } from './user.service';
-import { FilesInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-
 @ApiTags('User')
 @Controller('user')
 export class UserController {
@@ -30,21 +40,26 @@ export class UserController {
     return user;
   }
 
+  generateFilename(file: Express.Multer.File) {
+    return `${Date.now()}.${extname(file.originalname)}`;
+  }
+
   @UseGuards(JwtGuard)
   @Put(':id/profile')
   @UseInterceptors(
-    FilesInterceptor('avatar', 1, {
+    FileInterceptor('avatar', {
       storage: diskStorage({
-        destination: './uploads/',
-        filename: 'editFileName',
+        destination: 'temp',
+        filename: (req: any, file: any, cb: any) =>
+          cb(null, `${Date.now()}${extname(file.originalname)}`),
       }),
-    //   fileFilter: imageFileFilter,
     }),
-  )  async updateProfile(
+  )
+  async updateProfile(
     @Param('id') id: string,
     @User() user,
-    @UploadedFile() file,
     @Body() updateProfileDto: UpdateProfileDto,
+    @UploadedFile() file: Express.Multer.File,
   ) {
     const updatedUser = await this.userService.updateProfile(user.id, updateProfileDto, file);
     return updatedUser;
