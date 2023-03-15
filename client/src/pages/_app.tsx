@@ -2,7 +2,7 @@ import '@styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import type { AppProps } from 'next/app';
 import { SWRConfig } from 'swr';
-import DefaultLayout from '@components/layout/default';
+import DefaultLayout from '@components/layout/Default';
 import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
