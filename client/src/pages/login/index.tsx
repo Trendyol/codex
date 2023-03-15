@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import Head from 'next/head';
 import Login from '@modules/Auth/Login';
-import DefaultLayout from '@components/layout/Default';
+import DefaultLayout from '@components/layout/default';
 import { AppProps } from 'next/app';
 
 export const LoginPage = () => {

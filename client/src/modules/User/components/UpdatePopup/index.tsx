@@ -6,7 +6,7 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { UpdateProfileValues, useUpdateProfile } from '@hooks/data/useUpdateProfile';
+import { UpdateProfileData, useUpdateProfile } from '@hooks/data/useUpdateProfile';
 import { toast } from 'react-toastify';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
@@ -37,7 +37,7 @@ const UpdatePopup: FC<UpdatePopupProps> = ({ show, onHide }) => {
       name: me?.name,
       bio: me?.bio,
       avatar: {},
-    } as UpdateProfileValues,
+    } as UpdateProfileData,
     resolver: yupResolver(schema),
   });
   const { getRootProps, getInputProps } = useDropzone({

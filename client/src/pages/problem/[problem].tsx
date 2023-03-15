@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Problem from '@modules/Problem';
-import DefaultLayout from '@components/layout/Default';
+import DefaultLayout from '@components/layout/default';
 import { AppProps } from 'next/app';
 import { ReactElement } from 'react';
 

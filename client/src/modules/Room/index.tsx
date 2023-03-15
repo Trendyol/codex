@@ -1,23 +1,25 @@
 import Chat from '@components/shared/Chat';
 import Countdown from '@components/shared/Countdown';
 import Description from '@components/shared/Description';
+import Submissions from '@components/shared/Submissions';
 import TabsGroup from '@components/shared/TabsGroup';
 import { useChallenge, useRoom } from '@hooks/data';
 import { User } from '@hooks/data/models/types';
+import { useDefaultCode } from '@hooks/data/useDefaultCode';
 import { useMe } from '@hooks/data/useMe';
 import { Language } from '@models/enums';
+import { disconnectSocket } from '@services/lobby';
 import { joinRoom, sendMessage } from '@services/room';
+import { decodeBase64 } from '@utils/converter';
+import { DateTime } from 'luxon';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import Submission from './components/Submission';
 import Video from './components/Video';
 import { Action } from './models/types';
-import { DateTime } from 'luxon';
-import { disconnectSocket } from '@services/lobby';
-import { useDefaultCode } from '@hooks/data/useDefaultCode';
-import { decodeBase64 } from '@utils/converter';
-import Editor from '@components/shared/Editor';
-import Submissions from '@components/shared/Submissions';
+
+const Editor = dynamic(() => import('@components/shared/Editor'), { ssr: false });
 
 const Room = () => {
   const { push, query, isReady } = useRouter();

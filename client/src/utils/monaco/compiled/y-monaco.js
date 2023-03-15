@@ -26,14 +26,8 @@ const createRelativeSelection = (editor, monacoModel, type) => {
   if (sel !== null) {
     const startPos = sel.getStartPosition();
     const endPos = sel.getEndPosition();
-    const start = Y.createRelativePositionFromTypeIndex(
-      type,
-      monacoModel.getOffsetAt(startPos)
-    );
-    const end = Y.createRelativePositionFromTypeIndex(
-      type,
-      monacoModel.getOffsetAt(endPos)
-    );
+    const start = Y.createRelativePositionFromTypeIndex(type, monacoModel.getOffsetAt(startPos));
+    const end = Y.createRelativePositionFromTypeIndex(type, monacoModel.getOffsetAt(endPos));
     return new RelativeSelection(start, end, sel.getDirection());
   }
   return null;
@@ -46,20 +40,10 @@ const createRelativeSelection = (editor, monacoModel, type) => {
  * @param {Y.Doc} doc
  * @return {null|monaco.Selection}
  */
-const createMonacoSelectionFromRelativeSelection = (
-  editor,
-  type,
-  relSel,
-  doc
-) => {
+const createMonacoSelectionFromRelativeSelection = (editor, type, relSel, doc) => {
   const start = Y.createAbsolutePositionFromRelativePosition(relSel.start, doc);
   const end = Y.createAbsolutePositionFromRelativePosition(relSel.end, doc);
-  if (
-    start !== null &&
-    end !== null &&
-    start.type === type &&
-    end.type === type
-  ) {
+  if (start !== null && end !== null && start.type === type && end.type === type) {
     const model = /** @type {monaco.editor.ITextModel} */ (editor.getModel());
     const startPos = model.getPositionAt(start.index);
     const endPos = model.getPositionAt(end.index);
@@ -68,7 +52,7 @@ const createMonacoSelectionFromRelativeSelection = (
       startPos.column,
       endPos.lineNumber,
       endPos.column,
-      relSel.direction
+      relSel.direction,
     );
   }
   return null;
@@ -76,19 +60,13 @@ const createMonacoSelectionFromRelativeSelection = (
 
 export class MonacoBinding {
   /**
-   * @param {typeof import("/Users/tolga.ordanuc/projects/codex/codex-client/node_modules/monaco-editor/esm/vs/editor/editor.api")} monaco
+   * @param {typeof import("./types").Editor} monaco
    * @param {Y.Text} ytext
    * @param {monaco.editor.ITextModel} monacoModel
    * @param {Set<monaco.editor.IStandaloneCodeEditor>} [editors]
    * @param {Awareness?} [awareness]
    */
-  constructor(
-    monaco,
-    ytext,
-    monacoModel,
-    editors = new Set(),
-    awareness = null
-  ) {
+  constructor(monaco, ytext, monacoModel, editors = new Set(), awareness = null) {
     this.monaco = monaco;
     this.doc = /** @type {Y.Doc} */ (ytext.doc);
     this.ytext = ytext;
@@ -132,11 +110,11 @@ export class MonacoBinding {
             ) {
               const anchorAbs = Y.createAbsolutePositionFromRelativePosition(
                 state.selection.anchor,
-                this.doc
+                this.doc,
               );
               const headAbs = Y.createAbsolutePositionFromRelativePosition(
                 state.selection.head,
-                this.doc
+                this.doc,
               );
               if (
                 anchorAbs !== null &&
@@ -148,22 +126,20 @@ export class MonacoBinding {
                 if (anchorAbs.index < headAbs.index) {
                   start = monacoModel.getPositionAt(anchorAbs.index);
                   end = monacoModel.getPositionAt(headAbs.index);
-                  afterContentClassName =
-                    'yRemoteSelectionHead yRemoteSelectionHead-' + clientID;
+                  afterContentClassName = 'yRemoteSelectionHead yRemoteSelectionHead-' + clientID;
                   beforeContentClassName = null;
                 } else {
                   start = monacoModel.getPositionAt(headAbs.index);
                   end = monacoModel.getPositionAt(anchorAbs.index);
                   afterContentClassName = null;
-                  beforeContentClassName =
-                    'yRemoteSelectionHead yRemoteSelectionHead-' + clientID;
+                  beforeContentClassName = 'yRemoteSelectionHead yRemoteSelectionHead-' + clientID;
                 }
                 newDecorations.push({
                   range: new monaco.Range(
                     start.lineNumber,
                     start.column,
                     end.lineNumber,
-                    end.column
+                    end.column,
                   ),
                   options: {
                     className: 'yRemoteSelection yRemoteSelection-' + clientID,
@@ -176,7 +152,7 @@ export class MonacoBinding {
           });
           this._decorations.set(
             editor,
-            editor.deltaDecorations(currentDecorations, newDecorations)
+            editor.deltaDecorations(currentDecorations, newDecorations),
           );
         } else {
           // ignore decorations
@@ -199,7 +175,7 @@ export class MonacoBinding {
               pos.lineNumber,
               pos.column,
               pos.lineNumber,
-              pos.column
+              pos.column,
             );
             const insert = /** @type {string} */ (op.insert);
             monacoModel.applyEdits([{ range, text: insert }]);
@@ -211,7 +187,7 @@ export class MonacoBinding {
               pos.lineNumber,
               pos.column,
               endPos.lineNumber,
-              endPos.column
+              endPos.column,
             );
             monacoModel.applyEdits([{ range, text: '' }]);
           } else {
@@ -219,12 +195,7 @@ export class MonacoBinding {
           }
         });
         this._savedSelections.forEach((rsel, editor) => {
-          const sel = createMonacoSelectionFromRelativeSelection(
-            editor,
-            ytext,
-            rsel,
-            this.doc
-          );
+          const sel = createMonacoSelectionFromRelativeSelection(editor, ytext, rsel, this.doc);
           if (sel !== null) {
             editor.setSelection(sel);
           }
@@ -244,9 +215,7 @@ export class MonacoBinding {
       this.mux(() => {
         this.doc.transact(() => {
           event.changes
-            .sort(
-              (change1, change2) => change2.rangeOffset - change1.rangeOffset
-            )
+            .sort((change1, change2) => change2.rangeOffset - change1.rangeOffset)
             .forEach((change) => {
               ytext.delete(change.rangeOffset, change.rangeLength);
               ytext.insert(change.rangeOffset, change.text);

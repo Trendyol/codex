@@ -1,15 +1,17 @@
 import Chat from '@components/shared/Chat';
 import Description from '@components/shared/Description';
-import Submission from '@modules/Problem/components/Submission';
+import Submissions from '@components/shared/Submissions';
 import TabsGroup from '@components/shared/TabsGroup';
 import { useMe, useProblem } from '@hooks/data';
+import { useDefaultCode } from '@hooks/data/useDefaultCode';
 import { Language } from '@models/enums';
+import Submission from '@modules/Problem/components/Submission';
+import { decodeBase64 } from '@utils/converter';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import Editor from '@components/shared/Editor';
-import { decodeBase64 } from '@utils/converter';
-import { useDefaultCode } from '@hooks/data/useDefaultCode';
-import Submissions from '@components/shared/Submissions';
+
+const Editor = dynamic(() => import('@components/shared/Editor'), { ssr: false });
 
 const Problem = () => {
   const [notes, setNotes] = useState<{ message: string }[]>([]);

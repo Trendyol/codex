@@ -5,7 +5,7 @@ import axios from 'axios';
 export const useParticipate = () => {
   const { trigger } = useMutation(
     'participate',
-    (_, { arg }) => axios.post(`/challenge/${arg}/participate`),
+    (_, { arg }: { arg: string }) => axios.post(`/challenge/${arg}/participate`),
     {
       onSuccess: ({ data }) => {
         mutate('/challenge');
