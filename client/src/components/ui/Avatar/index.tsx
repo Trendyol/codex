@@ -1,3 +1,4 @@
+import { getHashAvatar } from '@utils/common';
 import { cx } from 'class-variance-authority';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,7 +22,15 @@ const Avatar: FC<AvatarProps> = ({ id, name, avatar, points, truncate, className
         className,
       )}
     >
-      <Image alt="avatar" className="rounded-md" width={40} height={40} src={avatar} />
+      <div className="h-[40px] w-[40px] overflow-hidden rounded-md">
+        <Image
+          className="object-cover"
+          alt="avatar"
+          width={40}
+          height={40}
+          src={avatar || getHashAvatar(id)}
+        />
+      </div>
       <div className="flex flex-col">
         <div
           className={cx(

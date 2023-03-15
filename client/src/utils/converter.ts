@@ -11,3 +11,10 @@ export const encodeBase64 = (text?: string) => {
   const buff = Buffer.from(text, 'ascii');
   return buff.toString('base64');
 };
+
+export const jsonToFormData = (data?: Record<string, any>) => {
+  const formData = new FormData();
+  if (!data) return formData;
+  Object.keys(data).forEach((key) => key && formData.append(key, data[key]));
+  return formData;
+};

@@ -9,7 +9,7 @@ const withTM = require('next-transpile-modules')([
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ['lh3.googleusercontent.com', 'i.pravatar.cc'],
+    domains: ['lh3.googleusercontent.com', 'i.pravatar.cc', 'cdn.dsmcdn.com'],
   },
   webpack: (config, options) => {
     if (!options.isServer) {
