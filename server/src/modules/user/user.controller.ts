@@ -3,8 +3,10 @@ import { User } from '@core/decorators/user.decorator';
 import {
   Body,
   Controller,
+  FileTypeValidator,
   Get,
   Param,
+  ParseFilePipe,
   Put,
   Query,
   UploadedFile,
@@ -59,7 +61,12 @@ export class UserController {
     @Param('id') id: string,
     @User() user,
     @Body() updateProfileDto: UpdateProfileDto,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' })],
+      }),
+    )
+    file: Express.Multer.File,
   ) {
     const updatedUser = await this.userService.updateProfile(user.id, updateProfileDto, file);
     return updatedUser;

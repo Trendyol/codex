@@ -1,3 +1,4 @@
+import { getHashAvatar } from '@utils/common';
 import { cx } from 'class-variance-authority';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -27,7 +28,7 @@ const Avatar: FC<AvatarProps> = ({ id, name, avatar, points, truncate, className
           alt="avatar"
           width={40}
           height={40}
-          src={avatar}
+          src={avatar || getHashAvatar(id)}
         />
       </div>
       <div className="flex flex-col">

@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { getHashAvatar } from '@utils/common';
+import { BsFillCameraFill } from 'react-icons/bs';
 
 type UpdatePopupProps = {
   show: boolean;
@@ -81,8 +82,8 @@ const UpdatePopup: FC<UpdatePopupProps> = ({ show, onHide }) => {
       }
     >
       <div className="space-y-6">
-        <section className="flex justify-center" {...getRootProps()}>
-          <div className="-bottom-[50px] left-8 flex h-32 w-32 items-center justify-center overflow-hidden rounded-full bg-background-200 ring-4 ring-background-200">
+        <div className="relative m-auto w-fit cursor-pointer " {...getRootProps()}>
+          <div className="left-8 flex h-[120px] w-[120px] items-center justify-center overflow-hidden rounded-full bg-background-200 ring-4 ring-background-100">
             <Image
               className="object-cover"
               alt="avatar"
@@ -91,8 +92,11 @@ const UpdatePopup: FC<UpdatePopupProps> = ({ show, onHide }) => {
               src={getValues('avatar')?.preview || me?.avatar || getHashAvatar(me?.id)}
             />
           </div>
+          <div className=" absolute top-0 flex h-[122px] w-[120px] items-center  justify-center rounded-full bg-background-100 opacity-0 hover:opacity-90">
+            <BsFillCameraFill size={40} />
+          </div>
           <input {...getInputProps()} />
-        </section>
+        </div>
         <Input {...register('name')} label="Name" placeholder="Name" error={errors.name?.message} />
         <Input {...register('bio')} rows={4} label="Bio" placeholder="Bio" />
       </div>
