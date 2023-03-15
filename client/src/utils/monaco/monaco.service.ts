@@ -1,8 +1,7 @@
 import * as Y from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
 import { MonacoBinding } from './compiled/y-monaco';
-import { editor } from 'monaco-editor';
-import { Monaco } from '@monaco-editor/react';
+import { Editor, Monaco } from './types';
 
 export class MonacoController {
   yDoc: Y.Doc;
@@ -11,7 +10,7 @@ export class MonacoController {
 
   private constructor(
     public monaco: Monaco,
-    public editor: editor.IStandaloneCodeEditor,
+    public editor: Editor,
     public roomId: string,
 
     onSynced: () => void,
@@ -37,12 +36,7 @@ export class MonacoController {
   }
 
   private static instance?: MonacoController;
-  static async init(
-    monaco: Monaco,
-    editorDiv: editor.IStandaloneCodeEditor,
-    roomId: string,
-    onSynced: () => void,
-  ) {
+  static async init(monaco: Monaco, editorDiv: Editor, roomId: string, onSynced: () => void) {
     if (MonacoController.instance) return;
     if (!window.MonacoEnvironment) window.MonacoEnvironment = {};
     window.MonacoEnvironment.getWorkerUrl = (_moduleId: string, label: string) => {

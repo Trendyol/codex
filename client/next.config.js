@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const withTM = require('next-transpile-modules')([
   // `monaco-editor` isn't published to npm correctly: it includes both CSS
@@ -6,21 +5,23 @@ const withTM = require('next-transpile-modules')([
   'monaco-editor',
 ]);
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
   images: {
     domains: ['lh3.googleusercontent.com', 'i.pravatar.cc'],
   },
-  webpack: (config) => {
-    config.plugins.push(
-      new MonacoWebpackPlugin({
-        languages: ['json', 'css', 'typescript', 'html'],
-        filename: 'static/[name].worker.js',
-      }),
-    );
+  webpack: (config, options) => {
+    if (!options.isServer) {
+      config.plugins.push(
+        new MonacoWebpackPlugin({
+          languages: ['json', 'css', 'typescript', 'html'],
+          filename: 'static/[name].worker.js',
+        }),
+      );
+    }
     return config;
   },
 };
 
 module.exports = withTM(nextConfig);
-
