@@ -22,9 +22,10 @@ export class CdnStorageService implements IStorageService, OnModuleInit {
 
   async onModuleInit() {
     const secret = config.storage.cdn.secret;
-    await cdn.authorize(secret);
-  }
-  catch(error) {
-    Logger.error('Error connecting to CDN Storage', error);
+    try {
+      await cdn.authorize(secret);
+    } catch (error) {
+      Logger.error('Error connecting to CDN Storage', error);
+    }
   }
 }
