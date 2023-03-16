@@ -64,9 +64,10 @@ export class UserController {
     @UploadedFile(
       new ParseFilePipe({
         validators: [new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' })],
+        fileIsRequired: false,
       }),
     )
-    file: Express.Multer.File,
+    file?: Express.Multer.File,
   ) {
     const updatedUser = await this.userService.updateProfile(user.id, updateProfileDto, file);
     return updatedUser;
@@ -78,8 +79,9 @@ export class UserController {
     @Query('orderBy') orderBy?: string,
     @Query('order') order?: string,
     @Query('limit') limit?: number,
+    @Query('name') name?: string,
   ) {
-    const users = await this.userService.find({ orderBy, order, limit });
+    const users = await this.userService.find({ orderBy, order, limit, name });
     return users;
   }
 

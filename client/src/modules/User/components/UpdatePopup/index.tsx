@@ -92,7 +92,7 @@ const UpdatePopup: FC<UpdatePopupProps> = ({ show, onHide }) => {
               src={getValues('avatar')?.preview || me?.avatar || getHashAvatar(me?.id)}
             />
           </div>
-          <div className=" absolute top-0 flex h-[122px] w-[120px] items-center  justify-center rounded-full bg-background-100 opacity-0 hover:opacity-90">
+          <div className=" absolute top-[-1px] flex h-[122px] w-[120px] items-center  justify-center rounded-full bg-background-100 opacity-0 hover:opacity-90">
             <BsFillCameraFill size={40} />
           </div>
           <input {...getInputProps()} />

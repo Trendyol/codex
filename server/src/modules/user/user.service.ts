@@ -48,14 +48,28 @@ export class UserService {
     });
   }
 
-  async find({ orderBy, order, limit }) {
+  async find({
+    orderBy,
+    order,
+    limit,
+    name,
+  }: {
+    orderBy?: string;
+    order?: string;
+    limit?: number;
+    name?: string;
+  }) {
     const filter = {};
+    const args = {};
     if (orderBy && order) {
-      filter['sort'] = { [orderBy]: order };
+      args['sort'] = { [orderBy]: order };
     }
     if (limit) {
-      filter['limit'] = limit;
+      args['limit'] = limit;
     }
-    return this.dataService.users.find({}, filter);
+    if (name) {
+      filter['name'] = { $like: `%${name}%` };
+    }
+    return this.dataService.users.find(filter, args);
   }
 }

@@ -94,9 +94,10 @@ export type Room = {
 };
 
 export type Order = {
+  name?: string;
   orderBy?: string;
   order?: string;
-  limit?: string;
+  limit?: number;
 };
 
 export type Placement = {

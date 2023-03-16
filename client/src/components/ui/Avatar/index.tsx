@@ -9,20 +9,22 @@ type AvatarProps = {
   name: string;
   points: number;
   avatar: string;
-  className?: string;
+  disabled?: boolean;
   truncate?: boolean;
+  className?: string;
 };
 
-const Avatar: FC<AvatarProps> = ({ id, name, avatar, points, truncate, className }) => {
+const Avatar: FC<AvatarProps> = ({ id, name, avatar, points, truncate, disabled, className }) => {
   return (
     <Link
       href={`/user/${id}`}
       className={cx(
-        'flex w-full cursor-pointer select-none items-center gap-4 overflow-hidden text-ellipsis rounded-md p-2 hover:bg-background-50',
+        ' flex w-full cursor-pointer select-none items-center gap-4 overflow-hidden text-ellipsis rounded-md p-2 hover:bg-background-50',
         className,
       )}
+      onClick={(e) => disabled && e.preventDefault()}
     >
-      <div className="h-[40px] w-[40px] overflow-hidden rounded-md">
+      <div className="h-[40px] min-w-[40px] overflow-hidden rounded-md">
         <Image
           className="object-cover"
           alt="avatar"

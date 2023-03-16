@@ -1,12 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 export class UpdateProfileDto {
   @ApiProperty()
   @IsString()
+  @MaxLength(24)
+  @MinLength(1)
   readonly name?: string;
 
   @ApiProperty()
   @IsString()
+  @MaxLength(300)
   readonly bio?: string;
 
   @ApiProperty()
