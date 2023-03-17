@@ -16,7 +16,20 @@ export enum Language {
 }
 
 export enum SubmissionStatus {
-  Accepted = 3,
+  'In Queue' = 1,
+  'Processing' = 2,
+  'Accepted' = 3,
+  'Wrong Answer' = 4,
+  'Time Limit Exceeded' = 5,
+  'Compilation Error' = 6,
+  'Runtime Error (SIGSEGV)' = 7,
+  'Runtime Error (SIGXFSZ)' = 8,
+  'Runtime Error (SIGFPE)' = 9,
+  'Runtime Error (SIGABRT)' = 10,
+  'Runtime Error (NZEC)' = 11,
+  'Runtime Error (Other)' = 12,
+  'Internal Error' = 13,
+  'Exec Format Error' = 14,
 }
 
 export enum SubmissionTypes {

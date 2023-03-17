@@ -14,6 +14,7 @@ const Result: FC<ResultProps> = ({ result }) => {
     runtime,
     memory,
     stdin,
+    stderr,
     stdout,
     expected_output,
     type,
@@ -30,7 +31,7 @@ const Result: FC<ResultProps> = ({ result }) => {
   return (
     <div>
       <div className={cx('h-[32px] text-lg', accepted ? 'text-success' : 'text-error')}>
-        <span>{accepted ? 'Accepted' : 'Wrong Answer'}</span>
+        <span>{SubmissionStatus[status]}</span>
         <span className="ml-1 text-xs">{isRun && '(Testcase)'}</span>
         <span className="ml-2 text-xs text-secondary-100">
           <span className="text-secondary-200">{runtime}</span> seconds
@@ -55,13 +56,25 @@ const Result: FC<ResultProps> = ({ result }) => {
       </span>
       {showValues && (
         <div className="mt-3 h-[100px] overflow-auto">
+          {stderr && (
+            <div>
+              <div className="mb-1 text-xs">Error</div>
+              <div className="rounded-md bg-background-50 px-2 py-1 text-sm">
+                {decodeBase64(stderr)}
+              </div>
+            </div>
+          )}
           <div>
             <div className="mb-1 text-xs">Input</div>
-            <div className="rounded-md bg-background-50 px-2 py-1 text-sm">{decodeBase64(stdin)}</div>
+            <div className="rounded-md bg-background-50 px-2 py-1 text-sm">
+              {decodeBase64(stdin)}
+            </div>
           </div>
           <div className="mt-2">
             <div className="mb-1 text-xs">Output</div>
-            <div className="rounded-md bg-background-50 px-2 py-1 text-sm">{decodeBase64(stdout)}</div>
+            <div className="rounded-md bg-background-50 px-2 py-1 text-sm">
+              {decodeBase64(stdout)}
+            </div>
           </div>
           <div className="mt-2">
             <div className="mb-1 text-xs">Expected Output</div>
