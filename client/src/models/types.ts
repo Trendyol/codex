@@ -4,6 +4,7 @@ export type SubmissionResult = {
   created_at: string;
   expected_output: string;
   stdin: string;
+  stderr?: string;
   language: number;
   memory: number;
   code: string;
