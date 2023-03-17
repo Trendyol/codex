@@ -8,7 +8,7 @@ type MessageProps = {
 };
 
 const Message: FC<MessageProps> = ({ user, message }) => {
-  const { name, avatar } = user || {};
+  const { name, avatar, points } = user || {};
   return (
     <div className="flex rounded-md bg-background-50 p-2">
       {avatar && (
@@ -18,7 +18,7 @@ const Message: FC<MessageProps> = ({ user, message }) => {
         {name && (
           <div className="text-sm text-primary-500">
             <span className="font-semibold">{name}</span>
-            <span className="ml-2 text-xs text-secondary-100">350 Points</span>
+            <span className="ml-2 text-xs text-secondary-100">{points || 0} Points</span>
           </div>
         )}
         <div className="text-sm text-secondary-200 whitespace-normal break-all">{message}</div>

@@ -64,6 +64,7 @@ export const USER_MENU_ITEMS = [
     title: 'Settings',
     Icon: IoSettingsSharp,
     path: '/settings',
+    disabled: true,
   },
 ];
 

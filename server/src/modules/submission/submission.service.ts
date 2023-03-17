@@ -25,6 +25,7 @@ export class SubmissionService {
 
     return {
       ...result,
+      runtime: result.time,
       status: result.status.id,
       passedTestcases: passed ? 1 : 0,
       totalTestcases: 1,
@@ -52,8 +53,8 @@ export class SubmissionService {
     for (const { stdin, expected_output } of testcases) {
       const result = await this.execute(code, language, stdin, expected_output);
 
-      runtime += result.time;
-      memory += result.memory;
+      runtime += Number(result.time);
+      memory += Number(result.memory);
       status = result.status.id;
 
       latestTestcaseResult = result;
@@ -105,9 +106,7 @@ export class SubmissionService {
         },
         data,
       };
-
       const result = (await axios.request(options)).data as SubmissionResult;
-
       return {
         ...result,
         language,
