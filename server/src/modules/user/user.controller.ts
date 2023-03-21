@@ -1,3 +1,4 @@
+import { AnonymousGuard } from '@auth/guards/anonymous.guard';
 import { UserEntity } from '@core/data/entities';
 import { User } from '@core/decorators/user.decorator';
 import {
@@ -74,7 +75,7 @@ export class UserController {
   }
 
   @Get()
-  @UseGuards(JwtGuard)
+  @UseGuards(AnonymousGuard)
   async find(
     @Query('orderBy') orderBy?: string,
     @Query('order') order?: string,

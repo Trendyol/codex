@@ -9,6 +9,8 @@ type ProgressionProps = {};
 const Progression: FC<ProgressionProps> = () => {
   const { progression } = useProgression();
 
+  if (!progression) return null;
+
   return (
     <Card className="flex flex-col items-center gap-4 overflow-hidden">
       <div className="text-lg font-semibold text-primary-400">Progression</div>
