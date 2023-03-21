@@ -49,6 +49,7 @@ export class SubmissionService {
     let status = 0;
     const date = new Date();
     let latestTestcaseResult: SubmissionResult;
+    let passed;
 
     for (const { stdin, expected_output } of testcases) {
       const result = await this.execute(code, language, stdin, expected_output);
@@ -58,7 +59,7 @@ export class SubmissionService {
       status = result.status.id;
 
       latestTestcaseResult = result;
-      const passed = status == SubmissionStatus.Accepted;
+      passed = status == SubmissionStatus.Accepted;
       if (!passed) break;
 
       passedTestcases++;
@@ -75,6 +76,8 @@ export class SubmissionService {
       status,
       date,
     });
+
+    if (passed) await this.dataService.queries.appendProblemToUser(userId, problemId);
 
     return {
       ...latestTestcaseResult,

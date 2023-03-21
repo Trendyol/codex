@@ -37,4 +37,10 @@ export class ProblemController {
   findDefaultCode(@Param('id') id: string, @Param('language') language: number) {
     return this.problemService.findDefaultCode(id, language);
   }
+
+  @Get('/progression/all')
+  @UseGuards(JwtGuard)
+  findProblemProgression(@User() user: UserEntity) {
+    return this.problemService.findProgression(user.id);
+  }
 }

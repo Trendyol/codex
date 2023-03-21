@@ -79,6 +79,11 @@ export class OttomanQueries {
       parameters: { USER_ID: userId, CHALLENGE: challenge },
     });
   }
+  async appendProblemToUser(userId: string, problem: string) {
+    await this._query(queries.appendProblemToUser, {
+      parameters: { USER_ID: userId, PROBLEM: problem },
+    });
+  }
 
   async findProblems(userId: string) {
     const result = await this._query(queries.findProblems, {
@@ -89,11 +94,18 @@ export class OttomanQueries {
 
     result.rows.forEach((row) => {
       problems.push({
-        ...row["q1"],
+        ...row['q1'],
         solved: row.solved[0]?.['$1'],
       });
     });
 
     return problems;
+  }
+  async findProblemProgression(userId: string) {
+    const result = await this._query(queries.findProblemProgression, {
+      parameters: { USER_ID: userId },
+    });
+
+    return result.rows[0];
   }
 }

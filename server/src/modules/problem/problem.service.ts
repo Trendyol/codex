@@ -31,4 +31,10 @@ export class ProblemService {
 
     return defaultCode;
   }
+
+  async findProgression(userId: string) {
+    const progression = await this.dataService.queries.findProblemProgression(userId);
+
+    return progression;
+  }
 }

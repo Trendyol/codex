@@ -19,6 +19,7 @@ export class UserService {
       role: Roles.USER,
       rank: 0,
       challenges: [],
+      problems: [],
     });
   }
 

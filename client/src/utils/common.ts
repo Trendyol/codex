@@ -1,4 +1,4 @@
 export const getHashAvatar = (hash = '') => {
   if (!hash) return '';
-  return `https://avatars.dicebear.com/api/avataaars/${hash}.svg`;
+  return `https://api.dicebear.com/5.x/thumbs/png?seed=${hash}`;
 };
