@@ -1,5 +1,6 @@
 import Community from '@components/shared/Community';
 import Leaderboard from '@components/shared/Leaderboard';
+import Progression from '@components/shared/Progression';
 import Suggestion from '@components/shared/Suggestion';
 import Lore from './components/Lore';
 import Placement from './components/Placement';
@@ -13,7 +14,8 @@ const Challenge = () => {
         <Placement />
         <Prize />
       </div>
-      <div className="flex flex-col gap-6 flex-shrink-0 w-sidebar xl:w-[270px] md:hidden">
+      <div className="flex w-sidebar flex-shrink-0 flex-col gap-6 xl:w-[270px] md:hidden">
+        <Progression />
         <Leaderboard />
         <Community />
         <Suggestion />

@@ -129,19 +129,75 @@ Update default set challenges = ARRAY_APPEND(challenges, $CHALLENGE)
 where type = 'user' and id = $USER_ID
 `;
 
+const appendProblemToUser = `
+Update default set problems = ARRAY_APPEND(problems, $PROBLEM)
+where type = 'user' and id = $USER_ID
+`;
+
 const findProblems = `
 SELECT *, solved
 FROM default q1
 LET solved = (
     SELECT TRUE
     FROM default q2
-    WHERE type = 'submission'
-        AND status = 3
-        AND userId = $USER_ID
-        AND q1.id = q2.problemId
-    LIMIT 1)
+    WHERE type = 'user'
+        AND q1.id in q2.problems)
 WHERE type = 'problem'
 `;
+
+const findProblemProgression = `SELECT ARRAY_LENGTH(solvedAll) AS solvedAll,
+ARRAY_LENGTH(totalAll) AS totalAll,
+ARRAY_LENGTH(solvedEasy) AS solvedEasy,
+ARRAY_LENGTH(totalEasy) AS totalEasy,
+ARRAY_LENGTH(solvedMedium) AS solvedMedium,
+ARRAY_LENGTH(totalMedium) AS totalMedium,
+ARRAY_LENGTH(solvedHard) AS solvedHard,
+ARRAY_LENGTH(totalHard) AS totalHard
+FROM default q1
+LET solvedAll = (
+SELECT *
+FROM default q2
+WHERE type = 'problem'
+ AND id IN q1.problems),
+totalAll = (
+SELECT *
+FROM default q2
+WHERE type = 'problem'),
+solvedEasy = (
+SELECT *
+FROM default q2
+WHERE type = 'problem'
+ AND difficulty = 1
+ AND id IN q1.problems),
+totalEasy = (
+SELECT *
+FROM default q2
+WHERE type = 'problem'
+ AND difficulty = 1),
+solvedMedium = (
+SELECT *
+FROM default q2
+WHERE type = 'problem'
+ AND difficulty = 2
+ AND id IN q1.problems),
+totalMedium = (
+SELECT *
+FROM default q2
+WHERE type = 'problem'
+ AND difficulty = 2),
+solvedHard = (
+SELECT *
+FROM default q2
+WHERE type = 'problem'
+ AND difficulty = 3
+ AND id IN q1.problems),
+totalHard = (
+SELECT *
+FROM default q2
+WHERE type = 'problem'
+ AND difficulty = 3)
+WHERE type = 'user'
+AND id = $USER_ID`;
 
 export const queries = {
   findChallenges,
@@ -151,5 +207,7 @@ export const queries = {
   addPointsToUser,
   findChallengePlacements,
   appendChallengeToUser,
-  findProblems
+  appendProblemToUser,
+  findProblems,
+  findProblemProgression,
 };

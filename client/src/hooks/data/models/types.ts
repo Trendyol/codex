@@ -18,6 +18,17 @@ export type Challenge = {
   userActiveParticipant: boolean;
 };
 
+export type Progression = {
+  solvedAll: number;
+  totalAll: number;
+  solvedEasy: number;
+  totalEasy: number;
+  solvedMedium: number;
+  totalMedium: number;
+  solvedHard: number;
+  totalHard: number;
+};
+
 export type Testcase = {
   id: string;
   expected_output: string;

@@ -1,5 +1,6 @@
 import { Schema } from 'ottoman';
 
+
 export const userSchema = new Schema({
   email: String,
   name: String,
@@ -14,4 +15,5 @@ export const userSchema = new Schema({
       ranking: Number,
     },
   ],
+  problems: [{ type: String, ref: 'problem' }],
 });

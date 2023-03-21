@@ -8,7 +8,7 @@ const Leaderboard = () => {
   const filter = {
     orderBy: 'points',
     order: 'desc',
-    limit: '3',
+    limit: 3,
   };
   const { users } = useUsers(filter);
 
