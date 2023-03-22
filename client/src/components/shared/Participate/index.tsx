@@ -23,7 +23,11 @@ const Participate: FC<ParticipateProps> = ({
 
   if (status == Status.upcoming) {
     if (userParticipant)
-      return <div className="mt-auto text-sm font-semibold text-green-400">Registered</div>;
+      return (
+        <Button intent={'primary'} disabled size={'small'}>
+          Registered
+        </Button>
+      );
 
     return (
       <Button

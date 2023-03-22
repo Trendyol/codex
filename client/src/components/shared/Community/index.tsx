@@ -4,9 +4,9 @@ import { BsSlack } from 'react-icons/bs';
 
 const Community = () => {
   return (
-    <Card className="whitespace-nowrap flex flex-col items-center gap-6">
-      <div className="text-primary-400 text-lg font-semibold">Join Codex Community</div>
-      <div className="w-20 h-20 bg-[#57caeb] flex items-center justify-center rounded-md">
+    <Card className="flex flex-col items-center gap-6 whitespace-nowrap">
+      <div className="text-lg font-semibold text-primary-400">Join Codex Community</div>
+      <div className="flex h-20 w-20 items-center justify-center rounded-md bg-[#57caeb]">
         <BsSlack color="white" size={50} radius={55} />
       </div>
       <Button intent={'secondary'} fluid>

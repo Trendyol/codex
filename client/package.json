@@ -38,6 +38,7 @@
     "react-use": "^17.4.0",
     "rehype-raw": "^6.1.1",
     "remark-gfm": "^3.0.1",
+    "sharp": "^0.31.3",
     "socket.io-client": "^4.5.4",
     "swr": "^2.0.3",
     "typescript": "4.9.4",
@@ -49,11 +50,11 @@
     "yup": "^1.0.0"
   },
   "devDependencies": {
+    "@types/luxon": "^3.2.0",
     "@types/node": "18.11.18",
+    "@types/random-gradient": "^0.0.0",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.10",
-    "@types/luxon": "^3.2.0",
-    "@types/random-gradient": "^0.0.0",
     "@types/react-syntax-highlighter": "^15.5.6",
     "autoprefixer": "^10.4.13",
     "eslint-config-prettier": "^8.6.0",
