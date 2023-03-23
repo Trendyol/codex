@@ -67,7 +67,7 @@ const Header = () => {
       ),
     },
     {
-      key: 3,
+      key: 4,
       label: (
         <div className="flex items-center p-2 text-sm">
           <FiLogOut />
