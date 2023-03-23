@@ -22,16 +22,24 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v3
 
-      - name: Verify Changed files
-        uses: tj-actions/verify-changed-files@v14
-        id: verify-changed-files
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
         with:
-          files: |
-            client/**
-      - name: Run step only when any of the above files change.
-        if: steps.verify-changed-files.outputs.files_changed == 'true'
+          since_last_remote_commit: true
+          files: client/**
+
+      - name: List all changed files
         run: |
-          echo "Changed files: ${{ steps.verify-changed-files.outputs.changed_files }}"
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
+
+      - name: Run step if any file(s) in the docs folder change
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+          echo "One or more files in the docs folder has changed."
+          echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
