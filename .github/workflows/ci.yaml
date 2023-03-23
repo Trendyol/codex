@@ -13,7 +13,7 @@ env:
   SERVER_IMAGE_NAME: ${{ github.repository }}-server
 
 jobs:
-  install and build:
+  install_and_build:
     runs-on: ubuntu-latest
     defaults:
       run:
