@@ -48,7 +48,7 @@ jobs:
 
   client:
     runs-on: ubuntu-latest
-    if: ${{ needs.outputs.client == 'true' }}
+    if: ${{ needs.check.outputs.client == 'true' }}
     defaults:
       run:
         working-directory: client
@@ -94,7 +94,7 @@ jobs:
 
   server:
     runs-on: ubuntu-latest
-    if: ${{ needs.outputs.server == 'true' }}
+    if: ${{ needs.check.outputs.server == 'true' }}
     defaults:
       run:
         working-directory: server
