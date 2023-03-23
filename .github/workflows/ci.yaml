@@ -13,7 +13,7 @@ env:
   SERVER_IMAGE_NAME: ${{ github.repository }}-server
 
 jobs:
-  check:
+  changed:
     runs-on: ubuntu-latest
     outputs:
       client: ${{ steps.client.outputs.changed }}
@@ -48,7 +48,7 @@ jobs:
 
   client:
     runs-on: ubuntu-latest
-    if: ${{ needs.check.outputs.client == 'true' }}
+    if: ${{ needs.changed.outputs.client == 'true' }}
     defaults:
       run:
         working-directory: client
@@ -94,7 +94,7 @@ jobs:
 
   server:
     runs-on: ubuntu-latest
-    if: ${{ needs.check.outputs.server == 'true' }}
+    if: ${{ needs.changed.outputs.server == 'true' }}
     defaults:
       run:
         working-directory: server
