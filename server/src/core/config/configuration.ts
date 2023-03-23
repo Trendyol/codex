@@ -22,7 +22,6 @@ export interface Config {
     username: string;
     password: string;
   };
-  
   redirectUrl: string;
   clientUrl: string;
   judge0: {
