@@ -71,7 +71,7 @@ const Header = () => {
       label: (
         <div className="flex items-center p-2 text-sm">
           <FiLogOut />
-          <div onClick={logout} className="ml-2">
+          <div onClick={() => logout()} className="ml-2">
             Sign out
           </div>
         </div>
