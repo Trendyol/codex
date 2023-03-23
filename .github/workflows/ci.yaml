@@ -13,7 +13,7 @@ env:
   SERVER_IMAGE_NAME: ${{ github.repository }}-server
 
 jobs:
-  needs:
+  check:
     runs-on: ubuntu-latest
     outputs:
       client: ${{ steps.client.outputs.changed }}
@@ -90,6 +90,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+    needs: check
 
   server:
     runs-on: ubuntu-latest
@@ -135,3 +136,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+    needs: check
