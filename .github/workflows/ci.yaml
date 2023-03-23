@@ -25,7 +25,6 @@ jobs:
           cache: 'yarn'
       - name: "Install Client"
         working-directory: client
-        if: steps.cache-client-node_modules.outputs.cache-hit != 'true'
         run: yarn
 
   build:
