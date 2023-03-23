@@ -21,8 +21,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
-          cache: 'yarn'
+          node-version: "16"
+          cache: "yarn"
           cache-dependency-path: client/yarn.lock
       - name: "Install Client"
         working-directory: client
@@ -36,6 +36,12 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+          cache-dependency-path: client/yarn.lock
       - name: "Build Client"
         run: yarn build
       - name: Archive build artifacts
