@@ -15,17 +15,18 @@ env:
 jobs:
   install:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
     steps:
       - name: "Checkout"
         uses: actions/checkout@v3
       - name: Set up Node.js
-        working-directory: client
         uses: actions/setup-node@v3
         with:
           node-version: '16'
           cache: 'yarn'
       - name: "Install Client"
-        working-directory: client
         run: yarn
 
   build:
@@ -34,7 +35,6 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v3
       - name: "Build Client"
-        working-directory: client
         run: yarn build
       - name: Archive build artifacts
         uses: actions/upload-artifact@v3
