@@ -19,6 +19,7 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v3
       - name: Set up Node.js
+        working-directory: client
         uses: actions/setup-node@v3
         with:
           node-version: '16'
