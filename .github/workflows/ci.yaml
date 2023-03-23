@@ -18,15 +18,11 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v3
-      # - name: Cache node modules
-      #   working-directory: client
-      #   id: cache-client-node_modules
-      #   uses: actions/cache@v3
-      #   env:
-      #     cache-name: cache-node-modules
-      #   with:
-      #     path: node_modules
-      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn-lock.json') }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'yarn'
       - name: "Install Client"
         working-directory: client
         if: steps.cache-client-node_modules.outputs.cache-hit != 'true'
