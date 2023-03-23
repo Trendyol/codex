@@ -23,8 +23,8 @@ export interface Config {
     password: string;
   };
 
-  redirectUrl: string;
   clientUrl: string;
+  redirectUrl: string;
   judge0: {
     url: string;
     key: string;
