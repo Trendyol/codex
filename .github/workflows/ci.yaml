@@ -13,7 +13,7 @@ env:
   SERVER_IMAGE_NAME: ${{ github.repository }}-server
 
 jobs:
-  install_and_build:
+  client:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -21,50 +21,33 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v3
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "16"
           cache: "yarn"
           cache-dependency-path: client/yarn.lock
-      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: "Install Client"
-        working-directory: client
-        run: yarn --prefer-offline
-      - name: "Build Client"
-        run: yarn build
-      - name: Archive build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: client-build
-          path: |
-            client/.next
 
-  dockerize:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: client
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - name: "Checkout"
-        uses: actions/checkout@v3
+      - name: Install project dependencies
+        run: yarn
+
+      - name: "Build"
+        run: yarn build
+
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: ${{ env.REGISTRY }}/${{ env.CLIENT_IMAGE_NAME }}
-      - uses: actions/download-artifact@v3
-        with:
-          name: client-build
+
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
@@ -72,4 +55,46 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-    needs: install_and_build
+
+  server:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+          cache-dependency-path: server/yarn.lock
+
+      - name: Install project dependencies
+        run: yarn
+
+      - name: "Build"
+        run: yarn build
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: ./server
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
