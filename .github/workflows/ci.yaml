@@ -13,22 +13,7 @@ env:
   SERVER_IMAGE_NAME: ${{ github.repository }}-server
 
 jobs:
-  install:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout"
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16"
-          cache: "yarn"
-          cache-dependency-path: client/yarn.lock
-      - name: "Install Client"
-        working-directory: client
-        run: yarn
-
-  build:
+  install and build:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -42,6 +27,10 @@ jobs:
           node-version: "16"
           cache: "yarn"
           cache-dependency-path: client/yarn.lock
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: "Install Client"
+        working-directory: client
+        run: yarn --prefer-offline
       - name: "Build Client"
         run: yarn build
       - name: Archive build artifacts
