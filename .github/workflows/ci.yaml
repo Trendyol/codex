@@ -31,9 +31,6 @@ jobs:
         working-directory: client
         if: steps.cache-client-node_modules.outputs.cache-hit != 'true'
         run: yarn
-      - name: "Build Client"
-        working-directory: client
-        run: yarn build
 
   build:
     runs-on: ubuntu-latest
