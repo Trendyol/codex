@@ -38,7 +38,7 @@ jobs:
         with:
           name: client-build
           path: |
-            dist
+            .next
 
   dockerize:
     runs-on: ubuntu-latest
