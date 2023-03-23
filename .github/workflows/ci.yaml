@@ -39,7 +39,6 @@ jobs:
           name: client-build
           path: |
             dist
-    needs: install
 
   dockerize:
     runs-on: ubuntu-latest
