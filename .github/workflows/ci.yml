@@ -1,0 +1,96 @@
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+      - ci
+
+jobs:
+  changed:
+    runs-on: ubuntu-latest
+    outputs:
+      client: ${{ steps.client.outputs.changed }}
+      server: ${{ steps.server.outputs.changed }}
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
+
+      - name: Get changed client files
+        id: client-files
+        uses: tj-actions/changed-files@v35
+        with:
+          since_last_remote_commit: true
+          files: client/**
+
+      - name: Get changed server files
+        id: server-files
+        uses: tj-actions/changed-files@v35
+        with:
+          since_last_remote_commit: true
+          files: server/**
+
+      - name: Check if client has changed files
+        id: client
+        if: steps.client-files.outputs.any_changed == 'true'
+        run: echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Check if server has changed files
+        id: server
+        if: steps.server-files.outputs.any_changed == 'true'
+        run: echo "changed=true" >> "$GITHUB_OUTPUT"
+
+  client:
+    runs-on: ubuntu-latest
+    if: ${{ needs.changed.outputs.client == 'true' }}
+    defaults:
+      run:
+        working-directory: client
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+          cache-dependency-path: client/yarn.lock
+
+      - name: Install project dependencies
+        run: yarn --prefer-offline
+
+      # - name: Test
+      #   run: yarn test --passWithNoTests
+
+      - name: "Build"
+        run: yarn build
+
+    needs: changed
+
+  server:
+    runs-on: ubuntu-latest
+    if: ${{ needs.changed.outputs.server == 'true' }}
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+          cache-dependency-path: server/yarn.lock
+
+      - name: Install project dependencies
+        run: yarn --prefer-offline
+
+      # - name: Test
+      #   run: yarn test --passWithNoTests
+
+      - name: "Build"
+        run: yarn build
+
+    needs: changed
