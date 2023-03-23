@@ -13,10 +13,11 @@ env:
   SERVER_IMAGE_NAME: ${{ github.repository }}-server
 
 jobs:
-  client:
-    runs-on: node
+  install:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: "Checkout"
+        uses: actions/checkout@v3
       # - name: Cache node modules
       #   working-directory: client
       #   id: cache-client-node_modules
@@ -28,11 +29,36 @@ jobs:
       #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn-lock.json') }}
       - name: "Install Client"
         working-directory: client
-        # if: steps.cache-client-node_modules.outputs.cache-hit != 'true'
+        if: steps.cache-client-node_modules.outputs.cache-hit != 'true'
         run: yarn
       - name: "Build Client"
         working-directory: client
         run: yarn build
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
+      - name: "Build Client"
+        working-directory: client
+        run: yarn build
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: client-build
+          path: |
+            dist
+    needs: install
+
+  dockerize:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
@@ -51,3 +77,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+    needs: build
