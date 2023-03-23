@@ -13,33 +13,48 @@ env:
   SERVER_IMAGE_NAME: ${{ github.repository }}-server
 
 jobs:
+  needs:
+    runs-on: ubuntu-latest
+    outputs:
+      client: ${{ steps.client.outputs.changed }}
+      server: ${{ steps.server.outputs.changed }}
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
+
+      - name: Get changed client files
+        id: client-files
+        uses: tj-actions/changed-files@v35
+        with:
+          since_last_remote_commit: true
+          files: client/**
+
+      - name: Get changed server files
+        id: server-files
+        uses: tj-actions/changed-files@v35
+        with:
+          since_last_remote_commit: true
+          files: server/**
+
+      - name: Check if client has changed files
+        id: client
+        if: steps.client-files.outputs.any_changed == 'true'
+        run: echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Check if server has changed files
+        id: server
+        if: steps.server-files.outputs.any_changed == 'true'
+        run: echo "changed=true" >> "$GITHUB_OUTPUT"
+
   client:
     runs-on: ubuntu-latest
+    if: ${{ needs.needs.outputs.client == 'true' }}
     defaults:
       run:
         working-directory: client
     steps:
       - name: "Checkout"
         uses: actions/checkout@v3
-
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v35
-        with:
-          since_last_remote_commit: true
-          files: client/**
-
-      - name: List all changed files
-        run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
-          done
-
-      - name: Run step if any file(s) in the docs folder change
-        if: steps.changed-files.outputs.any_changed == 'true'
-        run: |
-          echo "One or more files in the docs folder has changed."
-          echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -78,6 +93,7 @@ jobs:
 
   server:
     runs-on: ubuntu-latest
+    if: ${{ needs.needs.outputs.server == 'true' }}
     defaults:
       run:
         working-directory: server
