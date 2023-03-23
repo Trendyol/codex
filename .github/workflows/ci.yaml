@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: '16'
           cache: 'yarn'
-          cache-dependency-path: subdir/package-lock.json
+          cache-dependency-path: client/yarn.lock
       - name: "Install Client"
         working-directory: client
         run: yarn
