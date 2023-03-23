@@ -22,6 +22,17 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v3
 
+      - name: Verify Changed files
+        uses: tj-actions/verify-changed-files@v14
+        id: verify-changed-files
+        with:
+          files: |
+            client/**
+      - name: Run step only when any of the above files change.
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
+        run: |
+          echo "Changed files: ${{ steps.verify-changed-files.outputs.changed_files }}"
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -92,7 +103,6 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}
           tags: type=sha
-
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
