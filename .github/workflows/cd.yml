@@ -48,7 +48,7 @@ jobs:
 
   client:
     runs-on: ubuntu-latest
-    # if: ${{ needs.changed.outputs.client == 'true' }}
+    if: ${{ needs.changed.outputs.client == 'true' }}
     defaults:
       run:
         working-directory: client
@@ -90,7 +90,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-    # needs: changed
+    needs: changed
 
   server:
     runs-on: ubuntu-latest
