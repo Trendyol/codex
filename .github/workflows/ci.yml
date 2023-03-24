@@ -5,6 +5,8 @@ on:
       - dev
       - ci
 
+name: Pre-check
+
 jobs:
   changed:
     runs-on: ubuntu-latest
@@ -20,14 +22,14 @@ jobs:
         uses: tj-actions/changed-files@v35
         with:
           since_last_remote_commit: true
-          files: client/**
+          files: client/**, .github/workflows/*
 
       - name: Get changed server files
         id: server-files
         uses: tj-actions/changed-files@v35
         with:
           since_last_remote_commit: true
-          files: server/**
+          files: server/**, .github/workflows/*
 
       - name: Check if client has changed files
         id: client
