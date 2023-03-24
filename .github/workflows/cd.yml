@@ -128,9 +128,6 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}
           tags: type=sha
-      
-      - name: ls files
-        run: ls -la
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
