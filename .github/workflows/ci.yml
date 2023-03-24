@@ -22,14 +22,14 @@ jobs:
         uses: tj-actions/changed-files@v35
         with:
           since_last_remote_commit: true
-          files: client/**, .github/workflows/*
+          files: client/**
 
       - name: Get changed server files
         id: server-files
         uses: tj-actions/changed-files@v35
         with:
           since_last_remote_commit: true
-          files: server/**, .github/workflows/*
+          files: server/**
 
       - name: Check if client has changed files
         id: client
