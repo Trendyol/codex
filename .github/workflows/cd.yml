@@ -5,6 +5,8 @@ on:
       - dev
       - ci
 
+name: Build & Deploy
+
 env:
   REGISTRY: ghcr.io
   CLIENT_IMAGE_NAME: ${{ github.repository }}-client

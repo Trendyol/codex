@@ -5,6 +5,8 @@ on:
       - dev
       - ci
 
+name: Pre-check
+
 jobs:
   changed:
     runs-on: ubuntu-latest
