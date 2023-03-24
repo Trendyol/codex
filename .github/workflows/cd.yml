@@ -82,11 +82,14 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.CLIENT_IMAGE_NAME }}
           tags: type=sha
+      
+      - name: show files
+        run: ls -la
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: client
+          context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
