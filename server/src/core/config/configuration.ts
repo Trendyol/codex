@@ -11,6 +11,13 @@ export interface Config {
   jwt: {
     secret: string;
   };
+  jwks: {
+    issuer: string;
+    uri: string;
+    cookieName: string;
+    headerName: string;
+    algorithm: string;
+  };
   google: {
     clientId: string;
     clientSecret: string;
@@ -47,6 +54,13 @@ export const config = {
   },
   jwt: {
     secret: process.env.JWT_SECRET,
+  },
+  jwks: {
+    issuer: process.env.JWKS_ISSUER,
+    uri: process.env.JWKS_URI,
+    cookieName: process.env.JWKS_COOKIE_NAME,
+    headerName: process.env.JWKS_HEADER_NAME,
+    algorithm: process.env.JWKS_ALGORITHM,
   },
   google: {
     clientId: process.env.GOOGLE_CLIENT_ID,

@@ -8,6 +8,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { AnonymousStrategy } from './strategies/anonymous.strategy';
 import { GoogleStrategy } from './strategies/google.strategy';
+import { JwksStrategy } from './strategies/jwks.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
@@ -21,6 +22,6 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, GoogleStrategy, AnonymousStrategy],
+  providers: [AuthService, JwtStrategy, JwksStrategy, GoogleStrategy, AnonymousStrategy],
 })
 export class AuthModule {}

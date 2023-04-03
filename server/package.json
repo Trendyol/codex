@@ -39,6 +39,7 @@
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
     "helmet": "^6.0.1",
+    "jwks-rsa": "^3.0.1",
     "luxon": "^3.2.1",
     "ottoman": "^2.3.0",
     "passport": "^0.6.0",
