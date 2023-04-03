@@ -1,3 +1,4 @@
+import config from '@core/config/configuration';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import express from 'express'
@@ -7,11 +8,11 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 
 function cookieExtractor(req: express.Request): string | null{
   console.log(req.cookies)
-  return req.cookies[process.env.JWT_COOKIE_NAME] || null
+  return req.cookies[config.jwks.cookieName] || null
 }
 
 function headerExtractor(req: express.Request): string | null{
-  return req.cookies[process.env.JWT_HEADER_NAME] || null
+  return req.cookies[config.jwks.headerName] || null
 }
 
 
@@ -23,12 +24,12 @@ export class JwksStrategy extends PassportStrategy(Strategy, 'jwks') {
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: `${process.env.JWKS_URI}`,
+        jwksUri: `${config.jwks.uri}`,
       }),
 
       jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor, headerExtractor]),
-      issuer: `${process.env.JWKS_ISSUER}`,
-      algorithms: [process.env.JWKS_ALGORITHM],
+      issuer: `${config.jwks.issuer}`,
+      algorithms: [config.jwks.algorithm],
     });
   }
 
