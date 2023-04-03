@@ -7,7 +7,9 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
 import { GoogleGuard } from './guards/google.guard';
+import { JwksGuard } from './guards/jwks.guard';
 import { JwtGuard } from './guards/jwt.guard';
+import { BasicJwt, convertToUser } from './models/jwt';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -18,6 +20,15 @@ export class AuthController {
   @UseGuards(GoogleGuard)
   async googleAuthCallback(@User() user: UserEntity, @Res() response) {
     const token = await this.authService.handleAuth(user);
+
+    response.cookie(ACCESS_TOKEN, token, { httpOnly: true });
+    return response.redirect(config.redirectUrl);
+  }
+
+  @Get('jwks/callback')
+  @UseGuards(JwksGuard)
+  async jwksCallback(@User() jwt: BasicJwt, @Res() response) {
+    const token = await this.authService.handleAuth(convertToUser(jwt));
 
     response.cookie(ACCESS_TOKEN, token, { httpOnly: true });
     return response.redirect(config.redirectUrl);
