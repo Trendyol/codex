@@ -3,13 +3,14 @@ import Input from '@components/ui/Input';
 import Link from 'next/link';
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
+import { IoMdLogIn } from 'react-icons/io';
 
 const LoginForm = () => {
   return (
     <section className="bg-background-100">
-      <div className="flex flex-col items-center justify-center px-6 mx-auto h-screen py-0">
-        <div className="flex items-center mb-6 text-4xl font-semibold text">Codex</div>
-        <div className="w-full rounded-lg shadow border mt-0 max-w-md p-0 bg-background-12">
+      <div className="mx-auto flex h-screen flex-col items-center justify-center px-6 py-0">
+        <div className="text mb-6 flex items-center text-4xl font-semibold">Codex</div>
+        <div className="bg-background-12 mt-0 w-full max-w-md rounded-lg border p-0 shadow">
           <div className="space-y-3 p-8">
             <div className="space-y-6">
               <Input label="Email" type="email" name="email" placeholder="name@company.com" />
@@ -20,25 +21,39 @@ const LoginForm = () => {
                 id="password"
                 placeholder="••••••••"
               />
-              <Button fluid>Sign in</Button>
-              <div className="w-full flex items-center gap-2 text-gray-300">
-                <div className="w-full flex-1 h-px bg-gray-700"></div>
+              <Button fluid disabled={Boolean(process.env.NEXT_PUBLIC_PASSWORD_LOGIN_ENABLED)}>
+                Sign in
+              </Button>
+              <div className="flex w-full items-center gap-2 text-gray-300">
+                <div className="h-px w-full flex-1 bg-gray-700"></div>
                 or
-                <div className="w-full flex-1 h-px bg-gray-700"></div>
+                <div className="h-px w-full flex-1 bg-gray-700"></div>
               </div>
               <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/google/callback`}>
                 <Button
                   fluid
                   intent={'secondary'}
-                  className="flex items-center justify-center mt-6"
+                  className="mt-6 flex items-center justify-center"
                 >
                   <FcGoogle size={20} className="mr-2" />
                   <div>Log in with Google</div>
                 </Button>
               </Link>
+              {process.env.NEXT_PUBLIC_JWKS_ENABLED && (
+                <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/jwks/callback`}>
+                  <Button
+                    fluid
+                    intent={'secondary'}
+                    className="mt-6 flex items-center justify-center"
+                  >
+                    <IoMdLogIn size={20} className="mr-2" />
+                    <div className="w-30">Log in with {process.env.NEXT_PUBLIC_JWKS_NAME}</div>
+                  </Button>
+                </Link>
+              )}
               <p className="text-sm font-light text-gray-400">
                 Don’t have an account yet?
-                <a href="#" className="ml-2 font-medium hover:underline text-primary-100">
+                <a href="#" className="ml-2 font-medium text-primary-100 hover:underline">
                   Sign up
                 </a>
               </p>
