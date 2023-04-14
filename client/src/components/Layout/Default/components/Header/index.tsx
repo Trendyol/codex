@@ -13,6 +13,7 @@ import { ThemeContext } from '@contexts/ThemeContext';
 import { useLogout } from '@hooks/data/useLogout';
 import { useUsers } from '@hooks/data/useUsers';
 import { useDebounce } from 'react-use';
+import getConfig from 'next/config';
 
 const Header = () => {
   const [search, setSearch] = useState<string>();
@@ -21,6 +22,7 @@ const Header = () => {
   const { users } = useUsers({ name: debouncedSearch, limit: 3, orderBy: 'points', order: 'desc' });
   const { logout } = useLogout();
   const { theme, toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
+  const { publicRuntimeConfig } = getConfig();
 
   useDebounce(() => setDebouncedSearch(search), 500, [search]);
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -99,9 +101,11 @@ const Header = () => {
             <Link href={'/login'}>
               <Button className="mr-4 md:hidden">Log in</Button>
             </Link>
-            <Button intent={'secondary'}>
-              Create<span className="sm:hidden"> account</span>
-            </Button>
+            {publicRuntimeConfig.isSignUpAvailable && (
+              <Button intent={'secondary'}>
+                Create<span className="sm:hidden"> account</span>
+              </Button>
+            )}
           </>
         )}
       </div>

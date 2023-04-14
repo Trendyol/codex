@@ -22,6 +22,9 @@ const nextConfig = {
     }
     return config;
   },
+  publicRuntimeConfig: {
+    isSignUpAvailable: false
+  }
 };
 
 module.exports = withTM(nextConfig);
