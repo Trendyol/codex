@@ -1,3 +1,4 @@
+import config from '@core/config/configuration';
 import { UserEntity } from "@core/data/entities"
 
 export type BasicJwt = {
@@ -14,7 +15,7 @@ export type BasicJwt = {
 export function convertToUser(jwt: BasicJwt): UserEntity {
   return {
     email: jwt.email || jwt.sub,
-    name: jwt.name,
-    avatar: jwt.avatar
+    name: jwt.name || config.defaultUser.name,
+    avatar: jwt.avatar || config.defaultUser.avatar,
   } as UserEntity
 }
