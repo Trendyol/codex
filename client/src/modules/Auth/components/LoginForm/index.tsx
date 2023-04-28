@@ -46,7 +46,7 @@ const LoginForm = () => {
                 </>
               )}
               {process.env.NEXT_PUBLIC_JWKS_ENABLED && (
-                <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/jwks/callback`}>
+                <Link href={`${process.env.NEXT_PUBLIC_JWKS_CALLBACK_URL}/auth/jwks/callback`}>
                   <Button
                     fluid
                     intent={'secondary'}
