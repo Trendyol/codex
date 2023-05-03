@@ -18,6 +18,9 @@ export interface Config {
     headerName: string;
     algorithm: string;
   };
+  cookie: {
+    domain: string;
+  };
   google: {
     clientId: string;
     clientSecret: string;
@@ -65,6 +68,9 @@ export const config = {
     cookieName: process.env.JWKS_COOKIE_NAME,
     headerName: process.env.JWKS_HEADER_NAME,
     algorithm: process.env.JWKS_ALGORITHM,
+  },
+  cookie: {
+    domain: process.env.COOKIE_DOMAIN,
   },
   google: {
     clientId: process.env.GOOGLE_CLIENT_ID,

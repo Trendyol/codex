@@ -21,7 +21,7 @@ export class AuthController {
   async googleAuthCallback(@User() user: UserEntity, @Res() response) {
     const token = await this.authService.handleAuth(user);
 
-    response.cookie(ACCESS_TOKEN, token, { httpOnly: true });
+    response.cookie(ACCESS_TOKEN, token, { httpOnly: true, domain: config.cookie.domain });
     return response.redirect(config.redirectUrl);
   }
 
@@ -30,7 +30,7 @@ export class AuthController {
   async jwksCallback(@User() jwt: BasicJwt, @Res() response) {
     const token = await this.authService.handleAuth(convertToUser(jwt));
 
-    response.cookie(ACCESS_TOKEN, token, { httpOnly: true });
+    response.cookie(ACCESS_TOKEN, token, { httpOnly: true, domain: config.cookie.domain });
     return response.redirect(config.redirectUrl);
   }
 
