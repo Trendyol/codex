@@ -1,6 +1,9 @@
 import axios, { AxiosRequestConfig } from "axios";
+import getConfig from "next/config";
 
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+const { publicRuntimeConfig } = getConfig();
+
+axios.defaults.baseURL = publicRuntimeConfig.baseUrl;
 axios.defaults.withCredentials = true;
 
 export const fetcher = async (url: any, config?: AxiosRequestConfig) => {
