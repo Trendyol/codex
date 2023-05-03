@@ -23,7 +23,15 @@ const nextConfig = {
     return config;
   },
   publicRuntimeConfig: {
-    isSignUpAvailable: false
+    isSignUpAvailable: false,
+    baseUrl: process.env.BASE_URL,
+    jwksCallbackUrl: process.env.JWKS_CALLBACK_URL,
+    peerjsHost: process.env.PEERJS_HOST,
+    peerjsPort: process.env.PEERJS_PORT,
+    monacoSyncWsUrl: process.env.MONACO_SYNC_WS_URL,
+    jwksEnabled: process.env.JWKS_ENABLED,
+    jwksName: process.env.JWKS_NAME,
+    passwordLoginEnabled: process.env.PASSWORD_LOGIN_ENABLED,
   }
 };
 

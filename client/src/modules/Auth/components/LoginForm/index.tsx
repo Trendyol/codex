@@ -5,6 +5,7 @@ import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { IoMdLogIn } from 'react-icons/io';
 import getConfig from 'next/config';
+import * as process from "process";
 
 const LoginForm = () => {
   const { publicRuntimeConfig } = getConfig();
@@ -25,7 +26,7 @@ const LoginForm = () => {
                     id="password"
                     placeholder="••••••••"
                   />
-                  <Button fluid disabled={Boolean(process.env.NEXT_PUBLIC_PASSWORD_LOGIN_ENABLED)}>
+                  <Button fluid disabled={Boolean(publicRuntimeConfig.passwordLoginEnabled)}>
                     Sign in
                   </Button>
                   <div className="flex w-full items-center gap-2 text-gray-300">
@@ -33,7 +34,7 @@ const LoginForm = () => {
                     or
                     <div className="h-px w-full flex-1 bg-gray-700"></div>
                   </div>
-                  <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/google/callback`}>
+                  <Link href={`${publicRuntimeConfig.baseUrl}/auth/google/callback`}>
                     <Button
                       fluid
                       intent={'secondary'}
@@ -45,15 +46,15 @@ const LoginForm = () => {
                   </Link>
                 </>
               )}
-              {process.env.NEXT_PUBLIC_JWKS_ENABLED && (
-                <Link href={`${process.env.NEXT_PUBLIC_JWKS_CALLBACK_URL}/auth/jwks/callback`}>
+              {publicRuntimeConfig.jwksEnabled && (
+                <Link href={`${publicRuntimeConfig.jwksCallbackUrl}/auth/jwks/callback`}>
                   <Button
                     fluid
                     intent={'secondary'}
                     className="mt-6 flex items-center justify-center"
                   >
                     <IoMdLogIn size={20} className="mr-2" />
-                    <div className="w-30">Log in with {process.env.NEXT_PUBLIC_JWKS_NAME}</div>
+                    <div className="w-30">Log in with {publicRuntimeConfig.jwksName}</div>
                   </Button>
                 </Link>
               )}

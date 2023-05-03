@@ -8,6 +8,7 @@ import {
   BsFillMicFill,
   BsFillMicMuteFill,
 } from 'react-icons/bs';
+import getConfig from "next/config";
 type VideoProps = {};
 
 type VideoRef = {
@@ -15,6 +16,7 @@ type VideoRef = {
 };
 
 const Video: FC<VideoProps> = () => {
+  const { publicRuntimeConfig } = getConfig();
   const { query, isReady } = useRouter();
   const { me } = useMe();
   const { room } = useRoom(query.challenge as string, isReady);
@@ -34,9 +36,9 @@ const Video: FC<VideoProps> = () => {
       hasInitialized.current = true;
       const { Peer } = await import('peerjs');
       const peer = new Peer(me.id, {
-        host: process.env.NEXT_PUBLIC_PEERJS_HOST,
+        host: publicRuntimeConfig.peerjsHost,
         path: '/peerjs',
-        port: Number(process.env.NEXT_PUBLIC_PEERJS_URL),
+        port: Number(publicRuntimeConfig.peerjsPort),
       });
       peerInstance.current = peer;
       peer.on('error', (error: Error) => {});
