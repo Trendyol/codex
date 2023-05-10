@@ -18,7 +18,11 @@ export const LoginPage = () => {
 };
 
 LoginPage.getLayout = function getLayout(pageProps: AppProps, page: ReactElement) {
-  return <DefaultLayout>{page}</DefaultLayout>;
+    return <DefaultLayout>{page}</DefaultLayout>
 };
+
+export async function getServerSideProps(){
+    return { props: {} };
+}
 
 export default LoginPage;

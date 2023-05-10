@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig } from "axios";
-import getConfig from "next/config";
+import { getConfigWithTypes } from "@contexts/ConfigContext";
 
-const { publicRuntimeConfig } = getConfig();
+const configs = getConfigWithTypes();
 
-axios.defaults.baseURL = publicRuntimeConfig.baseUrl;
+axios.defaults.baseURL = configs.baseUrl;
 axios.defaults.withCredentials = true;
 
 export const fetcher = async (url: any, config?: AxiosRequestConfig) => {
