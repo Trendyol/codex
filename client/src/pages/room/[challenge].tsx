@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Room from '@modules/Room';
 import { AppProps } from 'next/app';
 import { ReactElement } from 'react';
-import DefaultLayout from '@components/layout/Default';
+import DefaultLayout from '@components/Layout/Default';
 
 const RoomPage = () => {
   return (
