@@ -26,4 +26,8 @@ RoomPage.getLayout = function getLayout(pageProps: AppProps, page: ReactElement)
   );
 };
 
+export async function getServerSideProps(){
+    return { props: {} };
+}
+
 export default RoomPage;

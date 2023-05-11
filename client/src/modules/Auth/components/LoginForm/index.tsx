@@ -4,11 +4,12 @@ import Link from 'next/link';
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { IoMdLogIn } from 'react-icons/io';
-import getConfig from 'next/config';
-import * as process from "process";
+import { useConfig } from "@contexts/ConfigContext";
 
-const LoginForm = () => {
-  const { publicRuntimeConfig } = getConfig();
+
+const LoginForm = (props:any) => {
+  const config = useConfig();
+
   return (
     <section className="bg-background-100">
       <div className="mx-auto flex h-screen flex-col items-center justify-center px-6 py-0">
@@ -16,7 +17,7 @@ const LoginForm = () => {
         <div className="bg-background-12 mt-0 w-full max-w-md rounded-lg border p-0 shadow">
           <div className="space-y-3 p-8">
             <div className="space-y-6">
-              {publicRuntimeConfig.isSignUpAvailable && (
+              {config.isSignUpAvailable && (
                 <>
                   <Input label="Email" type="email" name="email" placeholder="name@company.com" />
                   <Input
@@ -26,7 +27,7 @@ const LoginForm = () => {
                     id="password"
                     placeholder="••••••••"
                   />
-                  <Button fluid disabled={Boolean(publicRuntimeConfig.passwordLoginEnabled)}>
+                  <Button fluid disabled={Boolean(config.passwordLoginEnabled)}>
                     Sign in
                   </Button>
                   <div className="flex w-full items-center gap-2 text-gray-300">
@@ -34,7 +35,7 @@ const LoginForm = () => {
                     or
                     <div className="h-px w-full flex-1 bg-gray-700"></div>
                   </div>
-                  <Link href={`${publicRuntimeConfig.baseUrl}/auth/google/callback`}>
+                  <Link href={`${config.baseUrl}/auth/google/callback`}>
                     <Button
                       fluid
                       intent={'secondary'}
@@ -46,19 +47,19 @@ const LoginForm = () => {
                   </Link>
                 </>
               )}
-              {publicRuntimeConfig.jwksEnabled && (
-                <Link href={`${publicRuntimeConfig.jwksCallbackUrl}/auth/jwks/callback`}>
+              {config.jwksEnabled && (
+                <Link href={`${config.jwksCallbackUrl}/auth/jwks/callback`}>
                   <Button
                     fluid
                     intent={'secondary'}
                     className="mt-6 flex items-center justify-center"
                   >
                     <IoMdLogIn size={20} className="mr-2" />
-                    <div className="w-30">Log in with {publicRuntimeConfig.jwksName}</div>
+                    <div className="w-30">Log in with {config.jwksName}</div>
                   </Button>
                 </Link>
               )}
-              {publicRuntimeConfig.isSignUpAvailable && (
+              {config.isSignUpAvailable && (
                 <p className="text-sm font-light text-gray-400">
                   Don’t have an account yet?
                   <a href="#" className="ml-2 font-medium text-primary-100 hover:underline">

@@ -2,7 +2,7 @@ import * as Y from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
 import { MonacoBinding } from './compiled/y-monaco';
 import { Editor, Monaco } from './types';
-import getConfig from "next/config";
+import { getConfigWithTypes } from "@contexts/ConfigContext";
 
 export class MonacoController {
   yDoc: Y.Doc;
@@ -16,11 +16,11 @@ export class MonacoController {
 
     onSynced: () => void,
   ) {
-    const { publicRuntimeConfig } = getConfig();
+    const configs = getConfigWithTypes();
 
     this.yDoc = new Y.Doc();
     this.provider = new WebsocketProvider(
-      publicRuntimeConfig.monacoSyncWsUrl as string,
+        configs.monacoSyncWsUrl as string,
       this.roomId,
       this.yDoc,
     );

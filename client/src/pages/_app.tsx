@@ -8,6 +8,7 @@ import { ReactElement, ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { fetcher } from '@utils/fetcher';
 import ThemeProvider from '@contexts/ThemeContext';
+import ConfigProvider from "@contexts/ConfigContext";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (pageProps: AppProps, page: ReactElement) => ReactNode;
@@ -22,8 +23,10 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
     return (
       <SWRConfig value={{ fetcher }}>
         <ThemeProvider>
-          {Component.getLayout(pageProps, <Component {...pageProps} />)}
-          <ToastContainer autoClose={2000} />
+            <ConfigProvider>
+                {Component.getLayout(pageProps, <Component {...pageProps} />)}
+                <ToastContainer autoClose={2000} />
+            </ConfigProvider>
         </ThemeProvider>
       </SWRConfig>
     );
@@ -32,10 +35,12 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <SWRConfig value={{ fetcher }}>
       <ThemeProvider>
-        <DefaultLayout showHeader showSidebar>
-          <Component {...pageProps} />
-          <ToastContainer autoClose={2000} />
-        </DefaultLayout>
+          <ConfigProvider>
+              <DefaultLayout showHeader showSidebar>
+                  <Component {...pageProps} />
+                  <ToastContainer autoClose={2000} />
+              </DefaultLayout>
+          </ConfigProvider>
       </ThemeProvider>
     </SWRConfig>
   );
