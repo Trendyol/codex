@@ -1,7 +1,6 @@
 import { FC, ReactNode } from 'react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
-import ConfigProvider from "@contexts/ConfigContext";
 
 type DefaultLayoutProps = {
   children: ReactNode;
@@ -17,7 +16,6 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({
   collapsed = false,
 }) => {
   return (
-      <ConfigProvider>
         <div className="min-h-screen w-full bg-background-100 text-text">
           {showHeader && <Header />}
           <div className="flex">
@@ -25,8 +23,6 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({
             <div className="mt-6 flex-1 px-6 md:px-4 overflow-x-auto">{children}</div>
           </div>
         </div>
-      </ConfigProvider>
-
   );
 };
 
