@@ -41,6 +41,7 @@
     "sharp": "^0.31.3",
     "socket.io-client": "^4.5.4",
     "swr": "^2.0.3",
+    "tailwind-merge": "^1.12.0",
     "typescript": "4.9.4",
     "webrtc": "^1.14.1",
     "y-monaco": "0.1.4",

@@ -8,7 +8,7 @@ import {
   BsFillMicFill,
   BsFillMicMuteFill,
 } from 'react-icons/bs';
-import {useConfig} from "@contexts/ConfigContext";
+import { useConfig } from '@contexts/ConfigContext';
 type VideoProps = {};
 
 type VideoRef = {
