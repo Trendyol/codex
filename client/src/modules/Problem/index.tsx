@@ -20,11 +20,10 @@ const Problem = () => {
   const { query, isReady } = useRouter();
   const { problem } = useProblem(query.problem as string, isReady);
   const { defaultCode } = useDefaultCode(problem?.id, 3, !!problem?.id);
+
   const { me } = useMe();
 
-  const handleCodeChange = (code?: string) => {
-    setCode(code);
-  };
+  const handleCodeChange = (code?: string) => setCode(code);
 
   return (
     <div className="flex h-[calc(100vh-94px)] gap-6 pb-6">

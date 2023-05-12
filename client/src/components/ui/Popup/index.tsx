@@ -10,16 +10,16 @@ type PopupProps = {
   onHide: () => void;
 };
 
-const Pop: FC<PopupProps> = ({ show, onHide, title, children, footer }) => {
+const Popup: FC<PopupProps> = ({ show, onHide, title, children, footer }) => {
   const ref = useRef(null);
   useLockBodyScroll(show);
   useClickAway(ref, () => onHide());
 
   if (!show) return null;
   return (
-    <div className="fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto bg-gray-900 bg-opacity-70 px-4 md:h-full">
+    <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto bg-gray-900 bg-opacity-70 px-4 md:h-full">
       <div className="relative w-full max-w-xl md:h-auto" ref={ref}>
-        <div className="relative rounded-lg bg-background-200 shadow border border-border">
+        <div className="relative rounded-lg border border-border bg-background-200 shadow">
           <div className="flex items-start justify-between rounded-t border-b border-border p-4">
             <h3 className="text-xl font-semibold">{title}</h3>
             <button
@@ -29,7 +29,7 @@ const Pop: FC<PopupProps> = ({ show, onHide, title, children, footer }) => {
               <IoMdClose size={20} />
             </button>
           </div>
-          <div className="max-h-[60vh] min-h-[280px] space-y-6 overflow-auto p-6">{children}</div>
+          <div className="max-h-[60vh] space-y-6 overflow-auto p-6">{children}</div>
           {footer && (
             <div className="flex w-full items-center space-x-2 rounded-b border-t border-border  p-6">
               {footer}
@@ -41,4 +41,4 @@ const Pop: FC<PopupProps> = ({ show, onHide, title, children, footer }) => {
   );
 };
 
-export default Pop;
+export default Popup;

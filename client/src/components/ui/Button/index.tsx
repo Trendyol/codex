@@ -1,4 +1,5 @@
 import { cva, cx, type VariantProps } from 'class-variance-authority';
+import { twMerge } from 'tailwind-merge';
 import { FC, ReactNode } from 'react';
 
 type ButtonProps = {
@@ -20,6 +21,7 @@ const buttonVariants = cva('text-center font-medium box-border border-border', {
         'hover:bg-background-50',
         ,
       ],
+      danger: ['bg-error', 'hover:bg-red-600', 'text-white'],
     },
     size: {
       small: ['text-sm', 'py-2 h-[36px]', 'px-3', 'rounded-lg'],
@@ -42,7 +44,7 @@ const Button: FC<ButtonProps> = ({
   ...props
 }) => {
   const buttonClasses = cx(
-    buttonVariants({ intent, size, className }),
+    twMerge(buttonVariants({ intent, size }), className),
     fluid ? 'w-full' : '',
     disabled ? 'opacity-60 cursor-not-allowed' : '',
   );
