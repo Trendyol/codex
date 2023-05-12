@@ -2,7 +2,7 @@ function TestController() { }
 
 
 TestController.prototype.renderAddTestsModal = function() {
-    Logger.log("renderAddTestsModal")
+    
     const addNewTestsHtml = HtmlService
         .createTemplateFromFile('src/views/add-new-tests')
         .evaluate()
