@@ -1,10 +1,9 @@
 function ProblemController() { }
 
-
 ProblemController.prototype.renderAddProblemModal = function() {
 
     const addProblemModalHtml = HtmlService
-        .createTemplateFromFile('src/views/add-new-problem')
+        .createTemplateFromFile('src/views/add-new-problem-modal/add-new-problem-modal')
         .evaluate()
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
         .getContent();

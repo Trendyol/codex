@@ -1,10 +1,9 @@
 function TestController() { }
 
-
 TestController.prototype.renderAddTestsModal = function() {
     
     const addNewTestsHtml = HtmlService
-        .createTemplateFromFile('src/views/add-new-tests')
+        .createTemplateFromFile('src/views/add-new-tests-modal/add-new-tests-modal')
         .evaluate()
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
         .getContent();

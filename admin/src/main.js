@@ -6,7 +6,7 @@ function renderMenu() {
 
     const ui = SpreadsheetApp.getUi();
 
-    ui.createMenu('Codex Addon')
+    ui.createMenu('Codex Admin')
         .addItem('Add Problem', 'addProblem')
         .addItem('Add Tests', 'addTests')
         .addToUi();
