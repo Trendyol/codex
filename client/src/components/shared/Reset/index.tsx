@@ -1,7 +1,7 @@
 import Button from '@components/ui/Button';
 import { FC, useState } from 'react';
-import { GrPowerReset } from 'react-icons/gr';
 import WarningPopup from './components/WarningPopup';
+import { AiOutlineClear } from 'react-icons/ai';
 
 type ResetProps = {
   onReset: () => void;
@@ -11,14 +11,14 @@ const Reset: FC<ResetProps> = ({ onReset }) => {
   const [showWarningPopup, setShowWarningPopup] = useState(false);
 
   const showWarning = () => setShowWarningPopup(true);
-  const hideWarningPopup = () => setShowWarningPopup(false);
+  const hideWarning = () => setShowWarningPopup(false);
 
   return (
     <>
       <Button onClick={showWarning} intent={'secondary'} className="border-border">
-        <GrPowerReset size={14} />
+        <AiOutlineClear size={16}/>
       </Button>
-      <WarningPopup show={showWarningPopup} onHide={hideWarningPopup} onReset={onReset} />
+      <WarningPopup show={showWarningPopup} onHide={hideWarning} onReset={onReset} />
     </>
   );
 };
