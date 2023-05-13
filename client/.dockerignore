@@ -2,3 +2,4 @@
 !.next
 !package.json
 !node_modules
+!.env.example
