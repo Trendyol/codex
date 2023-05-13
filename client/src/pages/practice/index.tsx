@@ -14,4 +14,7 @@ const PracticePage = () => {
   );
 };
 
+export async function getServerSideProps(){
+    return { props: {} };
+}
 export default PracticePage;
