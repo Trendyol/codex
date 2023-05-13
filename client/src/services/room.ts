@@ -1,8 +1,11 @@
 import { User } from '@hooks/data/models/types';
 import { ActionTypes } from '@modules/Room/models/enum';
 import { io } from 'socket.io-client';
+import {getConfigWithTypes} from "@contexts/ConfigContext";
 
-const socket = io('http://localhost:4000/room', {
+const configs = getConfigWithTypes();
+
+const socket = io(`${configs.baseUrl}/room`, {
   withCredentials: true,
 });
 

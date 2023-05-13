@@ -15,4 +15,7 @@ const DashboardPage = () => {
   );
 };
 
+export async function getServerSideProps(){
+    return { props: {} };
+}
 export default DashboardPage;

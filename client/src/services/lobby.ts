@@ -1,7 +1,10 @@
 import { User } from '@hooks/data/models/types';
 import { io } from 'socket.io-client';
+import {getConfigWithTypes} from "@contexts/ConfigContext";
 
-const socket = io('http://localhost:4000/lobby', {
+const configs = getConfigWithTypes();
+
+const socket = io(`${configs.baseUrl}/lobby`, {
   withCredentials: true,
 });
 

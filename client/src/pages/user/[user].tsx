@@ -16,4 +16,8 @@ export const UserPage = () => {
   );
 };
 
+export async function getServerSideProps(){
+    return { props: {} };
+}
+
 export default UserPage;

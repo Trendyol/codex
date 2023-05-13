@@ -25,4 +25,8 @@ ProblemPage.getLayout = function getLayout(pageProps: AppProps, page: ReactEleme
   );
 };
 
+export async function getServerSideProps(){
+    return { props: {} };
+}
+
 export default ProblemPage;
