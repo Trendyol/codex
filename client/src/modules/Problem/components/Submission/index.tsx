@@ -73,7 +73,6 @@ const Submission: FC<SubmissionProps> = ({ problemId, code, language }) => {
           </button>
         )}
         <div className="flex">
-          {showComplete && <Button size={'small'}>Complete ✓</Button>}
           <Button
             className="mr-2 ml-auto"
             intent={'secondary'}
