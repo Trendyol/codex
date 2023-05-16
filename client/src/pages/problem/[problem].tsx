@@ -29,6 +29,16 @@ ProblemPage.getLayout = function getLayout(pageProps: AppProps, page: ReactEleme
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const me = await getMe(req.headers.cookie);
+
+  if (!me) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       fallback: {
