@@ -10,9 +10,10 @@ type MenuItemProps = {
   Icon: IconType;
   disabled?: boolean;
   collapse?: boolean;
+  target?: string;
 };
 
-const MenuItem: FC<MenuItemProps> = ({ path, title, Icon, disabled, collapse }) => {
+const MenuItem: FC<MenuItemProps> = ({ path, title, Icon, disabled, collapse, target }) => {
   const router = useRouter();
 
   const isActive = router.pathname === path;
@@ -22,6 +23,7 @@ const MenuItem: FC<MenuItemProps> = ({ path, title, Icon, disabled, collapse }) 
       key={title}
       title={title}
       onClick={(e) => e.stopPropagation()}
+      target={target}
     >
       <div
         className={cx(
