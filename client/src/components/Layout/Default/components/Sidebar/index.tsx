@@ -23,7 +23,7 @@ const Sidebar: FC<SidebarProps> = ({ collapsed }) => {
       <div className="flex h-full flex-col justify-between">
         <div className="flex flex-col gap-2">
           <div className="mt-2 mb-3 text-sm text-primary-500 lg:ml-0">{/* Menu */}</div>
-          {menuItems.map(({ path, title, Icon, disabled }) => (
+          {menuItems.map(({ path, title, Icon, disabled, target }) => (
             <MenuItem
               collapse={collapsed}
               key={title}
@@ -31,11 +31,12 @@ const Sidebar: FC<SidebarProps> = ({ collapsed }) => {
               title={title}
               Icon={Icon}
               disabled={disabled}
+              target={target}
             />
           ))}
         </div>
         <div className="flex flex-col gap-2 pb-6">
-          {BOTTOM_MENU_ITEMS.map(({ path, title, Icon, disabled }) => (
+          {BOTTOM_MENU_ITEMS.map(({ path, title, Icon, disabled, target }) => (
             <MenuItem
               collapse={collapsed}
               key={title}
@@ -43,6 +44,7 @@ const Sidebar: FC<SidebarProps> = ({ collapsed }) => {
               title={title}
               Icon={Icon}
               disabled={disabled}
+              target={target}
             />
           ))}
         </div>
