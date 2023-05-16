@@ -3,6 +3,8 @@ import Problem from '@modules/Problem';
 import DefaultLayout from '@components/Layout/Default';
 import { AppProps } from 'next/app';
 import { ReactElement } from 'react';
+import { GetServerSideProps } from 'next';
+import { getMe } from '@services/me';
 
 const ProblemPage = () => {
   return (
@@ -25,8 +27,15 @@ ProblemPage.getLayout = function getLayout(pageProps: AppProps, page: ReactEleme
   );
 };
 
-export async function getServerSideProps(){
-    return { props: {} };
-}
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const me = await getMe(req.headers.cookie);
+  return {
+    props: {
+      fallback: {
+        '/user/me': me,
+      },
+    },
+  };
+};
 
 export default ProblemPage;

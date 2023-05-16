@@ -1,6 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 import User from '@modules/User';
+import { GetServerSideProps } from 'next';
+import { getMe } from '@services/me';
 
 export const UserPage = () => {
   return (
@@ -16,8 +18,15 @@ export const UserPage = () => {
   );
 };
 
-export async function getServerSideProps(){
-    return { props: {} };
-}
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const me = await getMe(req.headers.cookie);
+  return {
+    props: {
+      fallback: {
+        '/user/me': me,
+      },
+    },
+  };
+};
 
 export default UserPage;

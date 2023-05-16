@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import Lobby from '@modules/Lobby';
+import { GetServerSideProps } from 'next';
+import { getMe } from '@services/me';
 
 const LobbyPage = () => {
   return (
@@ -15,7 +17,15 @@ const LobbyPage = () => {
   );
 };
 
-export async function getServerSideProps(){
-    return { props: {} };
-}
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const me = await getMe(req.headers.cookie);
+  return {
+    props: {
+      fallback: {
+        '/user/me': me,
+      },
+    },
+  };
+};
+
 export default LobbyPage;

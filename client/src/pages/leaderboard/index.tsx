@@ -1,4 +1,6 @@
 import Leaderboard from '@modules/Leaderboard';
+import { getMe } from '@services/me';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 
 const LeaderboardPage = () => {
@@ -14,7 +16,15 @@ const LeaderboardPage = () => {
   );
 };
 
-export async function getServerSideProps(){
-    return { props: {} };
-}
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const me = await getMe(req.headers.cookie);
+  return {
+    props: {
+      fallback: {
+        '/user/me': me,
+      },
+    },
+  };
+};
+
 export default LeaderboardPage;
