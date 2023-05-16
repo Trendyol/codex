@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Dashboard from '@modules/Dashboard';
 import { GetServerSideProps } from 'next';
 import { getMe } from '@services/me';
+import { getChallenges } from '@services/challeges';
 
 const DashboardPage = () => {
   return (
@@ -19,10 +20,13 @@ const DashboardPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const me = await getMe(req.headers.cookie);
+  const challenges = await getChallenges(req.headers.cookie);
+
   return {
     props: {
       fallback: {
         '/user/me': me,
+        '/challenge': challenges,
       },
     },
   };
