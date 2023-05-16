@@ -4,7 +4,6 @@
 <head>
     <base target="_top">
     <?!= HtmlService.createHtmlOutputFromFile("src/views/add-new-problem-modal/styles-add-new-problem-modal").getContent(); ?>
-    <?!= HtmlService.createHtmlOutputFromFile("src/views/add-new-problem-modal/scripts-add-new-problem-modal").getContent(); ?>
 </head>
 
 <body>
@@ -19,6 +18,10 @@
                 <textarea type="text" class="text-field" id="content" name="content"></textarea>
             </div>
             <div class="form-group">
+                <label for="code">Default Code</label>
+                <textarea type="text" class="text-field" id="code" name="code"></textarea>
+            </div>
+            <div class="form-group">
                 <label for="difficulty">Select Difficulty</label>
                 <select name="difficulty" id="difficulty">
                     <option value="1">Easy</option>
@@ -27,10 +30,11 @@
                 </select>
             </div>
             <div class="form-group">
-                <button onclick="submit"> Submit </button>
+                <button id="submitButton" onclick="submit"> Submit </button>
             </div>
     </div>
     </div>
 </body>
+    <?!= HtmlService.createHtmlOutputFromFile("src/views/add-new-problem-modal/scripts-add-new-problem-modal").getContent(); ?>
 
 </html>

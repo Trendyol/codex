@@ -1,5 +1,95 @@
 <script>
-    function submit() {
-        console.log("submit");
+
+function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
     }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+
+    function DomController() {
+        this.problemService = new ProblemService();
+
+        init = () => {
+            setCookie("access_token", window.stringifiedData.token, 100);
+            document.getElementById("submitButton").addEventListener("click", submit);
+            initElements();
+        }
+
+        initElements = () => {
+            this.$title = document.getElementById("title");
+            this.$content = document.getElementById("content");
+            this.$difficulty = document.getElementById("difficulty");
+            this.$code = document.getElementById("code");
+        }
+
+        submit = (e) => {
+
+            const problem = {
+                title: this.$title.value,
+                content: this.$content.value,
+                difficulty: this.$difficulty.value,
+                code: this.$code.value,
+            }
+            this.problemService.validate(problem);
+            this.problemService.add(problem)
+        }
+
+        return {
+            init
+        }
+    }
+
+   
+
+    function ProblemService() {
+        
+
+        validate = (problem) => {
+
+        }
+
+        add = (problem) => {
+            const url = "https://discovery-sfx-codex-service.moon.trendyol.com/problem"
+
+            const requestOptions = {
+                method: "POST",
+                body: JSON.stringify({
+                    title: problem.title,
+                    content: problem.content,
+                    difficulty: parseInt(problem.difficulty),
+                    defaultCodes: [{
+                        "language": "3",
+                        "defaultCode": btoa(problem.code)
+                    }]
+                }),
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Credentials": "true",
+                    "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+                    "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With, cookie, cache-control, accept, authority",
+                }
+            }
+
+            console.log(requestOptions)
+            fetch(url, requestOptions).then(response => {
+                console.log(response)
+            }).catch(error => {
+                console.log("ERROR")
+            })
+        }
+
+        return {
+            add,
+            validate
+        }
+    }
+
+    const domController = new DomController();
+    domController.init();
 </script>
