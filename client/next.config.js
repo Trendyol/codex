@@ -23,7 +23,7 @@ const nextConfig = {
     return config;
   },
   publicRuntimeConfig: {
-    isSignUpAvailable: false,
+    isSignUpAvailable: true,
     baseUrl: process.env.BASE_URL,
     jwksCallbackUrl: process.env.JWKS_CALLBACK_URL,
     peerjsHost: process.env.PEERJS_HOST,
