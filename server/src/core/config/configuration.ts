@@ -35,6 +35,7 @@ export interface Config {
 
   redirectUrl: string;
   clientUrl: string;
+  allowedOrigins: string[];
   judge0: {
     url: string;
     key: string;
@@ -85,6 +86,7 @@ export const config = {
   },
   redirectUrl: process.env.REDIRECT_URL,
   clientUrl: process.env.CLIENT_URL,
+  allowedOrigins: process.env.ALLOWED_ORIGINS?.split(',') || [],
   judge0: {
     url: process.env.JUDGE0_URL,
     key: process.env.JUDGE0_KEY,

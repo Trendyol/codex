@@ -90,7 +90,7 @@ const setupSwagger = (app: INestApplication) => {
 
 const enableCors = (app: INestApplication) => {
   app.enableCors({
-    origin: config.clientUrl,
+    origin: [config.clientUrl, ...config.allowedOrigins],
     credentials: true,
   });
 };
