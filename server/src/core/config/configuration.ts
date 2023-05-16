@@ -48,10 +48,6 @@ export interface Config {
       path: string;
     };
   };
-  defaultUser: {
-    name: string;
-    avatar: string;
-  }
 }
 
 export const config = {
@@ -98,10 +94,6 @@ export const config = {
       team: process.env.STORAGE_CDN_TEAM,
       path: process.env.STORAGE_CDN_PATH,
     },
-  },
-  defaultUser: {
-    name: process.env.DEFAULT_USER_NAME,
-    avatar: process.env.DEFAULT_USER_AVATAR,
   }
 };
 
