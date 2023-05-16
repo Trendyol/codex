@@ -3,6 +3,8 @@ import Room from '@modules/Room';
 import { AppProps } from 'next/app';
 import { ReactElement } from 'react';
 import DefaultLayout from '@components/Layout/Default';
+import { GetServerSideProps } from 'next';
+import { getMe } from '@services/me';
 
 const RoomPage = () => {
   return (
@@ -26,8 +28,15 @@ RoomPage.getLayout = function getLayout(pageProps: AppProps, page: ReactElement)
   );
 };
 
-export async function getServerSideProps(){
-    return { props: {} };
-}
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const me = await getMe(req.headers.cookie);
+  return {
+    props: {
+      fallback: {
+        '/user/me': me,
+      },
+    },
+  };
+};
 
 export default RoomPage;

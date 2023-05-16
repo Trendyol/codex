@@ -13,12 +13,18 @@ const Leaderboard = () => {
   const { users } = useUsers(filter);
 
   return (
-    <Card className="flex flex-col items-center gap-2 overflow-hidden">
+    <Card className="flex h-[324px] flex-col items-center gap-2 overflow-hidden ">
       <div className="text-lg font-semibold text-primary-400">Leaderboard</div>
-      {users?.map(({ id, name, avatar, points }) => (
-        <Avatar id={id} key={id} name={name} avatar={avatar} points={points} />
-      ))}
-      <Link href="/leaderboard" className="w-full">
+      {users ? (
+        <div className="h-full h-max w-full">
+          {users?.map(({ id, name, avatar, points }) => (
+            <Avatar id={id} key={id} name={name} avatar={avatar} points={points} />
+          ))}
+        </div>
+      ) : (
+        <></>
+      )}
+      <Link href="/leaderboard" className="mt-auto w-full">
         <Button intent={'secondary'} fluid>
           View All
         </Button>
