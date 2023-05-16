@@ -1,4 +1,4 @@
-import { getHashAvatar } from '@utils/common';
+import { getSeedAvatar, getSeedName } from '@utils/common';
 import { cx } from 'class-variance-authority';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -30,7 +30,7 @@ const Avatar: FC<AvatarProps> = ({ id, name, avatar, points, truncate, disabled,
           alt="avatar"
           width={40}
           height={40}
-          src={avatar || getHashAvatar(id)}
+          src={avatar || getSeedAvatar(id)}
         />
       </div>
       <div className="flex flex-col">
@@ -40,7 +40,7 @@ const Avatar: FC<AvatarProps> = ({ id, name, avatar, points, truncate, disabled,
             truncate ? 'truncate xs:w-[90px]' : '',
           )}
         >
-          {name}
+          {name || getSeedName(id)} 
         </div>
         <div className="truncate text-xs text-secondary-100">{points} points</div>
       </div>

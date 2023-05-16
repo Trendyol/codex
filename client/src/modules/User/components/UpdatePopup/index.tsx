@@ -10,7 +10,7 @@ import { UpdateProfileData, useUpdateProfile } from '@hooks/data/useUpdateProfil
 import { toast } from 'react-toastify';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
-import { getHashAvatar } from '@utils/common';
+import { getSeedAvatar } from '@utils/common';
 import { BsFillCameraFill } from 'react-icons/bs';
 
 type UpdatePopupProps = {
@@ -89,7 +89,7 @@ const UpdatePopup: FC<UpdatePopupProps> = ({ show, onHide }) => {
               alt="avatar"
               height={120}
               width={120}
-              src={getValues('avatar')?.preview || me?.avatar || getHashAvatar(me?.id)}
+              src={getValues('avatar')?.preview || me?.avatar || getSeedAvatar(me?.id)}
             />
           </div>
           <div className=" absolute top-[-1px] flex h-[122px] w-[120px] items-center  justify-center rounded-full bg-background-100 opacity-0 hover:opacity-90">

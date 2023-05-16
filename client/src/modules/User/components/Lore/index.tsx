@@ -1,7 +1,7 @@
 import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
 import { useMe, useUser } from '@hooks/data';
-import { getHashAvatar } from '@utils/common';
+import { getSeedAvatar } from '@utils/common';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import randomGradient from 'random-gradient';
@@ -32,7 +32,7 @@ const Lore: FC<LoreProps> = ({ onShowUpdatePopup }) => {
             alt="avatar"
             height={120}
             width={120}
-            src={user?.avatar || getHashAvatar(user?.id)}
+            src={user?.avatar || getSeedAvatar(user?.id)}
           />
         </div>
         {self && (
