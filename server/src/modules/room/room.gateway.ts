@@ -26,6 +26,8 @@ import { MessageRoomMessage } from './messages/message-room.message';
     httpOnly: true,
     credentials: true,
   },
+  secure: true,
+  rejectUnauthorized: false,
 })
 export class RoomGateway implements OnGatewayInit {
   constructor(private readonly dataService: IDataService) {}

@@ -32,7 +32,7 @@ const Challenge: FC<ChallengeProps> = ({
           <BsFillTrophyFill color="white" size={28} />
         </div>
         <div className="flex flex-1 flex-col ">
-          <div className="h-[48px] whitespace-pre-wrap text-secondary-200 line-clamp-2">
+          <div className="h-[48px] whitespace-pre-wrap text-secondary-200 line-clamp-2 mb-1">
             {description}
           </div>
           <div className="flex h-[36px] justify-between font-semibold text-secondary-200 lg:text-sm">
