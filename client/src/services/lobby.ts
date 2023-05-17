@@ -6,6 +6,7 @@ const configs = getConfigWithTypes();
 
 const socket = io(`${configs.baseUrl}/lobby`, {
   withCredentials: true,
+  transports: ['websocket'],
 });
 
 export const joinLobby = (

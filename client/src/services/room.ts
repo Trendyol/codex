@@ -7,6 +7,7 @@ const configs = getConfigWithTypes();
 
 const socket = io(`${configs.baseUrl}/room`, {
   withCredentials: true,
+  transports: ['websocket'],
 });
 
 export const joinRoom = (
