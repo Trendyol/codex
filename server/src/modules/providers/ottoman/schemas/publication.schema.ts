@@ -1,12 +1,11 @@
 import { Schema } from 'ottoman';
 
 const baseSchema = {
-  userId: String,
+  userId: { type: String, ref: 'user' },
   content: String,
   isApproved: Boolean,
   isPublished: Boolean,
   likedBy: [{ type: String }],
-  type: String,
 };
 
 export const articleSchema = new Schema({
@@ -17,7 +16,7 @@ export const articleSchema = new Schema({
 export const discussionSchema = new Schema({
   ...baseSchema,
   title: String,
-  problemId: String,
+  problemId: { type: String, ref: 'problem' },
 });
 
 export const commentSchema = new Schema({

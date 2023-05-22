@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsBoolean, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class BaseCreatePublicationDto {
   @ApiProperty()
@@ -12,10 +12,7 @@ export class BaseCreatePublicationDto {
 
   @ApiProperty()
   @IsBoolean()
-  readonly isApproved: boolean;
-
-  @ApiProperty()
-  @IsBoolean()
+  @IsOptional()
   readonly isPublished: boolean;
 
   @ApiProperty()
@@ -27,6 +24,10 @@ export class CreateArticleDto extends BaseCreatePublicationDto {
   @ApiProperty()
   @IsString()
   readonly title: string;
+
+  @ApiProperty()
+  @IsBoolean()
+  readonly isApproved: boolean;
 }
 
 export class CreateDiscussionDto extends BaseCreatePublicationDto {

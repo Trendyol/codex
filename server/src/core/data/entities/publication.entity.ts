@@ -1,14 +1,13 @@
 export class BasePublicationEntity {
   readonly userId: string;
   readonly content: string;
-  readonly isApproved: boolean;
   readonly isPublished: boolean;
   readonly likedBy: string[];
-  readonly type: 'article' | 'discussion' | 'comment';
 }
 
 export class ArticleEntity extends BasePublicationEntity {
   readonly title: string;
+  readonly isApproved: boolean;
 }
 
 export class DiscussionEntity extends BasePublicationEntity {
