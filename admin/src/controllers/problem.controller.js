@@ -1,6 +1,11 @@
 function ProblemController() { }
 
-ProblemController.prototype.renderAddProblemModal = function() {
+function processAddProblem(problem) {
+    const problemController = new ProblemController();
+    problemController.addProblem(problem);
+}
+
+ProblemController.prototype.renderAddProblemModal = function () {
 
     const scriptProperties = PropertiesService.getScriptProperties();
     const token = scriptProperties.getProperty("token")
@@ -15,8 +20,14 @@ ProblemController.prototype.renderAddProblemModal = function() {
     const dataScript = "<script>window.stringifiedData = " + JSON.stringify(data) + "</script>";
     const template = HtmlService.createTemplate(dataScript + addProblemModalHtml)
         .evaluate()
-        .setWidth(600)
-        .setHeight(550);
+        .setWidth(1000)
+        .setHeight(600);
 
     SpreadsheetApp.getUi().showModalDialog(template, 'Add New Problem');
+}
+
+ProblemController.prototype.addProblem = function (problem) {
+    const problemsSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Problems');
+    const row = [problem.id, problem.title, problem.content, problem.defaultCodes[0].defaultCode, problem.difficulty];
+    problemsSheet.appendRow(row);
 }

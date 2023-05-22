@@ -7,7 +7,28 @@
 </head>
 
 <body>
-    <div class="hello">Hello World</div>
-</body>
+    <div class="container">
+        <div class="table-container">
+            <table id="testsTable">
+                <thead>
+                    <tr>
+                        <td>Problem Id</td>
+                        <td>Input</td>
+                        <td>Output</td>
+                        <td>Is Public</td>
+                    </tr>
+                </thead>
+                <tbody>
 
+                </tbody>
+            </table>
+        </div>
+        <div class="form-container">
+            <div class="form-group">
+                <button id="submitButton" onclick="submit"> Submit </button>
+            </div>
+        </div>
+    </div>
+</body>
+    <?!= HtmlService.createHtmlOutputFromFile("src/views/add-new-tests-modal/scripts-add-new-tests-modal").getContent(); ?>
 </html>

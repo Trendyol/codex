@@ -10,20 +10,52 @@
         document.cookie = name + "=" + (value || "") + expires + "; path=/";
     }
 
+    function hasClass(ele, cls) {
+        return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+    }
+
+    function addClass(ele, cls) {
+        if (!hasClass(ele, cls)) ele.className += " " + cls;
+    }
+
+    function removeClass(ele, cls) {
+        if (hasClass(ele, cls)) {
+            var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+            ele.className = ele.className.replace(reg, ' ');
+        }
+    }
+
     function DomController() {
         this.problemService = new ProblemService();
+        this.editor = {};
 
         init = () => {
             setCookie("access_token", window.stringifiedData.token, 100);
             document.getElementById("submitButton").addEventListener("click", submit);
             initElements();
+            initEditor();
         }
 
         initElements = () => {
+            this.loader = document.getElementById("loader");
+            this.formContainer = document.getElementById("formContainer");
             this.$title = document.getElementById("title");
             this.$content = document.getElementById("content");
             this.$difficulty = document.getElementById("difficulty");
-            this.$code = document.getElementById("code");
+        }
+
+        initEditor = () => {
+            this.editor = ace.edit("editor");
+            this.editor.setTheme("ace/theme/textmate");
+            this.editor.session.setTabSize(4);
+            this.editor.session.setMode("ace/mode/javascript");
+        }
+
+        toggleLoader = (isShow) => {
+            if (isShow) {
+                addClass(this.formContainer, "hide");
+                removeClass(this.loader, "hide");
+            }
         }
 
         submit = (e) => {
@@ -32,10 +64,18 @@
                 title: this.$title.value,
                 content: this.$content.value,
                 difficulty: this.$difficulty.value,
-                code: this.$code.value,
+                code: this.editor.getValue(),
             }
-            this.problemService.validate(problem);
-            this.problemService.add(problem)
+
+            const isValid = this.problemService.validate(problem);
+            if (isValid) {
+                toggleLoader(true);
+                this.problemService.add(problem)
+            }
+            else {
+                alert("Problem is not valid, Make sure all the fields are filled");
+            }
+
         }
 
         return {
@@ -50,6 +90,21 @@
 
         validate = (problem) => {
 
+            if (problem.title.length === 0) {
+                return false;
+            }
+            else if (problem.content.length === 0) {
+                return false;
+            }
+            else if (problem.content.code === 0) {
+                return false;
+            }
+
+            return true;
+        }
+
+        onSuccess = () => {
+            google.script.host.close();
         }
 
         add = (problem) => {
@@ -76,12 +131,14 @@
                 }
             }
 
-            console.log(requestOptions)
-            fetch(url, requestOptions).then(response => {
-                console.log(response)
-            }).catch(error => {
-                console.log("ERROR")
-            })
+            fetch(url, requestOptions).
+                then(response => response.json()).
+                then(json => {
+                    google.script.run.withSuccessHandler(onSuccess).processAddProblem(json);
+                }).
+                catch(error => {
+                    alert("Error occured, you probably not connected VPN")
+                })
         }
 
         return {

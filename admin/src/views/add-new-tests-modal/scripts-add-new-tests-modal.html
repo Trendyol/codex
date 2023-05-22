@@ -1,0 +1,102 @@
+<script>
+    
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function DomController() {
+        this.testService = new TestService();
+        init = () => {
+            const tests = window.stringifiedData.tests;
+            setCookie("access_token", window.stringifiedData.token, 100);
+            document.getElementById("submitButton").addEventListener("click", submit);
+            initTestTable(tests);
+        }
+
+        initTestTable = (tests) => {
+            tests.forEach(test => {
+                insertNewRow(test);
+            });
+        }
+
+        insertNewRow = (test) => {
+            const table = document.getElementById('testsTable');
+            let newRow = table.insertRow(-1);
+            let l = table.rows.length-1;
+
+            //Col1
+            table.rows[l].insertCell(0);
+            table.rows[l].cells[0].innerHTML = test.id;
+
+            //Col2
+            table.rows[l].insertCell(1);
+            table.rows[l].cells[1].innerHTML = test.input;
+
+            //Col3
+            table.rows[l].insertCell(2);
+            table.rows[l].cells[2].innerHTML = test.output;
+
+            //Col4
+            table.rows[l].insertCell(3);
+            table.rows[l].cells[3].innerHTML = test.isPublic;
+        }
+
+        submit = (e) => {
+            const tests = window.stringifiedData.tests;
+            for(let test of tests) {
+                this.testService.add(test);
+            }
+        }
+
+        return {
+            init:init
+        }
+    }
+
+    function TestService() {
+        add = (test) => {
+            const url = "https://discovery-sfx-codex-service.moon.trendyol.com/testcase"
+
+            const requestOptions = {
+                method: "POST",
+                body: JSON.stringify({
+                    problemId: test.id,
+                    stdin: btoa(test.input),
+                    expected_output: btoa(test.output),
+                    isPublic: test.isPublic
+                }),
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Credentials": "true",
+                    "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+                    "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With, cookie, cache-control, accept, authority",
+                }
+            }
+
+            fetch(url, requestOptions).
+            then(response => response.json()).
+            then(json => {
+                console.log(json)
+                // google.script.run.withSuccessHandler(onSuccess).processAddProblem(json);
+            }).
+            catch(error => {
+                console.log(error)
+            })
+        }
+
+        return {
+            add
+        }
+    }
+
+    const domController = new DomController();
+    domController.init();
+</script>
