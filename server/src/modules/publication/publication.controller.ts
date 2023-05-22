@@ -1,6 +1,7 @@
 import { AdminGuard } from '@auth/guards/admin.guard';
+import { AnonymousGuard } from '@auth/guards/anonymous.guard';
 import { JwtGuard } from '@auth/guards/jwt.guard';
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import {
@@ -13,32 +14,68 @@ import { PublicationService } from './publication.service';
 @ApiTags('Publication')
 @Controller('publication')
 export class PublicationController {
-  constructor(private readonly articleService: PublicationService) {}
+  constructor(private readonly publicationService: PublicationService) {}
 
-  @Post('/create-article')
+  @Post('/articles')
   @UseGuards(JwtGuard, AdminGuard)
   createArticle(@Body() createDto: CreateArticleDto) {
-    return this.articleService.createArticle({
+    return this.publicationService.createArticle({
       ...createDto,
       isPublished: createDto.isPublished || false,
     });
   }
 
-  @Post('/create-discussion')
+  @Post('/discussions')
   @UseGuards(JwtGuard, AdminGuard)
   createDiscussion(@Body() createDto: CreateDiscussionDto) {
-    return this.articleService.createDiscussion({
+    return this.publicationService.createDiscussion({
       ...createDto,
       isPublished: createDto.isPublished || true,
     });
   }
 
-  @Post('/create-comment')
+  @Post('/comments')
   @UseGuards(JwtGuard, AdminGuard)
   createComment(@Body() createDto: CreateCommentDto) {
-    return this.articleService.createComment({
+    return this.publicationService.createComment({
       ...createDto,
       isPublished: createDto.isPublished || true,
     });
+  }
+
+  @Get('/articles')
+  @UseGuards(AnonymousGuard)
+  findAllArticles() {
+    return this.publicationService.findAllArticles();
+  }
+
+  @Get('/discussions')
+  @UseGuards(AnonymousGuard)
+  findAllDiscussions() {
+    return this.publicationService.findAllDiscussions();
+  }
+
+  @Get('/comments')
+  @UseGuards(AnonymousGuard)
+  findAllComments() {
+    return this.publicationService.findAllComments();
+  }
+
+  @Get('/articles/:articleId')
+  @UseGuards(AnonymousGuard)
+  findArticleById(@Param('articleId') articleId: string) {
+    return this.publicationService.findArticleById(articleId);
+  }
+
+  @Get('/discussions/:discussionId')
+  @UseGuards(AnonymousGuard)
+  findDiscussionById(@Param('discussionId') discussionId: string) {
+    return this.publicationService.findDiscussionById(discussionId);
+  }
+
+  @Get('/comments/:commentId')
+  @UseGuards(AnonymousGuard)
+  findCommentById(@Param('commentId') commentId: string) {
+    return this.publicationService.findCommentById(commentId);
   }
 }

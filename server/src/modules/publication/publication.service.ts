@@ -22,4 +22,28 @@ export class PublicationService {
   async createComment(createDto: CreateCommentDto) {
     return await this.dataService.comments.create(createDto);
   }
+
+  async findAllArticles() {
+    return await this.dataService.articles.find({});
+  }
+
+  async findAllDiscussions() {
+    return await this.dataService.discussions.find({});
+  }
+
+  async findAllComments() {
+    return await this.dataService.comments.find({});
+  }
+
+  async findArticleById(id: string) {
+    return await this.dataService.articles.findById(id);
+  }
+
+  async findDiscussionById(id: string) {
+    return await this.dataService.discussions.findById(id);
+  }
+
+  async findCommentById(id: string) {
+    return await this.dataService.comments.findById(id);
+  }
 }
