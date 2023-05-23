@@ -1,0 +1,204 @@
+<script>
+
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function hasClass(ele, cls) {
+        return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+    }
+
+    function addClass(ele, cls) {
+        if (!hasClass(ele, cls)) ele.className += " " + cls;
+    }
+
+    function removeClass(ele, cls) {
+        if (hasClass(ele, cls)) {
+            var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+            ele.className = ele.className.replace(reg, ' ');
+        }
+    }
+
+    function DomController() {
+        this.challangeService = new ChallangeService();
+        this.problemService = new ProblemService();
+
+        init = async () => {
+            setCookie("access_token", window.stringifiedData.token, 100);
+            document.getElementById("submitButton").addEventListener("click", submit);
+            initElements();
+            const problems = await this.problemService.getProblems();
+            initDataList(problems);
+        }
+
+        initDataList = (problems) => {
+            const datalist = document.getElementById('problems')
+            problems.forEach(function (problem) {
+                let option = document.createElement('option');
+                option.value = problem.title + ' - ' + problem.id;
+                datalist.appendChild(option);
+            });
+        }
+
+        initElements = () => {
+            this.loader = document.getElementById("loader");
+            this.formContainer = document.getElementById("formContainer");
+            this.$name = document.getElementById("name");
+            this.$description = document.getElementById("description");
+            this.$duration = document.getElementById("duration");
+            this.$teamSize = document.getElementById("teamSize");
+            this.$date = document.getElementById("date");
+            this.$problemChoice = document.getElementById('problemChoice');
+        }
+
+        toggleLoader = (isShow) => {
+            if (isShow) {
+                addClass(this.formContainer, "hide");
+                removeClass(this.loader, "hide");
+            }
+        }
+
+        submit = (e) => {
+
+            const selectedValue = this.$problemChoice.value;
+            const titleIdPair = selectedValue.split(' - ');
+            const problemId = titleIdPair[1];
+
+            const challange = {
+                name: this.$name.value,
+                description: this.$description.value,
+                duration: parseInt(this.$duration.value),
+                teamSize: parseInt(this.$teamSize.value),
+                date: this.$date.value,
+                problemId: problemId,
+            }
+
+            const isValid = this.challangeService.validate(challange);
+            if (isValid) {
+                toggleLoader(true);
+                this.challangeService.add(challange)
+            }
+            else {
+                alert("Challange is not valid, Make sure all the fields are filled");
+            }
+        }
+        return {
+            init
+        }
+    }
+
+    function ChallangeService(challange) {
+
+        validate = (challange) => {
+
+            if (!challange.name || challange.name.length === 0) {
+                return false;
+            }
+            else if (!challange.description || challange.description.length === 0) {
+                return false;
+            }
+            else if (!challange.problemId || challange.problemId <= 0) {
+                return false;
+            }
+            else if (!challange.teamSize || challange.teamSize <= 0) {
+                return false;
+            }
+            else if (!challange.duration || challange.duration <= 0) {
+                return false;
+            }
+            else if (!challange.date) {
+                return false;
+            }
+
+            return true;
+        }
+
+        onSuccess = () => {
+            google.script.host.close();
+        }
+
+        add = (challange) => {
+
+            const url = "https://discovery-sfx-codex-service.moon.trendyol.com/challenge"
+            const requestOptions = {
+                method: "POST",
+                body: JSON.stringify({
+                    name: challange.name,
+                    description: challange.description,
+                    problemId: challange.problemId,
+                    teamSize: challange.teamSize,
+                    duration: challange.duration,
+                    date: challange.date
+                }),
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Credentials": "true",
+                    "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+                    "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With, cookie, cache-control, accept, authority",
+                }
+            }
+
+            fetch(url, requestOptions).
+                then(response => response.json()).
+                then(json => {
+                    google.script.run.withSuccessHandler(onSuccess).processAddChallange(json);
+                }).
+                catch(error => {
+                    console.log(error)
+                })
+        }
+
+        return {
+            add,
+            validate
+        }
+
+    }
+
+    function ProblemService() {
+
+        const self = this;
+        getProblems = () => {
+            let promise = new Promise((resolve, reject) => {
+                const url = "https://discovery-sfx-codex-service.moon.trendyol.com/problem";
+                const requestOptions = {
+                    method: "GET",
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Credentials": "true",
+                        "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+                        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With, cookie, cache-control, accept, authority",
+                    }
+                };
+
+                fetch(url, requestOptions).
+                    then(response => response.json()).
+                    then(json => {
+                        resolve(json);
+                    }).
+                    catch(error => {
+                        reject(false);
+                    })
+
+            })
+            return promise;
+        }
+
+        return {
+            getProblems
+        }
+    }
+
+    const domController = new DomController();
+    domController.init();
+</script>

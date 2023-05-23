@@ -1,5 +1,10 @@
 function TestController() { }
 
+function processAddTest() {
+    const testController = new TestController();
+    testController.addTest();
+}
+
 TestController.prototype.getTestsSelection = function () {
     const testsSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Tests');
     const activeRange = testsSheet.getActiveRange();
@@ -8,10 +13,9 @@ TestController.prototype.getTestsSelection = function () {
     let tests = [];
     for(let row of activeValues){
         tests.push({
-            id: row[0],
-            input: row[1],
-            output: row[2],
-            isPublic: row[3],
+            input: row[0],
+            output: row[1],
+            isPublic: row[2],
         })
     }
 
@@ -38,9 +42,16 @@ TestController.prototype.renderAddTestsModal = function() {
     const template = HtmlService.createTemplate(dataScript + addNewTestsHtml)
         .evaluate()
         .setWidth(600)
-        .setHeight(550);
+        .setHeight(380);
 
     
 
     SpreadsheetApp.getUi().showModalDialog(template, 'Add New Tests');
+}
+
+
+TestController.prototype.addTest = function () {
+    const testsSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Tests');
+    const activeRange = testsSheet.getActiveRange();
+    activeRange.clearContent()
 }

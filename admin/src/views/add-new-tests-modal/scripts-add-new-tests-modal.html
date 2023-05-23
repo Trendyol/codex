@@ -10,14 +10,47 @@
         document.cookie = name + "=" + (value || "") + expires + "; path=/";
     }
 
+    function hasClass(ele, cls) {
+        return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+    }
+
+    function addClass(ele, cls) {
+        if (!hasClass(ele, cls)) ele.className += " " + cls;
+    }
+
+    function removeClass(ele, cls) {
+        if (hasClass(ele, cls)) {
+            var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+            ele.className = ele.className.replace(reg, ' ');
+        }
+    }
+
     function DomController() {
         this.testService = new TestService();
-        init = () => {
+        this.problemService = new ProblemService();
+        this.selectedIndex = -1;
+        const self = this;
+
+        init = async () => {
             const tests = window.stringifiedData.tests;
             setCookie("access_token", window.stringifiedData.token, 100);
             document.getElementById("submitButton").addEventListener("click", submit);
             initTestTable(tests);
+            const problems = await this.problemService.getProblems();
+            initDataList(problems);
+            this.formContainer = document.getElementById("formContainer");
+            this.tableContainer = document.getElementById("tableContainer");
+            this.loader = document.getElementById("loader");
         }
+
+        initDataList = (problems) => {
+            const datalist = document.getElementById('problems')
+            problems.forEach(function(problem){
+                let option = document.createElement('option');
+                option.value = problem.title + ' - ' + problem.id;
+                datalist.appendChild(option);
+            });
+        } 
 
         initTestTable = (tests) => {
             tests.forEach(test => {
@@ -26,32 +59,63 @@
         }
 
         insertNewRow = (test) => {
-            const table = document.getElementById('testsTable');
+
+            const table = document.getElementById('testsTable').getElementsByTagName('tbody')[0];
             let newRow = table.insertRow(-1);
             let l = table.rows.length-1;
 
-            //Col1
-            table.rows[l].insertCell(0);
-            table.rows[l].cells[0].innerHTML = test.id;
-
             //Col2
-            table.rows[l].insertCell(1);
-            table.rows[l].cells[1].innerHTML = test.input;
+            table.rows[l].insertCell(0);
+            table.rows[l].cells[0].innerHTML = test.input;
 
             //Col3
-            table.rows[l].insertCell(2);
-            table.rows[l].cells[2].innerHTML = test.output;
+            table.rows[l].insertCell(1);
+            table.rows[l].cells[1].innerHTML = test.output;
 
             //Col4
-            table.rows[l].insertCell(3);
-            table.rows[l].cells[3].innerHTML = test.isPublic;
+            table.rows[l].insertCell(2);
+            table.rows[l].cells[2].innerHTML = test.isPublic;
+        }
+
+        toggleLoader = (isShow) => {
+            if (isShow) {
+                addClass(this.formContainer, "hide");
+                addClass(this.tableContainer, "hide");
+                removeClass(this.loader, "hide");
+            }
+            else {
+                removeClass(this.formContainer, "hide");
+                removeClass(this.tableContainer, "hide");
+                addClass(this.loader, "hide");
+            }
         }
 
         submit = (e) => {
+            toggleLoader(true);
             const tests = window.stringifiedData.tests;
-            for(let test of tests) {
-                this.testService.add(test);
+            const $problemChoice = document.getElementById('problemChoice');
+            const selectedValue = $problemChoice.value;
+            const titleIdPair = selectedValue.split(' - ');
+            const problemId = titleIdPair[1];
+
+            if(problemId) {
+                for(let test of tests) {
+                    test.id = problemId;
+                    if(test.input && test.output) {
+                        this.testService.add(test);
+                    }
+                    else{
+                        alert("test is invalid");
+                        toggleLoader(false);
+                    }
+                    
+                }
+            }else {
+                alert("test id is req");
+                toggleLoader(false);
             }
+            
+            
         }
 
         return {
@@ -59,7 +123,48 @@
         }
     }
 
+    function ProblemService() {
+        
+        const self = this;
+        getProblems =  () => {
+            let promise = new Promise((resolve, reject) => {
+                const url = "https://discovery-sfx-codex-service.moon.trendyol.com/problem";
+                const requestOptions = {
+                    method: "GET",
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Credentials": "true",
+                        "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+                        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With, cookie, cache-control, accept, authority",
+                    }
+                };
+    
+                fetch(url, requestOptions).
+                then(response => response.json()).
+                then(json => {
+                    resolve(json);
+                }).
+                catch(error => {
+                    reject(false);
+                })
+    
+            })
+            return promise;
+        }
+
+        return {
+            getProblems
+        }
+    }
+
     function TestService() {
+
+        onSuccess = () => {
+            google.script.host.close();
+        }
+
         add = (test) => {
             const url = "https://discovery-sfx-codex-service.moon.trendyol.com/testcase"
 
@@ -84,8 +189,7 @@
             fetch(url, requestOptions).
             then(response => response.json()).
             then(json => {
-                console.log(json)
-                // google.script.run.withSuccessHandler(onSuccess).processAddProblem(json);
+                google.script.run.withSuccessHandler(onSuccess).processAddTest(json);
             }).
             catch(error => {
                 console.log(error)

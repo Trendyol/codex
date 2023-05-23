@@ -8,11 +8,11 @@
 
 <body>
     <div class="container">
-        <div class="table-container">
+        <div id="loader" class="lds-facebook hide"><div></div><div></div><div></div></div>
+        <div id="tableContainer" class="table-container">
             <table id="testsTable">
                 <thead>
                     <tr>
-                        <td>Problem Id</td>
                         <td>Input</td>
                         <td>Output</td>
                         <td>Is Public</td>
@@ -23,7 +23,14 @@
                 </tbody>
             </table>
         </div>
-        <div class="form-container">
+        <div id="formContainer" class="form-container">
+
+            <div class="form-group mt-20">
+                <label for="problem-choice">Select Problem</label>
+                <input list="problems" data-selected="" class="text-field" name="problem-choice" id="problemChoice">
+                <datalist id="problems"></datalist>
+            </div>
+
             <div class="form-group">
                 <button id="submitButton" onclick="submit"> Submit </button>
             </div>
