@@ -38,7 +38,6 @@ export interface Config {
   allowedOrigins: string[];
   judge0: {
     url: string;
-    key: string;
   };
   storage: {
     cdn: {
@@ -85,7 +84,6 @@ export const config = {
   allowedOrigins: process.env.ALLOWED_ORIGINS?.split(',') || [],
   judge0: {
     url: process.env.JUDGE0_URL,
-    key: process.env.JUDGE0_KEY,
   },
   storage: {
     cdn: {
@@ -94,7 +92,7 @@ export const config = {
       team: process.env.STORAGE_CDN_TEAM,
       path: process.env.STORAGE_CDN_PATH,
     },
-  }
+  },
 };
 
 export default config as Config;

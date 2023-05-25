@@ -98,18 +98,13 @@ export class SubmissionService {
         stdin,
         expected_output,
       };
-      const options = {
-        method: 'POST',
-        url: config.judge0.url,
-        params: { base64_encoded: 'true', wait: 'true', fields: '*' },
-        headers: {
-          'Content-Type': 'application/json',
-          'X-RapidAPI-Key': config.judge0.key,
-          'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com',
-        },
-        data,
-      };
-      const result = (await axios.request(options)).data as SubmissionResult;
+
+      const result = (
+        await axios.post(config.judge0.url, data, {
+          params: { base64_encoded: 'true', wait: 'true', fields: '*' },
+        })
+      ).data;
+
       return {
         ...result,
         language,
