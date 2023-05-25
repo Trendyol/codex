@@ -53,14 +53,15 @@ export class PublicationController {
   @UseGuards(AnonymousGuard)
   @ApiQuery({ name: 'problemId', required: false, type: String })
   @ApiQuery({ name: 'userId', required: false, type: String })
-  @ApiQuery({ name: 'isPublished', required: false, type: String, enum: ['true', 'false'] })
+  @ApiQuery({ name: 'isPublished', required: false, type: Boolean })
   findDiscussions(
     @Query('problemId') problemId?: string,
     @Query('userId') userId?: string,
-    @Query('isPublished') isPublished?: string,
+    @Query('isPublished') isPublished?: boolean,
   ) {
-    const _isPublished = isPublished === 'false' ? false : isPublished === 'true' || undefined;
-    return this.publicationService.findDiscussions(problemId, userId, _isPublished);
+    console.log('isPublished', isPublished);
+
+    return this.publicationService.findDiscussions(problemId, userId, isPublished);
   }
 
   @Get('/comments')

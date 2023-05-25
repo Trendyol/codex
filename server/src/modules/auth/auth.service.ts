@@ -14,13 +14,15 @@ export class AuthService {
   ) {}
 
   async handleAuth(user: UserDto) {
-    const { email, name, avatar} = user;
+    const { email, name, avatar } = user;
     let signedUser;
 
     try {
       signedUser = await this.dataService.users.findOne({ email });
+      console.log('try', signedUser);
     } catch {
       signedUser = await this.userService.create(name, email, avatar);
+      console.log('catch', signedUser);
     } finally {
       return this.jwtService.sign({
         id: signedUser.id,
