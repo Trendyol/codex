@@ -19,10 +19,8 @@ export class AuthService {
 
     try {
       signedUser = await this.dataService.users.findOne({ email });
-      console.log('try', signedUser);
     } catch {
       signedUser = await this.userService.create(name, email, avatar);
-      console.log('catch', signedUser);
     } finally {
       return this.jwtService.sign({
         id: signedUser.id,
