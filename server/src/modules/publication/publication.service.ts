@@ -23,16 +23,43 @@ export class PublicationService {
     return await this.dataService.comments.create(createDto);
   }
 
-  async findAllArticles() {
+  async findArticles() {
     return await this.dataService.articles.find({});
   }
 
-  async findAllDiscussions() {
-    return await this.dataService.discussions.find({});
+  async findDiscussions(problemId: string, userId: string, isPublished: boolean) {
+    const filter: any = {};
+
+    if (problemId !== undefined) {
+      filter.problemId = problemId;
+    }
+    if (userId !== undefined) {
+      filter.userId = userId;
+    }
+    if (isPublished !== undefined) {
+      filter.isPublished = isPublished;
+    }
+
+    return await this.dataService.discussions.find(filter);
   }
 
-  async findAllComments() {
-    return await this.dataService.comments.find({});
+  async findComments(depth: number, parentId: string, userId: string, isPublished: boolean) {
+    const filter: any = {};
+
+    if (depth !== undefined) {
+      filter.depth = depth;
+    }
+    if (parentId !== undefined) {
+      filter.parentId = parentId;
+    }
+    if (userId !== undefined) {
+      filter.userId = userId;
+    }
+    if (isPublished !== undefined) {
+      filter.isPublished = isPublished;
+    }
+
+    return await this.dataService.comments.find(filter);
   }
 
   async findArticleById(id: string) {

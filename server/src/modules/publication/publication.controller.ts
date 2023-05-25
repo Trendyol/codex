@@ -1,8 +1,8 @@
 import { AdminGuard } from '@auth/guards/admin.guard';
 import { AnonymousGuard } from '@auth/guards/anonymous.guard';
 import { JwtGuard } from '@auth/guards/jwt.guard';
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 
 import {
   CreateArticleDto,
@@ -45,20 +45,42 @@ export class PublicationController {
 
   @Get('/articles')
   @UseGuards(AnonymousGuard)
-  findAllArticles() {
-    return this.publicationService.findAllArticles();
+  findArticles() {
+    return this.publicationService.findArticles();
   }
 
   @Get('/discussions')
   @UseGuards(AnonymousGuard)
-  findAllDiscussions() {
-    return this.publicationService.findAllDiscussions();
+  @ApiQuery({ name: 'problemId', required: false, type: String })
+  @ApiQuery({ name: 'userId', required: false, type: String })
+  @ApiQuery({ name: 'isPublished', required: false, type: String, enum: ['true', 'false'] })
+  findDiscussions(
+    @Query('problemId') problemId?: string,
+    @Query('userId') userId?: string,
+    @Query('isPublished') isPublished?: string,
+  ) {
+    const _isPublished = isPublished === 'false' ? false : isPublished === 'true' || undefined;
+    return this.publicationService.findDiscussions(problemId, userId, _isPublished);
   }
 
   @Get('/comments')
   @UseGuards(AnonymousGuard)
-  findAllComments() {
-    return this.publicationService.findAllComments();
+  @ApiQuery({ name: 'depth', required: false, type: Number })
+  @ApiQuery({ name: 'parentId', required: false, type: String })
+  @ApiQuery({ name: 'userId', required: false, type: String })
+  @ApiQuery({ name: 'isPublished', required: false, type: String, enum: ['true', 'false'] })
+  findComments(
+    @Query('depth') depth?: number,
+    @Query('parentId') parentId?: string,
+    @Query('userId') userId?: string,
+    @Query('isPublished') isPublished?: string,
+  ) {
+    if (isNaN(depth)) {
+      depth = undefined;
+    }
+
+    const _isPublished = isPublished === 'false' ? false : isPublished === 'true' || undefined;
+    return this.publicationService.findComments(depth, parentId, userId, _isPublished);
   }
 
   @Get('/articles/:articleId')
