@@ -2,6 +2,11 @@ import config from '@core/config/configuration';
 import { SubmissionEntity, UserEntity } from '@core/data/entities';
 import { ChallengeEntity } from '@core/data/entities/challenge.entity';
 import { ProblemEntity } from '@core/data/entities/problem.entity';
+import {
+  ArticleEntity,
+  CommentEntity,
+  DiscussionEntity,
+} from '@core/data/entities/publication.entity';
 import { TeamEntity } from '@core/data/entities/team.entity';
 import { TestcaseEntity } from '@core/data/entities/testcase.entity';
 import { IDataService } from '@core/data/services/data.service';
@@ -12,6 +17,7 @@ import { OttomanQueries } from './ottoman.queries';
 import { Document, OttomanGenericRepository } from './ottoman.repository';
 import { challengeSchema } from './schemas/challenge.schema';
 import { problemSchema } from './schemas/problem.schema';
+import { articleSchema, commentSchema, discussionSchema } from './schemas/publication.schema';
 import { submissionSchema } from './schemas/submission.schema';
 import { teamSchema } from './schemas/team.schema';
 import { testcaseSchema } from './schemas/testcase.schema';
@@ -26,6 +32,9 @@ export class OttomanDataService implements IDataService, OnModuleInit {
   problems: OttomanGenericRepository<ProblemEntity>;
   testcases: OttomanGenericRepository<TestcaseEntity>;
   queries: OttomanQueries;
+  articles: OttomanGenericRepository<ArticleEntity>;
+  discussions: OttomanGenericRepository<DiscussionEntity>;
+  comments: OttomanGenericRepository<CommentEntity>;
 
   async onModuleInit() {
     const ottoman = new Ottoman({
@@ -75,10 +84,28 @@ export class OttomanDataService implements IDataService, OnModuleInit {
     );
     this.problems = new OttomanGenericRepository<ProblemEntity>(problemModel);
 
-    const testcaseModel = ottoman.model<TestcaseEntity, Document<ProblemEntity>>(
+    const testcaseModel = ottoman.model<TestcaseEntity, Document<TestcaseEntity>>(
       'testcase',
       testcaseSchema,
     );
     this.testcases = new OttomanGenericRepository<TestcaseEntity>(testcaseModel);
+
+    const articleModel = ottoman.model<ArticleEntity, Document<ArticleEntity>>(
+      'article',
+      articleSchema,
+    );
+    this.articles = new OttomanGenericRepository<ArticleEntity>(articleModel);
+
+    const discussionModel = ottoman.model<DiscussionEntity, Document<DiscussionEntity>>(
+      'discussion',
+      discussionSchema,
+    );
+    this.discussions = new OttomanGenericRepository<DiscussionEntity>(discussionModel);
+
+    const commentModel = ottoman.model<CommentEntity, Document<CommentEntity>>(
+      'comment',
+      commentSchema,
+    );
+    this.comments = new OttomanGenericRepository<CommentEntity>(commentModel);
   }
 }

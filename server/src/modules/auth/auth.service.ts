@@ -14,7 +14,7 @@ export class AuthService {
   ) {}
 
   async handleAuth(user: UserDto) {
-    const { email, name, avatar} = user;
+    const { email, name, avatar } = user;
     let signedUser;
 
     try {

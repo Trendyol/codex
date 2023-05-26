@@ -3,6 +3,7 @@ import { OttomanQueries } from '@ottoman/ottoman.queries';
 import { SubmissionEntity } from '../entities';
 import { ChallengeEntity } from '../entities/challenge.entity';
 import { ProblemEntity } from '../entities/problem.entity';
+import { ArticleEntity, CommentEntity, DiscussionEntity } from '../entities/publication.entity';
 import { TeamEntity } from '../entities/team.entity';
 import { TestcaseEntity } from '../entities/testcase.entity';
 import { UserEntity } from '../entities/user.entity';
@@ -18,4 +19,8 @@ export abstract class IDataService {
   abstract problems: IGenericRepository<Pure<ProblemEntity>, ProblemEntity>;
   abstract testcases: IGenericRepository<Pure<TestcaseEntity>, TestcaseEntity>;
   abstract queries: OttomanQueries;
+
+  abstract articles: IGenericRepository<Pure<ArticleEntity>, ArticleEntity>;
+  abstract discussions: IGenericRepository<Pure<DiscussionEntity>, DiscussionEntity>;
+  abstract comments: IGenericRepository<Pure<CommentEntity>, CommentEntity>;
 }
