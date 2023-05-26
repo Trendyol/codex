@@ -15,7 +15,7 @@ const Lore = () => {
   if (!challenge) return <></>;
   const { id, name, description, date, status, problem, userParticipant, userActiveParticipant } =
     challenge;
-  const formattedDate = DateTime.fromISO(date).toFormat('dd LLL yyyy');
+  const formattedDate = DateTime.fromISO(date).toFormat('dd LLL yyyy - HH:mm');
 
   return (
     <Card className="h-fit min-h-[500px] overflow-hidden rounded-lg p-0" space={false}>
