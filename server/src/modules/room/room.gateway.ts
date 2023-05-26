@@ -26,8 +26,6 @@ import { MessageRoomMessage } from './messages/message-room.message';
     httpOnly: true,
     credentials: true,
   },
-  secure: true,
-  rejectUnauthorized: false,
   transports: ['websocket'],
 })
 export class RoomGateway implements OnGatewayInit {

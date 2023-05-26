@@ -25,8 +25,6 @@ import { MessageLobbyMessage } from './messages/message-lobby.message';
     httpOnly: true,
     credentials: true,
   },
-  secure: true,
-  rejectUnauthorized: false,
   transports: ['websocket'],
 })
 export class LobbyGateway implements OnGatewayInit {
