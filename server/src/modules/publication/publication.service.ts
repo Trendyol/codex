@@ -43,12 +43,9 @@ export class PublicationService {
     return await this.dataService.discussions.find(filter);
   }
 
-  async findComments(depth: number, parentId: string, userId: string, isPublished: boolean) {
+  async findComments(parentId: string, userId: string, isPublished: boolean) {
     const filter: any = {};
 
-    if (depth !== undefined) {
-      filter.depth = depth;
-    }
     if (parentId !== undefined) {
       filter.parentId = parentId;
     }

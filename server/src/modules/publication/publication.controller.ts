@@ -51,11 +51,11 @@ export class PublicationController {
 
   @Get('/discussions')
   @UseGuards(AnonymousGuard)
-  @ApiQuery({ name: 'isPublished', required: false, type: Boolean, example: true })
+  @ApiQuery({ name: 'isPublished', required: false, type: Boolean })
   @ApiQuery({ name: 'problemId', required: false, type: String })
   @ApiQuery({ name: 'userId', required: false, type: String })
   findDiscussions(
-    @Query('isPublished') isPublished = true,
+    @Query('isPublished') isPublished: boolean,
     @Query('problemId') problemId?: string,
     @Query('userId') userId?: string,
   ) {
@@ -64,21 +64,15 @@ export class PublicationController {
 
   @Get('/comments')
   @UseGuards(AnonymousGuard)
-  @ApiQuery({ name: 'isPublished', required: false, type: Boolean, example: true })
-  @ApiQuery({ name: 'depth', required: false, type: Number })
+  @ApiQuery({ name: 'isPublished', required: false, type: Boolean })
   @ApiQuery({ name: 'parentId', required: false, type: String })
   @ApiQuery({ name: 'userId', required: false, type: String })
   findComments(
-    @Query('isPublished') isPublished = true,
-    @Query('depth') depth?: number,
+    @Query('isPublished') isPublished?: boolean,
     @Query('parentId') parentId?: string,
     @Query('userId') userId?: string,
   ) {
-    if (isNaN(depth)) {
-      depth = undefined;
-    }
-
-    return this.publicationService.findComments(depth, parentId, userId, isPublished);
+    return this.publicationService.findComments(parentId, userId, isPublished);
   }
 
   @Get('/articles/:articleId')
