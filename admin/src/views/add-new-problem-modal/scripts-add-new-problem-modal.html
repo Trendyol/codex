@@ -1,15 +1,5 @@
 <script>
 
-    function setCookie(name, value, days) {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    }
-
     function hasClass(ele, cls) {
         return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
     }
@@ -30,7 +20,6 @@
         this.editor = {};
 
         init = () => {
-            setCookie("access_token", window.stringifiedData.token, 100);
             document.getElementById("submitButton").addEventListener("click", submit);
             initElements();
             initEditor();
@@ -123,6 +112,7 @@
                 }),
                 credentials: 'include',
                 headers: {
+                    "x-access-token": window.stringifiedData.token,
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Credentials": "true",
