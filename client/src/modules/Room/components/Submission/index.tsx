@@ -2,7 +2,7 @@ import Result from '@components/shared/Result';
 import Testcases from '@components/shared/Testcases';
 import Button from '@components/ui/Button';
 import Card from '@components/ui/Card';
-import { useRoom } from '@hooks/data';
+import { useMe, useRoom } from '@hooks/data';
 import { Testcase } from '@hooks/data/models/types';
 import { useRun } from '@hooks/data/useRun';
 import { useSubmission } from '@hooks/data/useSubmission';
@@ -37,27 +37,28 @@ const Submission: FC<SubmissionProps> = ({
   const [activeTab, setActiveTab] = useState<SubmissionTabs>(SubmissionTabs.Testcase);
   const [result, setResult] = useState<SubmissionResult>();
   const [actionLoading, setActionLoading] = useState(false);
-
+  
+  const { me } = useMe();
   const { query, isReady } = useRouter();
   const { room } = useRoom(query.challenge as string, isReady);
   const { runTrigger, runLoading } = useRun((result) => setResult(result));
   const { submissionTrigger, submissionLoading } = useSubmission((result) => setResult(result));
 
+  useEffect(() => {
+    if (room?.team.id && me) sendAction(me, room?.team.id, ActionTypes.result, result);
+  }, [result, room?.team.id, me]);
+
   const handleRun = () => {
-    if (room?.team.id) sendAction(room?.team.id, ActionTypes.run);
+    if (room?.team.id && me) sendAction(me, room?.team.id, ActionTypes.run);
     setActiveTab(SubmissionTabs.Result);
     runTrigger({ problemId, code, language, testcaseId: selectedTestcase?.id });
   };
 
   const handleSubmission = () => {
-    if (room?.team.id) sendAction(room?.team.id, ActionTypes.submission);
+    if (room?.team.id && me) sendAction(me, room?.team.id, ActionTypes.submission);
     setActiveTab(SubmissionTabs.Result);
     submissionTrigger({ problemId, challengeId, teamId, code, language });
   };
-
-  useEffect(() => {
-    if (room?.team.id) sendAction(room?.team.id, ActionTypes.result, result);
-  }, [result, room?.team.id]);
 
   const handleActiveSubmissionTabChange = () => {
     setActiveTab((activeTab) =>
@@ -102,7 +103,7 @@ const Submission: FC<SubmissionProps> = ({
             disabled={loading}
             onClick={handleActiveSubmissionTabChange}
             className={cx(
-              'absolute top-6 right-6 ml-auto cursor-pointer whitespace-nowrap rounded-lg bg-background-200 bg-opacity-90 p-2 text-[10px] first-letter:cursor-pointer  hover:bg-background-100',
+              'absolute right-6 top-6 ml-auto cursor-pointer whitespace-nowrap rounded-lg bg-background-200 bg-opacity-90 p-2 text-[10px] first-letter:cursor-pointer  hover:bg-background-100',
               loading ? 'cursor-not-allowed opacity-60' : '',
             )}
           >
@@ -112,7 +113,7 @@ const Submission: FC<SubmissionProps> = ({
         <div className="flex">
           {showComplete && <Button size={'small'}>Complete ✓</Button>}
           <Button
-            className="mr-2 ml-auto"
+            className="ml-auto mr-2"
             intent={'secondary'}
             size={'small'}
             onClick={handleRun}

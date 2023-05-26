@@ -37,6 +37,7 @@ const Chat: FC<ChatProps> = ({ messages, sendMessage, className }) => {
           <Message user={user} message={message} key={index} />
         ))}
       </div>
+
       <Input
         onKeyDown={handleKeyDown}
         onChange={handleMessageChange}

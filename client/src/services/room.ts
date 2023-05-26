@@ -1,7 +1,7 @@
 import { User } from '@hooks/data/models/types';
 import { ActionTypes } from '@modules/Room/models/enum';
 import { io } from 'socket.io-client';
-import {getConfigWithTypes} from "@contexts/ConfigContext";
+import { getConfigWithTypes } from '@contexts/ConfigContext';
 
 const configs = getConfigWithTypes();
 
@@ -28,12 +28,12 @@ export const joinRoom = (
   });
 };
 
-export const sendMessage = (roomId?: string, message?: string) => {
-  socket.emit('send_message_room', { roomId, message });
+export const sendMessage = (user: User, roomId?: string, message?: string) => {
+  socket.emit('send_message_room', { user, roomId, message });
 };
 
-export const sendAction = (roomId: string, key: ActionTypes, data?: any) => {
-  socket.emit('send_action_room', { roomId, key, data });
+export const sendAction = (user: User, roomId: string, key: ActionTypes, data?: any) => {
+  socket.emit('send_action_room', { user, roomId, key, data });
 };
 
 export const disconnectSocket = () => {

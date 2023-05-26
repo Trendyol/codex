@@ -33,8 +33,8 @@ export const joinLobby = (
   });
 };
 
-export const sendMessage = (lobbyId?: string, message?: string) => {
-  socket.emit('send_message_lobby', { lobbyId, message });
+export const sendMessage = (user: User, lobbyId?: string, message?: string) => {
+  socket.emit('send_message_lobby', { user, lobbyId, message });
 };
 
 export const disconnectSocket = () => {
