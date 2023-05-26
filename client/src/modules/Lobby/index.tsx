@@ -8,12 +8,14 @@ import { useEffect, useState } from 'react';
 import Chat from '../../components/shared/Chat';
 import Dino from './components/Dino';
 import Participants from './components/Participants';
+import Spinner from '@components/shared/Spinner';
 
 const Lobby = () => {
   const router = useRouter();
   const { challenge } = useChallenge(router.query.challenge as string);
   const { lobby } = useLobby(router.query.challenge as string);
   const { me } = useMe();
+  const [navigating, setNavigating] = useState(false);
 
   const [activeParticipants, setActiveParticipants] = useState<User[]>([]);
   const [messages, setMessages] = useState<{ user: User; message: string }[]>([]);
@@ -21,6 +23,8 @@ const Lobby = () => {
   const handleRoomNavigation = () => {
     router.push(`/room/${router.query.challenge}`);
   };
+
+  const startNavigation = () => setNavigating(true);
 
   useEffect(() => {
     if (!lobby || !lobby.id || !me) return;
@@ -52,7 +56,11 @@ const Lobby = () => {
           />
         </div>
         <div className="flex w-[320px] shrink-0 flex-col gap-6 md:hidden">
-          <Countdown text={'Time to Challenge'} date={challenge?.date} />
+          <Countdown
+            text={navigating ? <Spinner /> : 'Time to Challenge'}
+            date={challenge?.date}
+            onComplete={startNavigation}
+          />
           <Dino />
         </div>
       </div>
