@@ -38,6 +38,8 @@ const Lobby = () => {
     return () => disconnectSocket();
   }, []);
 
+  if (!me) return <></>;
+
   return (
     <div className="flex h-[calc(100vh-94px)] gap-6 pb-6">
       <div className="flex flex-1 gap-6 md:flex-col">
@@ -46,7 +48,7 @@ const Lobby = () => {
           <Chat
             className="h-full overflow-auto"
             messages={messages}
-            sendMessage={(message) => sendMessage(lobby?.id, message)}
+            sendMessage={(message) => sendMessage(me, lobby?.id, message)}
           />
         </div>
         <div className="flex w-[320px] shrink-0 flex-col gap-6 md:hidden">

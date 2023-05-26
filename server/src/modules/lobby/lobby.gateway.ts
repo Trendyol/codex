@@ -3,7 +3,6 @@ import { Status } from '@challenge/models/enums';
 import config from '@core/config/configuration';
 import { UserEntity } from '@core/data/entities';
 import { IDataService } from '@core/data/services/data.service';
-import { User } from '@core/decorators/user.decorator';
 import { Logger, UseGuards } from '@nestjs/common';
 import {
   ConnectedSocket,
@@ -63,9 +62,8 @@ export class LobbyGateway implements OnGatewayInit {
   @UseGuards(WsGuard)
   @SubscribeMessage('send_message_lobby')
   message(
-    @User() user: UserEntity,
     @ConnectedSocket() client: Socket,
-    @MessageBody() { lobbyId, message }: MessageLobbyMessage,
+    @MessageBody() { user, lobbyId, message }: MessageLobbyMessage,
   ) {
     client.emit('message_lobby', { user, message });
     client.to(lobbyId).emit('message_lobby', { user, message });

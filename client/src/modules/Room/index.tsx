@@ -25,12 +25,12 @@ const Room = () => {
   const { push, query, isReady } = useRouter();
   const [messages, setMessages] = useState<{ user: User; message: string }[]>([]);
   const [notes, setNotes] = useState<{ user: User; message: string }[]>([]);
+  const [code, setCode] = useState<string>();
+  const [action, setAction] = useState<Action>();
+  const { me } = useMe();
   const { challenge } = useChallenge(query.challenge as string, isReady);
   const { room } = useRoom(query.challenge as string, isReady);
   const { defaultCode } = useDefaultCode(challenge?.problem.id, 3, !!challenge?.problem.id);
-  const { me } = useMe();
-  const [action, setAction] = useState<Action>();
-  const [code, setCode] = useState<string>();
 
   const handleDashboardNavigation = () => {
     push('/');
@@ -60,6 +60,8 @@ const Room = () => {
       DateTime.fromISO(challenge.date).plus({ minutes: challenge.duration }).toString(),
     [challenge?.date, challenge?.duration],
   );
+
+  if (!me) return <></>;
 
   return (
     <div className="flex h-[calc(100vh-94px)] gap-6 pb-6">
@@ -100,7 +102,7 @@ const Room = () => {
           <Video />
           <Chat
             className="flex flex-1 overflow-auto rounded-none border-none"
-            sendMessage={(message) => sendMessage(room?.team.id, message)}
+            sendMessage={(message) => sendMessage(me, room?.team.id, message)}
             messages={messages}
           />
           <Chat

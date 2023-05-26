@@ -1,9 +1,7 @@
 import { WsGuard } from '@auth/guards/ws.guard';
 import { Status } from '@challenge/models/enums';
 import config from '@core/config/configuration';
-import { UserEntity } from '@core/data/entities';
 import { IDataService } from '@core/data/services/data.service';
-import { User } from '@core/decorators/user.decorator';
 import { Logger, UseGuards } from '@nestjs/common';
 import {
   ConnectedSocket,
@@ -46,9 +44,8 @@ export class RoomGateway implements OnGatewayInit {
   @UseGuards(WsGuard)
   @SubscribeMessage('send_message_room')
   message(
-    @User() user: UserEntity,
     @ConnectedSocket() client: Socket,
-    @MessageBody() { roomId, message }: MessageRoomMessage,
+    @MessageBody() { user, roomId, message }: MessageRoomMessage,
   ) {
     client.emit('message_room', { user, message });
     client.to(roomId).emit('message_room', { user, message });
@@ -57,9 +54,8 @@ export class RoomGateway implements OnGatewayInit {
   @UseGuards(WsGuard)
   @SubscribeMessage('send_action_room')
   action(
-    @User() user: UserEntity,
     @ConnectedSocket() client: Socket,
-    @MessageBody() { roomId, key, data }: ActionRoomMessage,
+    @MessageBody() { user, roomId, key, data }: ActionRoomMessage,
   ) {
     client.to(roomId).emit('action_room', { user, key, data });
   }

@@ -5,15 +5,14 @@ import { FC, useContext, useState } from 'react';
 import { Tooltip } from 'flowbite-react';
 import { cx } from 'class-variance-authority';
 import { MAX_PARTICIPANT_DISPLAY } from '@modules/Lobby/models/constants';
-import { useRouter } from 'next/router';
 import { ThemeContext } from '@contexts/ThemeContext';
+import { getSeedAvatar, getSeedName } from '@utils/common';
 
 type ParticipantsProps = {
   activeParticipants: User[];
 };
 
 const Participants: FC<ParticipantsProps> = ({ activeParticipants }) => {
-  const router = useRouter();
   const { theme } = useContext(ThemeContext);
 
   const [expand, setExpand] = useState(false);
@@ -45,21 +44,21 @@ const Participants: FC<ParticipantsProps> = ({ activeParticipants }) => {
         <div className="flex -space-x-4 overflow-auto">
           {activeParticipants
             .slice(0, !expand ? MAX_PARTICIPANT_DISPLAY : activeParticipants.length)
-            .map(({ id, name, avatar }) => (
+            .map(({ id, name, avatar, points }) => (
               <div key={id} className="shrink-0 overflow-scroll hover:z-50">
                 <Tooltip
                   style={theme}
                   content={
                     <div>
-                      <div className="text-sm font-semibold text-primary-500">{name}</div>
-                      <div className="text-xs font-normal text-secondary-100">360 Points</div>
+                      <div className="text-sm font-semibold text-primary-500">{name || getSeedName(id)}</div>
+                      <div className="text-xs font-normal text-secondary-100">{points} Points</div>
                     </div>
                   }
                 >
                   <Image
-                    className={cx('rounded-full border-2 border-border')}
+                    className={cx('max-h-[56px] max-w-[56px] rounded-full border-2 border-border')}
                     alt={name}
-                    src={avatar}
+                    src={avatar || getSeedAvatar(id)}
                     width={56}
                     height={56}
                   />
@@ -68,7 +67,7 @@ const Participants: FC<ParticipantsProps> = ({ activeParticipants }) => {
             ))}
           {!expand && activeParticipants.length > MAX_PARTICIPANT_DISPLAY && (
             <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-border bg-gray-700 text-xs font-medium text-white">
-              +99
+              +{activeParticipants.length - MAX_PARTICIPANT_DISPLAY}
             </div>
           )}
         </div>
