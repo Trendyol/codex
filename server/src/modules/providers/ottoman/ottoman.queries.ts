@@ -1,7 +1,10 @@
+import config from '@core/config/configuration';
 import { UserChallenge } from '@core/data/entities';
 import { QueryOptions, QueryResult } from 'couchbase';
 
 import { queries } from './schemas/queries';
+
+const bucketName = config.couchbase.bucketName;
 
 export class OttomanQueries {
   constructor(
@@ -63,7 +66,7 @@ export class OttomanQueries {
     const placements = [];
 
     result.rows.forEach((row) => {
-      const participants = row.participants.map((participant) => participant.default);
+      const participants = row.participants.map((participant) => participant[bucketName]);
       placements.push({
         date: row.date,
         teamId: row.teamId,
