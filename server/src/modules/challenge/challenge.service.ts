@@ -37,7 +37,7 @@ export class ChallengeService {
 
   async findAll(userId?: string) {
     if (userId) return await this.dataService.queries.findChallenges(userId);
-    return await this.dataService.challenges.find({});
+    return await this.dataService.challenges.find({}, { sort: { date: 'desc' } });
   }
 
   async findById(challengeId: string, userId?: string) {
