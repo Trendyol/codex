@@ -34,7 +34,6 @@ export interface Config {
   };
 
   redirectUrl: string;
-  clientUrl: string;
   allowedOrigins: string[];
   judge0: {
     url: string;
@@ -80,7 +79,6 @@ export const config = {
     password: process.env.CB_PASSWORD,
   },
   redirectUrl: process.env.REDIRECT_URL,
-  clientUrl: process.env.CLIENT_URL,
   allowedOrigins: process.env.ALLOWED_ORIGINS?.split(',') || [],
   judge0: {
     url: process.env.JUDGE0_URL,

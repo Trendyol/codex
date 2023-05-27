@@ -20,7 +20,7 @@ import { MessageLobbyMessage } from './messages/message-lobby.message';
 @WebSocketGateway({
   namespace: '/lobby',
   cors: {
-    origin: [config.clientUrl],
+    origin: [...config.allowedOrigins],
     httpOnly: true,
     credentials: true,
   },

@@ -20,7 +20,7 @@ import { MessageRoomMessage } from './messages/message-room.message';
 @WebSocketGateway({
   namespace: '/room',
   cors: {
-    origin: [config.clientUrl],
+    origin: [...config.allowedOrigins],
     httpOnly: true,
     credentials: true,
   },
