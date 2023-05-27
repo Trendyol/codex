@@ -39,7 +39,7 @@ GROUP BY q1.id,
   q1.teamSize,
   userActiveParticipant,
   userParticipant
-ORDER BY q1.date`;
+ORDER BY q1.date desc`;
 
 const findChallenge = `
 SELECT q1.id,
