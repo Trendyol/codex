@@ -36,14 +36,18 @@ const Video: FC<VideoProps> = () => {
     (async () => {
       hasInitialized.current = true;
       const { Peer } = await import('peerjs');
+
       const peer = new Peer(me.id, {
         host: config.peerjsHost,
-        path: '/peerjs',
-        port: Number(config.peerjsPort),
+        path: '/peerjs'
       });
       peerInstance.current = peer;
-      peer.on('error', (error: Error) => {});
-      peer.on('connection', (...args) => {});
+      peer.on('error', (error: Error) => {
+        console.log("Peer error", error);
+      });
+      peer.on('connection', (...args) => {
+        console.log("Peer connection", args);
+      });
 
       peerInstance.current.on('open', () => {
         participants.forEach((participant) => call(participant.id));
