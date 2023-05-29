@@ -55,7 +55,7 @@ const Problem = () => {
         <TabsGroup tabs={['Note']}>
           <Chat
             className="flex flex-1 overflow-auto rounded-none border-none"
-            sendMessage={(message) => setNotes((notes) => [...notes, { message }])}
+            sendMessage={(message) => setNotes((notes) => [...notes, { user: me, message }])}
             messages={notes}
           />
         </TabsGroup>

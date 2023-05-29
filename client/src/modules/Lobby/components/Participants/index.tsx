@@ -56,7 +56,7 @@ const Participants: FC<ParticipantsProps> = ({ activeParticipants }) => {
                   }
                 >
                   <Image
-                    className={cx('max-h-[56px] max-w-[56px] rounded-full border-2 border-border')}
+                    className={cx('max-h-[56px] w-[56px] min-w-[56px] rounded-full border-2 border-border')}
                     alt={name}
                     src={avatar || getSeedAvatar(id)}
                     width={56}
