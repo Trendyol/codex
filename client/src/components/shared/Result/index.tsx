@@ -28,6 +28,15 @@ const Result: FC<ResultProps> = ({ result }) => {
   const showValues = (accepted && !isSubmission) || !accepted;
   const showCongrats = accepted && isSubmission;
 
+  const renderValues = (title: string, content?: string) => (
+    <div className="mt-1">
+      <div className="mb-1 text-xs">{title}</div>
+      <div className="whitespace-pre-line rounded-md bg-background-50 px-2 py-1 text-sm">
+        {decodeBase64(content)}
+      </div>
+    </div>
+  );
+
   return (
     <div>
       <div className={cx('h-[32px] text-lg', accepted ? 'text-success' : 'text-error')}>
@@ -56,32 +65,10 @@ const Result: FC<ResultProps> = ({ result }) => {
       </span>
       {showValues && (
         <div className="mt-3 h-[100px] overflow-auto">
-          {stderr && (
-            <div>
-              <div className="mb-1 text-xs">Error</div>
-              <div className="rounded-md bg-background-50 px-2 py-1 text-sm">
-                {decodeBase64(stderr)}
-              </div>
-            </div>
-          )}
-          <div>
-            <div className="mb-1 text-xs">Input</div>
-            <div className="rounded-md bg-background-50 px-2 py-1 text-sm">
-              {decodeBase64(stdin)}
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className="mb-1 text-xs">Output</div>
-            <div className="rounded-md bg-background-50 px-2 py-1 text-sm">
-              {decodeBase64(stdout)}
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className="mb-1 text-xs">Expected Output</div>
-            <div className="rounded-md bg-background-50 px-2 py-1 text-sm">
-              {decodeBase64(expected_output)}
-            </div>
-          </div>
+          {stderr && renderValues('Error', stderr)}
+          {renderValues('Input', stdin)}
+          {renderValues('Output', stdout)}
+          {renderValues('Expected Output', expected_output)}
         </div>
       )}
     </div>
