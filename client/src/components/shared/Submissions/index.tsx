@@ -16,11 +16,11 @@ const Submissions: FC<SubmissionsProps> = ({ problemId, teamId }) => {
       {submissions?.map(({ id, status, date, runtime, memory }) => {
         const accepted = status == SubmissionStatus.Accepted;
         return (
-          <div className="w-full border-b border-border p-2" key={id}>
-            <div className={cx('flex text-lg', accepted ? 'text-success' : 'text-error')}>
+          <div className="w-full border-b border-border px-6 py-2 " key={id}>
+            <div className={cx('text-md flex', accepted ? 'text-success' : 'text-error')}>
               {accepted ? 'Accepted' : 'Wrong Answer'}
             </div>
-            <div className="mt-1 text-xs text-secondary-200">
+            <div className="mt-0.5 text-xs text-secondary-200 ">
               {DateTime.fromISO(date).toFormat('dd LLL yyyy')} • {runtime} ms • {memory} KB
             </div>
           </div>

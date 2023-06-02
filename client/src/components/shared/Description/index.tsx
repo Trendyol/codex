@@ -15,11 +15,24 @@ type DescriptionProps = {
 const Description: FC<DescriptionProps> = ({ title, content, difficulty }) => {
   return (
     <div className="h-full overflow-auto p-6">
-      <div className="font-semibold text-primary-500">{title}</div>{' '}
-      <Badge className="my-2 capitalize" intent={difficulty}>
-        {Difficulty[difficulty]}
-      </Badge>
-      <ReactMarkdown children={content} rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkGfm]} />
+      <div className="mb-2 flex items-center gap-2">
+        <div
+          title={title}
+          className="overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-primary-500"
+        >
+          {title}
+        </div>
+
+        <Badge className="capitalize" intent={difficulty}>
+          {Difficulty[difficulty]}
+        </Badge>
+      </div>
+      <ReactMarkdown
+        children={content}
+        rehypePlugins={[rehypeRaw]}
+        remarkPlugins={[remarkGfm]}
+        className="text-[13px]"
+      />
     </div>
   );
 };
