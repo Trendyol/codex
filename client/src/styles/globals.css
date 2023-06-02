@@ -18,15 +18,14 @@
     --color-background-100: #f8fbfb;
     --color-background-200: #fefefe;
 
-    --color-yellow-100: #FDF5E3;
-    --color-yellow-800: #F4BB40;
+    --color-yellow-100: #fdf5e3;
+    --color-yellow-800: #f4bb40;
 
-    --color-red-800: #EB445A;
-    --color-red-100: #FCE3E6;
+    --color-red-800: #eb445a;
+    --color-red-100: #fce3e6;
 
-    --color-green-100: #E5F3F0;
-    --color-green-800: #5BB2A2;
-
+    --color-green-100: #e5f3f0;
+    --color-green-800: #5bb2a2;
 
     --color-text: #333333;
     --color-border: #e5e7eb;
@@ -34,7 +33,6 @@
     --color-error: #ef4444;
     --color-white: #fefefe;
     --color-black: #333333;
-
   }
 
   :root[class='dark'] {
@@ -72,10 +70,10 @@
 
 @layer components {
   pre {
-    @apply whitespace-pre-wrap rounded-md bg-[#eff1f6] p-2.5 text-[#262626];
+    @apply whitespace-pre-wrap rounded-md bg-[#eff1f6] px-2.5 py-2 text-xs text-[#262626];
   }
 
   code {
-    @apply rounded-md bg-[#eff1f6] p-0.5 text-[#262626];
+    @apply rounded-md bg-[#eff1f6] px-1 py-0.5 text-[#262626];
   }
 }
