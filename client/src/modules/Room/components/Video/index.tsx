@@ -9,6 +9,8 @@ import {
   BsFillMicMuteFill,
 } from 'react-icons/bs';
 import { useConfig } from '@contexts/ConfigContext';
+import { cx } from 'class-variance-authority';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 type VideoProps = {};
 
 type VideoRef = {
@@ -29,6 +31,7 @@ const Video: FC<VideoProps> = () => {
   const participants = room?.team.participants.filter((participant) => participant.id !== me?.id);
   const [muteVideo, setMuteVideo] = useState(false);
   const [muteAudio, setMuteAudio] = useState(false);
+  const [hidePreview, setHidePreview] = useState(true);
 
   useEffect(() => {
     if (!me || !room || !participants || peerInstance.current || hasInitialized.current) return;
@@ -39,15 +42,11 @@ const Video: FC<VideoProps> = () => {
 
       const peer = new Peer(me.id, {
         host: config.peerjsHost,
-        path: '/peerjs'
+        path: '/peerjs',
       });
       peerInstance.current = peer;
-      peer.on('error', (error: Error) => {
-        console.log("Peer error", error);
-      });
-      peer.on('connection', (...args) => {
-        console.log("Peer connection", args);
-      });
+      peer.on('error', (error: Error) => {});
+      peer.on('connection', (...args) => {});
 
       peerInstance.current.on('open', () => {
         participants.forEach((participant) => call(participant.id));
@@ -105,6 +104,14 @@ const Video: FC<VideoProps> = () => {
     tracks.forEach((track: MediaStreamTrack) => (track.enabled = !track.enabled));
   };
 
+  const handleHidePreview = () => {
+    setHidePreview((hidePreview) => !hidePreview);
+  };
+
+  const cameraHeight = participants
+    ? `${100 / (participants.length + (hidePreview ? 0 : 1))}%`
+    : '100%';
+
   return (
     <div className="w-full">
       <div className="flex h-[40px] items-center justify-between border-b">
@@ -114,17 +121,23 @@ const Video: FC<VideoProps> = () => {
         <div className="flex h-full w-full items-center justify-center" onClick={handleMuteAudio}>
           {muteAudio ? <BsFillMicMuteFill size={20} /> : <BsFillMicFill size={20} />}
         </div>
+        <div className="flex h-full w-full items-center justify-center" onClick={handleHidePreview}>
+          {hidePreview ? <AiFillEyeInvisible size={24} /> : <AiFillEye size={24} />}
+        </div>
       </div>
       <div className="flex h-[calc(100%-40px)] flex-col overflow-hidden">
-        <video muted className="hidden" controls ref={videoRef} />
-        {participants?.map((participant: any, index: number) => (
+        <video
+          muted
+          style={{ height: cameraHeight }}
+          className={cx('object-cover', hidePreview ? 'hidden' : '')}
+          ref={videoRef}
+        />
+        {participants?.map((participant, index) => (
           <video
-            muted
             className="object-cover"
-            style={{ height: `${100 / participants.length}%` }}
+            style={{ height: cameraHeight }}
             key={index}
             playsInline
-            controls
             ref={(ref) => (remoteVideoRefs.current[participant.id] = ref)}
             poster={participant.avatar}
           />

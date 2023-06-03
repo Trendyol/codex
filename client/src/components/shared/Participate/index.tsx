@@ -2,7 +2,6 @@ import Button from '@components/ui/Button';
 import { useParticipate } from '@hooks/data';
 import { Status } from '@models/enums';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { FC } from 'react';
 
 type ParticipateProps = {
@@ -19,7 +18,6 @@ const Participate: FC<ParticipateProps> = ({
   status,
 }) => {
   const { participate } = useParticipate();
-  const { push } = useRouter();
 
   if (status == Status.upcoming) {
     if (userParticipant)

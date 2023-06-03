@@ -13,7 +13,9 @@ const Placement = () => {
 
   return (
     <Card className="h-fit min-h-[400px] overflow-hidden rounded-lg">
-      <div className="text-2xl font-semibold">Placements</div>
+      <div className="text-2xl font-semibold">
+        <span>Placements</span>
+      </div>
       <div className="mt-3 space-y-4">
         {placements.slice(0, 3).map(({ teamId, participants, date }, index) => {
           const finishTime = DateTime.fromISO(date)

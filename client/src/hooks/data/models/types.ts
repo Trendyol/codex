@@ -16,6 +16,7 @@ export type Challenge = {
   difficulty: Difficulty;
   userParticipant: boolean;
   userActiveParticipant: boolean;
+  activeParticipants?: string[];
 };
 
 export type Progression = {
@@ -79,6 +80,7 @@ export type UserChallenge = {
 export type Participant = {
   id: string;
   name: string;
+  avatar: string;
 };
 
 export type Lobby = {
