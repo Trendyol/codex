@@ -6,6 +6,7 @@ import { DateTime } from 'luxon';
 import { Challenge } from '@hooks/data/models/types';
 import Participate from '@components/shared/Participate';
 import Link from 'next/link';
+import { useChallenge } from '@hooks/data';
 
 type ChallengeProps = {} & Challenge;
 
@@ -21,6 +22,7 @@ const Challenge: FC<ChallengeProps> = ({
 }) => {
   const formattedDate = useMemo(() => DateTime.fromISO(date).toFormat('dd LLL yyyy'), [date]);
   const challengePath = `/challenge/${id}`;
+  const { challenge } = useChallenge(id);
 
   return (
     <Link href={challengePath}>
@@ -38,12 +40,14 @@ const Challenge: FC<ChallengeProps> = ({
               <div className="mt-auto text-sm capitalize">
                 {formattedDate} - {Status[status]}
               </div>
-              <Participate
-                id={id}
-                userParticipant={userParticipant}
-                userActiveParticipant={userActiveParticipant}
-                status={status}
-              />
+              {challenge && (
+                <Participate
+                  id={id}
+                  userParticipant={userParticipant}
+                  userActiveParticipant={userActiveParticipant}
+                  status={status}
+                />
+              )}
             </div>
           </div>
         </div>
