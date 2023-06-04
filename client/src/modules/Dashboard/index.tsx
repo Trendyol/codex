@@ -1,7 +1,6 @@
 import Community from '@components/shared/Community';
 import Leaderboard from '@components/shared/Leaderboard';
 import Progression from '@components/shared/Progression';
-import Suggestion from '@components/shared/Suggestion';
 import List from './components/List';
 
 const Dashboard = () => {
@@ -13,7 +12,7 @@ const Dashboard = () => {
           <Progression />
           <Leaderboard />
           <Community />
-          <Suggestion />
+          {/* <Suggestion /> */}
         </div>
       </div>
     </>

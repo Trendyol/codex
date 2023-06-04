@@ -1,7 +1,6 @@
 import Community from '@components/shared/Community';
 import Leaderboard from '@components/shared/Leaderboard';
 import Progression from '@components/shared/Progression';
-import Suggestion from '@components/shared/Suggestion';
 import Lore from './components/Lore';
 import Placement from './components/Placement';
 import Prize from './components/Prize';
@@ -18,7 +17,7 @@ const Challenge = () => {
         <Progression />
         <Leaderboard />
         <Community />
-        <Suggestion />
+        {/* <Suggestion /> */}
       </div>
     </div>
   );

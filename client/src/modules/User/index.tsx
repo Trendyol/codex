@@ -1,7 +1,6 @@
 import Community from '@components/shared/Community';
 import Leaderboard from '@components/shared/Leaderboard';
 import Progression from '@components/shared/Progression';
-import Suggestion from '@components/shared/Suggestion';
 import { useState } from 'react';
 import Challenges from './components/Challenges';
 import Lore from './components/Lore';
@@ -23,7 +22,7 @@ const User = () => {
         <Progression />
         <Leaderboard />
         <Community />
-        <Suggestion />
+        {/* <Suggestion /> */}
       </div>
       <UpdatePopup show={showUpdatePopup} onHide={handleHideUpdatePopup} />
     </div>
