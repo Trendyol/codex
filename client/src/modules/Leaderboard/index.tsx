@@ -1,6 +1,5 @@
 import Community from '@components/shared/Community';
 import Progression from '@components/shared/Progression';
-import Suggestion from '@components/shared/Suggestion';
 import Avatar from '@components/ui/Avatar';
 import Card from '@components/ui/Card';
 import { useUsers } from '@hooks/data/useUsers';
@@ -27,7 +26,7 @@ const Leaderboard = () => {
         <div className="flex w-sidebar flex-shrink-0 flex-col gap-6 xl:w-[270px] md:hidden">
           <Progression />
           <Community />
-          <Suggestion />
+          {/* <Suggestion /> */}
         </div>
       </div>
     </>

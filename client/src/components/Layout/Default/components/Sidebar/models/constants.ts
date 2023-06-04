@@ -4,6 +4,7 @@ import { HiOutlineDocumentText } from 'react-icons/hi';
 import { AiFillGithub } from 'react-icons/ai';
 import { FaFeatherAlt } from 'react-icons/fa';
 import { IoRocketSharp } from 'react-icons/io5';
+import { MdLeaderboard } from 'react-icons/md';
 
 export const MENU_ITEMS = [
   {
@@ -19,8 +20,14 @@ export const MENU_ITEMS = [
     target: '_self',
   },
   {
-    title: 'Articles',
+    title: 'Leaderboard',
     Icon: FaFeatherAlt,
+    path: '/leaderboard',
+    target: '_self',
+  },
+  {
+    title: 'Articles',
+    Icon: MdLeaderboard,
     path: '/articles',
     disabled: true,
     target: '_self',
@@ -44,6 +51,12 @@ export const USER_MENU_ITEMS = [
     title: 'Practice',
     Icon: IoRocketSharp,
     path: '/practice',
+    target: '_self',
+  },
+  {
+    title: 'Leaderboard',
+    Icon: MdLeaderboard,
+    path: '/leaderboard',
     target: '_self',
   },
   {
