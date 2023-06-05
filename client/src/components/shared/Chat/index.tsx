@@ -2,7 +2,7 @@ import Card from '@components/ui/Card';
 import Input from '@components/ui/Input';
 import { User } from '@hooks/data/models/types';
 import { cx } from 'class-variance-authority';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import Message from './Message';
 
 type ChatProps = {
@@ -30,10 +30,22 @@ const Chat: FC<ChatProps> = ({ messages, sendMessage, className }) => {
     messagesRef.current?.scrollTo({ top: messagesRef.current.scrollHeight, behavior: 'smooth' });
   }, [messages]);
 
+  // ! This is a workaround to prevent duplicate messages from being displayed
+  // ! https://github.com/Trendyol/codex/issues/210
+
+  const uniqueMessages = useMemo(
+    () =>
+      messages.filter(
+        ({ message, user }, index) =>
+          messages.findIndex((m) => m.message === message && m.user?.id === user?.id) === index,
+      ),
+    [messages],
+  );
+
   return (
     <Card className={cx('flex flex-col justify-between space-y-2', className)}>
       <div className="mb-2 h-full space-y-2 overflow-scroll" ref={messagesRef}>
-        {messages.map(({ user, message }, index) => (
+        {uniqueMessages.map(({ user, message }, index) => (
           <Message user={user} message={message} key={index} />
         ))}
       </div>

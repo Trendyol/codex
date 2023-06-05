@@ -1,6 +1,7 @@
 import { User } from '@hooks/data/models/types';
 import { io } from 'socket.io-client';
-import {getConfigWithTypes} from "@contexts/ConfigContext";
+import { getConfigWithTypes } from '@contexts/ConfigContext';
+import { Status } from '@models/enums';
 
 const configs = getConfigWithTypes();
 
@@ -14,7 +15,7 @@ export const joinLobby = (
   participantId: string,
   joinedCallback: (activeParticipants: User[]) => any,
   messageCallback: (user: User, message: string) => any,
-  changeStatusCallback: () => any,
+  changeStatusCallback: (status: Status) => any,
 ) => {
   socket.connect();
 
@@ -28,8 +29,8 @@ export const joinLobby = (
     messageCallback(user, message);
   });
 
-  socket.on('change_status', () => {
-    changeStatusCallback();
+  socket.on('change_status', ({ status }) => {
+    changeStatusCallback(status);
   });
 };
 

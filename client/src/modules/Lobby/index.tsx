@@ -4,37 +4,45 @@ import { User } from '@hooks/data/models/types';
 import { useMe } from '@hooks/data/useMe';
 import { disconnectSocket, joinLobby, sendMessage } from '@services/lobby';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import Chat from '../../components/shared/Chat';
 import Dino from './components/Dino';
 import Participants from './components/Participants';
-import Spinner from '@components/shared/Spinner';
+import { Status } from '@models/enums';
+import { DateTime } from 'luxon';
+import Placement from '@components/shared/Placement';
 
-const Lobby = () => {
+type LobbyProps = {
+  discussion?: boolean;
+};
+
+const Lobby: FC<LobbyProps> = ({ discussion }) => {
   const router = useRouter();
   const { challenge } = useChallenge(router.query.challenge as string);
   const { lobby } = useLobby(router.query.challenge as string);
   const { me } = useMe();
-  const [navigating, setNavigating] = useState(false);
 
   const [activeParticipants, setActiveParticipants] = useState<User[]>([]);
   const [messages, setMessages] = useState<{ user: User; message: string }[]>([]);
 
-  const handleRoomNavigation = () => {
-    router.push(`/room/${router.query.challenge}`);
+  const handleNavigation = (status: Status) => {
+    if (status === Status.ongoing && !discussion) router.push(`/room/${router.query.challenge}`);
   };
 
-  const startNavigation = () => setNavigating(true);
+  useEffect(() => {
+    if (challenge?.status === Status.ongoing && !discussion)
+      router.push(`/room/${router.query.challenge}`);
+  }, [challenge]);
 
   useEffect(() => {
     if (!lobby || !lobby.id || !me) return;
-
+    const lobbyId = discussion ? `${lobby.id}/discussion` : lobby.id;
     joinLobby(
-      lobby.id,
+      lobbyId,
       me.id,
       (activeParticipants) => setActiveParticipants(activeParticipants),
       (user, message) => setMessages((messages) => [...messages, { user, message }]),
-      () => handleRoomNavigation(),
+      (status) => handleNavigation(status),
     );
   }, [lobby, me]);
 
@@ -42,13 +50,19 @@ const Lobby = () => {
     return () => disconnectSocket();
   }, []);
 
+  const countdownDate = useMemo(
+    () =>
+      challenge?.date &&
+      DateTime.fromISO(challenge.date).plus({ minutes: challenge.duration }).toString(),
+    [challenge?.date, challenge?.duration],
+  );
   if (!me) return <></>;
 
   return (
     <div className="flex h-[calc(100vh-94px)] gap-6 pb-6">
       <div className="flex flex-1 gap-6 md:flex-col">
         <div className="flex flex-1 flex-col gap-6">
-          <Participants activeParticipants={activeParticipants} />
+          {!discussion && <Participants activeParticipants={activeParticipants} />}
           <Chat
             className="h-full overflow-auto"
             messages={messages}
@@ -57,11 +71,11 @@ const Lobby = () => {
         </div>
         <div className="flex w-[320px] shrink-0 flex-col gap-6 md:hidden">
           <Countdown
-            text={navigating ? <Spinner /> : 'Time to Challenge'}
-            date={challenge?.date}
-            onComplete={startNavigation}
+            text={!discussion && 'Time to Challenge'}
+            date={discussion ? countdownDate : challenge?.date}
           />
-          <Dino />
+          {!discussion && <Dino />}
+          {discussion && <Placement />}
         </div>
       </div>
     </div>

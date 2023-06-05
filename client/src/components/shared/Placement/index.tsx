@@ -4,20 +4,25 @@ import { useChallenge } from '@hooks/data';
 import { usePlacements } from '@hooks/data/usePlacements';
 import { DateTime } from 'luxon';
 import { useRouter } from 'next/router';
+import { FC } from 'react';
 
-const Placement = () => {
+type PlacementProps = {
+  limit?: number;
+};
+
+const Placement: FC<PlacementProps> = ({ limit = 3 }) => {
   const { query, isReady } = useRouter();
   const { challenge } = useChallenge(query.challenge as string);
   const { placements } = usePlacements(query.challenge as string, isReady);
   if (!challenge || !placements || !placements.length) return <></>;
 
   return (
-    <Card className="h-fit min-h-[400px] overflow-hidden rounded-lg">
+    <Card className=" h-full min-h-[400px] overflow-scroll rounded-lg">
       <div className="text-2xl font-semibold">
         <span>Placements</span>
       </div>
-      <div className="mt-3 space-y-4">
-        {placements.slice(0, 3).map(({ teamId, participants, date }, index) => {
+      <div className="mt-3 space-y-4 overflow-auto ">
+        {placements.slice(0, limit).map(({ teamId, participants, date }, index) => {
           const finishTime = DateTime.fromISO(date)
             .diff(DateTime.fromISO(challenge.date))
             .toFormat('hh:mm:ss');

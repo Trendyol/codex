@@ -32,9 +32,7 @@ const Room = () => {
   const { room } = useRoom(query.challenge as string, isReady);
   const { defaultCode } = useDefaultCode(challenge?.problem.id, 3, !!challenge?.problem.id);
 
-  const handleDashboardNavigation = () => {
-    push('/');
-  };
+  const handleDashboardNavigation = () => push('/');
 
   const handleCodeChange = (code?: string) => {
     setCode(code);
