@@ -14,7 +14,7 @@ export const joinLobby = (
   lobbyId: string,
   participantId: string,
   joinedCallback: (activeParticipants: User[]) => any,
-  messageCallback: (user: User, message: string, time: string) => any,
+  messageCallback: (user: User, message: string, timestamp: string) => any,
   changeStatusCallback: (status: Status) => any,
 ) => {
   socket.connect();
@@ -25,8 +25,8 @@ export const joinLobby = (
     joinedCallback(activeParticipants);
   });
 
-  socket.on('message_lobby', ({ user, message, time }) => {
-    messageCallback(user, message, time);
+  socket.on('message_lobby', ({ user, message, timestamp }) => {
+    messageCallback(user, message, timestamp);
   });
 
   socket.on('change_status', (status) => {

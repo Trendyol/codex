@@ -7,12 +7,12 @@ import { FC } from 'react';
 type MessageProps = {
   user?: User;
   message: string;
-  time: string;
+  timestamp: string;
 };
 
-const Message: FC<MessageProps> = ({ user, message, time }) => {
+const Message: FC<MessageProps> = ({ user, message, timestamp }) => {
   const { id, name, avatar, points } = user || {};
-  const formattedTime = DateTime.fromISO(time).toFormat('HH:mm');
+  const formattedTimestamp = DateTime.fromISO(timestamp).toFormat('HH:mm');
 
   return (
     <div className="flex rounded-md bg-background-50 p-2">
@@ -29,7 +29,7 @@ const Message: FC<MessageProps> = ({ user, message, time }) => {
           <span className="ml-2 text-xs text-secondary-100">{points || 0} Points</span>
         </div>
         <div className="whitespace-normal break-all text-sm text-secondary-200">{message}</div>
-        <div className="absolute bottom-0 right-0 text-[10px] text-secondary-100">{formattedTime}</div>
+        <div className="absolute bottom-0 right-0 text-[10px] text-secondary-100">{formattedTimestamp}</div>
       </div>
     </div>
   );

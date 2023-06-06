@@ -18,13 +18,14 @@ import { useEffect, useMemo, useState } from 'react';
 import Submission from './components/Submission';
 import Video from './components/Video';
 import { Action } from './models/types';
+import { MessageEntry } from '@models/types';
 
 const Editor = dynamic(() => import('@components/shared/Editor'), { ssr: false });
 
 const Room = () => {
   const { push, query, isReady } = useRouter();
-  const [messages, setMessages] = useState<{ user: User; message: string; time: string }[]>([]);
-  const [notes, setNotes] = useState<{ user: User; message: string; time: string }[]>([]);
+  const [messages, setMessages] = useState<MessageEntry[]>([]);
+  const [notes, setNotes] = useState<MessageEntry[]>([]);
   const [code, setCode] = useState<string>();
   const [action, setAction] = useState<Action>();
   const { me } = useMe();
@@ -41,7 +42,8 @@ const Room = () => {
 
     joinRoom(
       room.team.id,
-      (user, message, time) => setMessages((messages) => [...messages, { user, message, time }]),
+      (user, message, timestamp) =>
+        setMessages((messages) => [...messages, { user, message, timestamp }]),
       (_, key, data) => setAction({ key, data }),
     );
   }, [room, me]);
@@ -106,7 +108,7 @@ const Room = () => {
             sendMessage={(message) =>
               setNotes((notes) => [
                 ...notes,
-                { user: me as User, message, time: new Date().toISOString() },
+                { user: me as User, message, timestamp: DateTime.now().toISO() },
               ])
             }
             messages={notes}

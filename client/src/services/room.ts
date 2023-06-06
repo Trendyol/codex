@@ -12,15 +12,15 @@ const socket = io(`${configs.baseUrl}/room`, {
 
 export const joinRoom = (
   roomId: string,
-  messageCallback: (user: User, message: string, time: string) => void,
+  messageCallback: (user: User, message: string, timestamp: string) => void,
   actionCallback: (user: User, key: ActionTypes, data?: any) => void,
 ) => {
   socket.connect();
 
   socket.emit('join_room', { roomId });
 
-  socket.on('message_room', ({ user, message, time }) => {
-    messageCallback(user, message, time);
+  socket.on('message_room', ({ user, message, timestamp }) => {
+    messageCallback(user, message, timestamp);
   });
 
   socket.on('action_room', ({ user, key, data }) => {
