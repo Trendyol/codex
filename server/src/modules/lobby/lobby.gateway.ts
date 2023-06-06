@@ -12,6 +12,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { DateTime } from 'luxon';
 import { Server, Socket } from 'socket.io';
 
 import { JoinLobbyMessage } from './messages/join-lobby.message';
@@ -65,9 +66,9 @@ export class LobbyGateway implements OnGatewayInit {
     @ConnectedSocket() client: Socket,
     @MessageBody() { user, lobbyId, message }: MessageLobbyMessage,
   ) {
-    const time = new Date().toISOString();
-    client.emit('message_lobby', { user, message, time });
-    client.to(lobbyId).emit('message_lobby', { user, message, time });
+    const timestamp = DateTime.now().toISO();
+    client.emit('message_lobby', { user, message, timestamp });
+    client.to(lobbyId).emit('message_lobby', { user, message, timestamp });
   }
 
   changeStatus(lobbyId: string, status: Status) {

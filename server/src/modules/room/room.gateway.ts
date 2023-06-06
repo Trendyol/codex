@@ -11,6 +11,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { DateTime } from 'luxon';
 import { Server, Socket } from 'socket.io';
 
 import { ActionRoomMessage } from './messages/action-room.message';
@@ -47,9 +48,9 @@ export class RoomGateway implements OnGatewayInit {
     @ConnectedSocket() client: Socket,
     @MessageBody() { user, roomId, message }: MessageRoomMessage,
   ) {
-    const time = new Date().toISOString();
-    client.emit('message_room', { user, message, time });
-    client.to(roomId).emit('message_room', { user, message, time });
+    const timestamp = DateTime.now().toISO();
+    client.emit('message_room', { user, message, timestamp });
+    client.to(roomId).emit('message_room', { user, message, timestamp });
   }
 
   @UseGuards(WsGuard)
