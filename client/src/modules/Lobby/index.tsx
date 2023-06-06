@@ -23,7 +23,7 @@ const Lobby: FC<LobbyProps> = ({ discussion }) => {
   const { me } = useMe();
 
   const [activeParticipants, setActiveParticipants] = useState<User[]>([]);
-  const [messages, setMessages] = useState<{ user: User; message: string }[]>([]);
+  const [messages, setMessages] = useState<{ user: User; message: string; time: string }[]>([]);
 
   const lobbyId = discussion ? `${lobby?.id}/discussion` : lobby?.id;
 
@@ -42,7 +42,7 @@ const Lobby: FC<LobbyProps> = ({ discussion }) => {
       lobbyId,
       me.id,
       (activeParticipants) => setActiveParticipants(activeParticipants),
-      (user, message) => setMessages((messages) => [...messages, { user, message }]),
+      (user, message, time) => setMessages((messages) => [...messages, { user, message, time }]),
       (status) => handleNavigation(status),
     );
   }, [lobby, me]);

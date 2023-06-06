@@ -1,15 +1,19 @@
 import { User } from '@hooks/data/models/types';
 import { getSeedAvatar, getSeedName } from '@utils/common';
+import { DateTime } from 'luxon';
 import Image from 'next/image';
 import { FC } from 'react';
 
 type MessageProps = {
   user?: User;
   message: string;
+  time: string;
 };
 
-const Message: FC<MessageProps> = ({ user, message }) => {
+const Message: FC<MessageProps> = ({ user, message, time }) => {
   const { id, name, avatar, points } = user || {};
+  const formattedTime = DateTime.fromISO(time).toFormat('HH:mm');
+
   return (
     <div className="flex rounded-md bg-background-50 p-2">
       <Image
@@ -25,7 +29,7 @@ const Message: FC<MessageProps> = ({ user, message }) => {
           <span className="ml-2 text-xs text-secondary-100">{points || 0} Points</span>
         </div>
         <div className="whitespace-normal break-all text-sm text-secondary-200">{message}</div>
-        <div className="absolute bottom-0 right-0 text-[10px] text-secondary-100">12.00</div>
+        <div className="absolute bottom-0 right-0 text-[10px] text-secondary-100">{formattedTime}</div>
       </div>
     </div>
   );

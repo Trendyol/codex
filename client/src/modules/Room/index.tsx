@@ -23,8 +23,8 @@ const Editor = dynamic(() => import('@components/shared/Editor'), { ssr: false }
 
 const Room = () => {
   const { push, query, isReady } = useRouter();
-  const [messages, setMessages] = useState<{ user: User; message: string }[]>([]);
-  const [notes, setNotes] = useState<{ user: User; message: string }[]>([]);
+  const [messages, setMessages] = useState<{ user: User; message: string; time: string }[]>([]);
+  const [notes, setNotes] = useState<{ user: User; message: string; time: string }[]>([]);
   const [code, setCode] = useState<string>();
   const [action, setAction] = useState<Action>();
   const { me } = useMe();
@@ -32,18 +32,16 @@ const Room = () => {
   const { room } = useRoom(query.challenge as string, isReady);
   const { defaultCode } = useDefaultCode(challenge?.problem.id, 3, !!challenge?.problem.id);
 
-  const handleDashboardNavigation = () => push('/');
+  const handleLobbyNavigation = () => push(`/lobby/${query.challenge}/discussion`);
 
-  const handleCodeChange = (code?: string) => {
-    setCode(code);
-  };
+  const handleCodeChange = (code?: string) => setCode(code);
 
   useEffect(() => {
     if (!room || !me) return;
 
     joinRoom(
       room.team.id,
-      (user, message) => setMessages((messages) => [...messages, { user, message }]),
+      (user, message, time) => setMessages((messages) => [...messages, { user, message, time }]),
       (_, key, data) => setAction({ key, data }),
     );
   }, [room, me]);
@@ -95,7 +93,7 @@ const Room = () => {
         )}
       </div>
       <div className="flex h-full w-[320px] shrink-0 flex-col gap-6 md:hidden">
-        <Countdown date={countdownDate} onComplete={handleDashboardNavigation} />
+        <Countdown date={countdownDate} onComplete={handleLobbyNavigation} />
         <TabsGroup tabs={['Video', 'Chat', 'Note']}>
           <Video />
           <Chat
@@ -106,7 +104,10 @@ const Room = () => {
           <Chat
             className="flex flex-1 overflow-auto rounded-none border-none"
             sendMessage={(message) =>
-              setNotes((notes) => [...notes, { user: me as User, message }])
+              setNotes((notes) => [
+                ...notes,
+                { user: me as User, message, time: new Date().toISOString() },
+              ])
             }
             messages={notes}
           />

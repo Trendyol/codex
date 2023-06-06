@@ -47,8 +47,9 @@ export class RoomGateway implements OnGatewayInit {
     @ConnectedSocket() client: Socket,
     @MessageBody() { user, roomId, message }: MessageRoomMessage,
   ) {
-    client.emit('message_room', { user, message });
-    client.to(roomId).emit('message_room', { user, message });
+    const time = new Date().toISOString();
+    client.emit('message_room', { user, message, time });
+    client.to(roomId).emit('message_room', { user, message, time });
   }
 
   @UseGuards(WsGuard)

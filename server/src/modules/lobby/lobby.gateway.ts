@@ -65,8 +65,9 @@ export class LobbyGateway implements OnGatewayInit {
     @ConnectedSocket() client: Socket,
     @MessageBody() { user, lobbyId, message }: MessageLobbyMessage,
   ) {
-    client.emit('message_lobby', { user, message });
-    client.to(lobbyId).emit('message_lobby', { user, message });
+    const time = new Date().toISOString();
+    client.emit('message_lobby', { user, message, time });
+    client.to(lobbyId).emit('message_lobby', { user, message, time });
   }
 
   changeStatus(lobbyId: string, status: Status) {

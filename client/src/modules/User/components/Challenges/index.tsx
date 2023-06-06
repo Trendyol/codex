@@ -8,7 +8,7 @@ const Challenges = () => {
   const { push, query, isReady } = useRouter();
   const { user } = useUser(query.user as string, isReady);
 
-  if (!user?.challenges) return <></>;
+  if (!user?.challenges || !user?.challenges.length) return <></>;
 
   const handleChallengeNavigation = (id: string) => {
     push(`/challenge/${id}`);
