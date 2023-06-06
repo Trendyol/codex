@@ -15,6 +15,7 @@ import { cx } from 'class-variance-authority';
 import { useRouter } from 'next/router';
 import { FC, useEffect, useState } from 'react';
 import Spinner from '../../../../components/shared/Spinner';
+import Link from 'next/link';
 
 type SubmissionProps = {
   problemId: string;
@@ -37,7 +38,7 @@ const Submission: FC<SubmissionProps> = ({
   const [activeTab, setActiveTab] = useState<SubmissionTabs>(SubmissionTabs.Testcase);
   const [result, setResult] = useState<SubmissionResult>();
   const [actionLoading, setActionLoading] = useState(false);
-  
+
   const { me } = useMe();
   const { query, isReady } = useRouter();
   const { room } = useRoom(query.challenge as string, isReady);
@@ -111,7 +112,11 @@ const Submission: FC<SubmissionProps> = ({
           </button>
         )}
         <div className="flex">
-          {showComplete && <Button size={'small'}>Complete ✓</Button>}
+          {showComplete && (
+            <Link href={`/lobby/${challengeId}/discussion`}>
+              <Button size={'small'}>Complete ✓</Button>
+            </Link>
+          )}
           <Button
             className="ml-auto mr-2"
             intent={'secondary'}

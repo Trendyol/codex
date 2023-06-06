@@ -25,6 +25,8 @@ const Lobby: FC<LobbyProps> = ({ discussion }) => {
   const [activeParticipants, setActiveParticipants] = useState<User[]>([]);
   const [messages, setMessages] = useState<{ user: User; message: string }[]>([]);
 
+  const lobbyId = discussion ? `${lobby?.id}/discussion` : lobby?.id;
+
   const handleNavigation = (status: Status) => {
     if (status === Status.ongoing && !discussion) router.push(`/room/${router.query.challenge}`);
   };
@@ -35,8 +37,7 @@ const Lobby: FC<LobbyProps> = ({ discussion }) => {
   }, [challenge]);
 
   useEffect(() => {
-    if (!lobby || !lobby.id || !me) return;
-    const lobbyId = discussion ? `${lobby.id}/discussion` : lobby.id;
+    if (!lobby || !lobby.id || !me || !lobbyId) return;
     joinLobby(
       lobbyId,
       me.id,
@@ -66,7 +67,7 @@ const Lobby: FC<LobbyProps> = ({ discussion }) => {
           <Chat
             className="h-full overflow-auto"
             messages={messages}
-            sendMessage={(message) => sendMessage(me, lobby?.id, message)}
+            sendMessage={(message) => sendMessage(me, lobbyId, message)}
           />
         </div>
         <div className="flex w-[320px] shrink-0 flex-col gap-6 md:hidden">
