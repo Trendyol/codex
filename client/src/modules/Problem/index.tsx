@@ -5,8 +5,10 @@ import TabsGroup from '@components/shared/TabsGroup';
 import { useMe, useProblem } from '@hooks/data';
 import { useDefaultCode } from '@hooks/data/useDefaultCode';
 import { Language } from '@models/enums';
+import { MessageEntry } from '@models/types';
 import Submission from '@modules/Problem/components/Submission';
 import { decodeBase64 } from '@utils/converter';
+import { DateTime } from 'luxon';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -14,7 +16,7 @@ import { useState } from 'react';
 const Editor = dynamic(() => import('@components/shared/Editor'), { ssr: false });
 
 const Problem = () => {
-  const [notes, setNotes] = useState<{ message: string }[]>([]);
+  const [notes, setNotes] = useState<MessageEntry[]>([]);
   const [code, setCode] = useState<string>();
 
   const { query, isReady } = useRouter();
@@ -55,7 +57,12 @@ const Problem = () => {
         <TabsGroup tabs={['Note']}>
           <Chat
             className="flex flex-1 overflow-auto rounded-none border-none"
-            sendMessage={(message) => setNotes((notes) => [...notes, { user: me, message }])}
+            sendMessage={(message) =>
+              setNotes((notes) => [
+                ...notes,
+                { user: me, message, timestamp: DateTime.now().toISO() },
+              ])
+            }
             messages={notes}
           />
         </TabsGroup>

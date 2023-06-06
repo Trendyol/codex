@@ -11,6 +11,7 @@ import Participants from './components/Participants';
 import { Status } from '@models/enums';
 import { DateTime } from 'luxon';
 import Placement from '@components/shared/Placement';
+import { MessageEntry } from '@models/types';
 
 type LobbyProps = {
   discussion?: boolean;
@@ -23,7 +24,7 @@ const Lobby: FC<LobbyProps> = ({ discussion }) => {
   const { me } = useMe();
 
   const [activeParticipants, setActiveParticipants] = useState<User[]>([]);
-  const [messages, setMessages] = useState<{ user: User; message: string }[]>([]);
+  const [messages, setMessages] = useState<MessageEntry[]>([]);
 
   const lobbyId = discussion ? `${lobby?.id}/discussion` : lobby?.id;
 
@@ -42,7 +43,8 @@ const Lobby: FC<LobbyProps> = ({ discussion }) => {
       lobbyId,
       me.id,
       (activeParticipants) => setActiveParticipants(activeParticipants),
-      (user, message) => setMessages((messages) => [...messages, { user, message }]),
+      (user, message, timestamp) =>
+        setMessages((messages) => [...messages, { user, message, timestamp }]),
       (status) => handleNavigation(status),
     );
   }, [lobby, me]);

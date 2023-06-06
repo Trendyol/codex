@@ -1,3 +1,4 @@
+import { User } from '@hooks/data/models/types';
 import { SubmissionTypes } from './enums';
 
 export type SubmissionResult = {
@@ -14,4 +15,10 @@ export type SubmissionResult = {
   totalTestcases?: number;
   passedTestcases?: number;
   type: SubmissionTypes;
+};
+
+export type MessageEntry = {
+  user?: User;
+  message: string;
+  timestamp: string;
 };
