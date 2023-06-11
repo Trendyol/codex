@@ -49,6 +49,7 @@ const Lore: FC<LoreProps> = ({ onShowUpdatePopup }) => {
       <div className="mt-12 p-6">
         <div className="flex items-baseline gap-3">
           <span className="text-2xl font-semibold">{user?.name}</span>
+          <span className="text-2xl text-gray-400">({user?.email})</span>
         </div>
         <div className="mt-2 text-sm text-secondary-100">
           {user?.points} Points - {user?.rank}th
