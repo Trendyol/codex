@@ -11,7 +11,7 @@ type MessageProps = {
 };
 
 const Message: FC<MessageProps> = ({ user, message, timestamp }) => {
-  const { id, name, avatar, points } = user || {};
+  const { id, name, avatar, points, email } = user || {};
   const formattedTimestamp = DateTime.fromISO(timestamp).toFormat('HH:mm');
 
   return (
@@ -26,6 +26,7 @@ const Message: FC<MessageProps> = ({ user, message, timestamp }) => {
       <div className="relative ml-2 w-full">
         <div className="text-sm text-primary-500">
           <span className="font-semibold">{name || getSeedName(id)}</span>
+          {email && <span className="text-gray-400">({email})</span>}
           <span className="ml-2 text-xs text-secondary-100">{points || 0} Points</span>
         </div>
         <div className="whitespace-normal break-all text-sm text-secondary-200">{message}</div>
