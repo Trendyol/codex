@@ -63,7 +63,6 @@ export const USER_MENU_ITEMS = [
     title: 'Articles',
     Icon: FaFeatherAlt,
     path: '/articles',
-    disabled: true,
     target: '_self',
   },
 ];
