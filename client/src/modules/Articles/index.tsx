@@ -3,7 +3,7 @@ import Leaderboard from '@components/shared/Leaderboard';
 import Progression from '@components/shared/Progression';
 import Suggestion from '@components/shared/Suggestion';
 import Card from '@components/ui/Card';
-import ArticleListing from './ArticleListing';
+import ArticleListing from './components/ArticleListing';
 import Button from '@components/ui/Button';
 import Link from 'next/link';
 import { useArticles } from '@hooks/data/useArticles';

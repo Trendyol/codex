@@ -53,20 +53,18 @@ const CreateArticle = () => {
                   foldGutter: false,
                   highlightActiveLineGutter: false,
                   highlightActiveLine: false,
-
                 }}
                 placeholder="Start writing your article here..."
                 theme={theme}
                 maxWidth="100%"
                 height="100%"
-                
                 className="prose w-full rounded-lg border-none"
               />
             </div>
             <ReactMarkdown
               rehypePlugins={[rehypeRaw]}
               remarkPlugins={[remarkGfm]}
-              className="prose p-4 dark:prose-invert"
+              className="prose  p-4 text-secondary-200 prose-headings:text-secondary-200"
             >
               {content}
             </ReactMarkdown>
