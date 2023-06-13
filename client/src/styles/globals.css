@@ -77,3 +77,7 @@
     @apply rounded-md bg-[#eff1f6] px-1 py-0.5 text-[#262626];
   }
 }
+
+.cm-focused {
+  outline: none !important;
+}
