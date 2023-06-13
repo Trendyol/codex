@@ -6,8 +6,11 @@ import Card from '@components/ui/Card';
 import ArticleListing from './ArticleListing';
 import Button from '@components/ui/Button';
 import Link from 'next/link';
+import { useArticles } from '@hooks/data/useArticles';
 
 const Articles = () => {
+  const { articles } = useArticles();
+
   return (
     <>
       <div className="flex flex-1 gap-6">
@@ -22,9 +25,8 @@ const Articles = () => {
           </Card>
 
           <div className="flex flex-1 flex-col gap-6">
-            <ArticleListing />
-            <ArticleListing />
-            <ArticleListing />
+            {articles &&
+              articles.map((article) => <ArticleListing key={article.title} {...article} />)}
           </div>
         </div>
 
