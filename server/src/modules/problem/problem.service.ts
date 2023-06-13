@@ -5,7 +5,7 @@ import { CreateProblemDto } from './dtos/create-problem.dto';
 
 @Injectable()
 export class ProblemService {
-  constructor(private readonly dataService: IDataService) {}
+  constructor(private readonly dataService: IDataService) { }
 
   async findAll(userId?: string) {
     if (userId) return await this.dataService.queries.findProblems(userId);
@@ -14,7 +14,8 @@ export class ProblemService {
 
   async findById(id: string) {
     const problem = await this.dataService.problems.findById(id);
-    return problem;
+
+    if(problem.isAvailable) return problem;
   }
 
   async create(createProblemDto: CreateProblemDto) {

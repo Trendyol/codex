@@ -73,6 +73,12 @@ export class ChallengeService {
     await this.dataService.challenges.update(challengeId, {
       activeParticipants: activeParticipants?.map((ap) => ap.id),
     });
+
+    const challenge = await this.dataService.challenges.findById(challengeId);
+    const problem = await this.dataService.problems.findById(challenge.problemId);
+
+    await this.dataService.problems.update(problem.id, { isAvailable: true });
+
     await this.teamService.setupTeams(challengeId, activeParticipants);
     this.lobbyService.changeStatus(challengeId, Status.ongoing);
   }
