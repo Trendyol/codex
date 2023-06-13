@@ -5,9 +5,6 @@ type ArticleParams = {
   title: string;
   content: string;
   isPublished: boolean;
-  isApproved: boolean;
-  likedBy: Array<string>;
-  userId: string;
 };
 export const useArticle = (successCallback?: (data: any) => void) => {
   const { trigger, isMutating, data } = useMutation(

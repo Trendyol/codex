@@ -127,4 +127,6 @@ export type Article = {
   isApproved: boolean;
   isPublished: boolean;
   likedBy: Array<string>;
+  author: Pick<User, 'name'>;
+  createdAt: string;
 };

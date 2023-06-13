@@ -111,4 +111,28 @@ export class OttomanQueries {
 
     return result.rows[0];
   }
+  async findArticles() {
+    const result = await this._query(queries.findArticles);
+
+    const articles = result.rows.map((row) => {
+      return {
+        ...row['q1'],
+        author: row.author[0],
+      };
+    });
+
+    return articles;
+  }
+
+  async findArticle(articleId: string) {
+    const result = await this._query(queries.findArticle, {
+      parameters: { ARTICLE_ID: articleId },
+    });
+    const article = {
+      ...result.rows[0]['q1'],
+      author: result.rows[0]['author'][0],
+    };
+
+    return article;
+  }
 }

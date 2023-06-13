@@ -11,20 +11,33 @@ import {
 export class PublicationService {
   constructor(private readonly dataService: IDataService) {}
 
-  async createArticle(createDto: CreateArticleDto) {
-    return await this.dataService.articles.create(createDto);
+  async createArticle(createDto: CreateArticleDto, userId: string) {
+    return await this.dataService.articles.create({
+      ...createDto,
+      userId,
+      likedBy: [],
+      isApproved: false,
+    });
   }
 
-  async createDiscussion(createDto: CreateDiscussionDto) {
-    return await this.dataService.discussions.create(createDto);
+  async createDiscussion(createDto: CreateDiscussionDto, userId: string) {
+    return await this.dataService.discussions.create({
+      ...createDto,
+      userId,
+      likedBy: [],
+    });
   }
 
-  async createComment(createDto: CreateCommentDto) {
-    return await this.dataService.comments.create(createDto);
+  async createComment(createDto: CreateCommentDto, userId: string) {
+    return await this.dataService.comments.create({
+      ...createDto,
+      userId,
+      likedBy: [],
+    });
   }
 
   async findArticles() {
-    return await this.dataService.articles.find({});
+    return await this.dataService.queries.findArticles()
   }
 
   async findDiscussions(problemId: string, userId: string, isPublished: boolean) {
@@ -60,7 +73,7 @@ export class PublicationService {
   }
 
   async findArticleById(id: string) {
-    return await this.dataService.articles.findById(id);
+    return await this.dataService.queries.findArticle(id);
   }
 
   async findDiscussionById(id: string) {

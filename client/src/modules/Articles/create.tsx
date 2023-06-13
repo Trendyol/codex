@@ -14,6 +14,7 @@ import { ThemeContext } from '@contexts/ThemeContext';
 import TabsGroup from '@components/shared/TabsGroup';
 import Button from '@components/ui/Button';
 import { useArticle } from '@hooks/data/useArticle';
+import Input from '@components/ui/Input';
 
 const CreateArticle = () => {
   const { theme } = useContext(ThemeContext);
@@ -28,9 +29,6 @@ const CreateArticle = () => {
       title,
       content,
       isPublished,
-      isApproved: false,
-      likedBy: [],
-      userId: '...',
     });
   }
 
@@ -41,17 +39,10 @@ const CreateArticle = () => {
       </p>
 
       <div className="flex flex-1 gap-6">
-        <Card>
+        <Card className="flex flex-col gap-6 overflow-hidden break-all">
           <div className="text-xl font-semibold text-primary-400">Create Article</div>
-
-          <input
-            type="text"
-            placeholder="title"
-            className="mt-3"
-            onChange={(e) => setTitle(e.target.value)}
-          />
-
-          <TabsGroup tabs={['Edit', 'Preview']} className="mt-5">
+          <Input placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
+          <TabsGroup tabs={['Edit', 'Preview']} className="h-[400px] max-h-[400px]">
             <div className="editor flex w-full gap-2">
               <CodeMirror
                 value={content}
@@ -62,24 +53,26 @@ const CreateArticle = () => {
                   foldGutter: false,
                   highlightActiveLineGutter: false,
                   highlightActiveLine: false,
+
                 }}
                 placeholder="Start writing your article here..."
                 theme={theme}
+                maxWidth="100%"
                 height="100%"
-                minHeight="600px"
-                className="w-full rounded-lg border-none bg-red-500"
+                
+                className="prose w-full rounded-lg border-none"
               />
             </div>
             <ReactMarkdown
               rehypePlugins={[rehypeRaw]}
               remarkPlugins={[remarkGfm]}
-              className="prose prose-slate min-h-[600px] p-4 dark:prose-invert"
+              className="prose p-4 dark:prose-invert"
             >
               {content}
             </ReactMarkdown>
           </TabsGroup>
 
-          <div className="mt-2 flex justify-end gap-3">
+          <div className="flex justify-end gap-3">
             <Button intent={'secondary'} onClick={() => handleArticle(false)}>
               Save as Draft
             </Button>
