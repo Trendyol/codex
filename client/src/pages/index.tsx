@@ -3,6 +3,7 @@ import Dashboard from '@modules/Dashboard';
 import { GetServerSideProps } from 'next';
 import { getMe } from '@services/me';
 import { getChallenges } from '@services/challeges';
+import Confetti from '@components/Confetti';
 
 const DashboardPage = () => {
   return (
@@ -12,7 +13,7 @@ const DashboardPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <Confetti />
       <Dashboard />
     </>
   );

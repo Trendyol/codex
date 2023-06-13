@@ -1,0 +1,1 @@
+export const CONFETTI_PARTICLE_COUNT = 800;
