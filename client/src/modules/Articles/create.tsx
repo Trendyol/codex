@@ -12,17 +12,45 @@ import { languages } from '@codemirror/language-data';
 import Card from '@components/ui/Card';
 import { ThemeContext } from '@contexts/ThemeContext';
 import TabsGroup from '@components/shared/TabsGroup';
-
+import Button from '@components/ui/Button';
+import { useArticle } from '@hooks/data/useArticle';
 
 const CreateArticle = () => {
   const { theme } = useContext(ThemeContext);
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [result, setResult] = useState('');
+
+  const { articleTrigger, articleLoading } = useArticle((result) => setResult(result));
+
+  function handleArticle(isPublished: boolean) {
+    articleTrigger({
+      title,
+      content,
+      isPublished,
+      isApproved: false,
+      likedBy: [],
+      userId: '...',
+    });
+  }
 
   return (
     <>
+      <p>
+        <b>Loading:</b> {articleLoading ? 'YES' : 'NO'}
+      </p>
+
       <div className="flex flex-1 gap-6">
         <Card>
           <div className="text-xl font-semibold text-primary-400">Create Article</div>
+
+          <input
+            type="text"
+            placeholder="title"
+            className="mt-3"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+
           <TabsGroup tabs={['Edit', 'Preview']} className="mt-5">
             <div className="editor flex w-full gap-2">
               <CodeMirror
@@ -50,6 +78,13 @@ const CreateArticle = () => {
               {content}
             </ReactMarkdown>
           </TabsGroup>
+
+          <div className="mt-2 flex justify-end gap-3">
+            <Button intent={'secondary'} onClick={() => handleArticle(false)}>
+              Save as Draft
+            </Button>
+            <Button onClick={() => handleArticle(true)}>Publish</Button>
+          </div>
         </Card>
 
         <div className="flex w-sidebar flex-shrink-0 flex-col gap-6 xl:w-[270px] md:hidden">

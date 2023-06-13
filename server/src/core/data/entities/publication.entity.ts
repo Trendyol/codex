@@ -1,6 +1,5 @@
 export class BasePublicationEntity {
   readonly id: string;
-  readonly userId: string;
   readonly content: string;
   readonly isPublished: boolean;
   readonly likedBy: string[];

@@ -1,14 +1,29 @@
-import useSWR from 'swr';
-import { Article } from './models/types';
+import useMutation from 'swr/mutation';
+import axios from 'axios';
 
-export const useArticle = (id: string) => {
-  let key = `/publication/articles/${id}`;
-  const { data, error, isLoading, mutate } = useSWR<Article>(key);
+type ArticleParams = {
+  title: string;
+  content: string;
+  isPublished: boolean;
+  isApproved: boolean;
+  likedBy: Array<string>;
+  userId: string;
+};
+export const useArticle = (successCallback?: (data: any) => void) => {
+  const { trigger, isMutating, data } = useMutation(
+    'article',
+    (_, { arg }: { arg: ArticleParams }) => {
+      let url = `/publication/articles`;
+      return axios.post(url, arg);
+    },
+    {
+      onSuccess: ({ data }) => successCallback?.(data),
+    },
+  );
 
   return {
-    error,
-    isLoading,
+    articleTrigger: trigger,
+    articleLoading: isMutating,
     article: data,
-    mutateArticles: mutate,
   };
 };

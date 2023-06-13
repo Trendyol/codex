@@ -2,13 +2,13 @@ import Community from '@components/shared/Community';
 import Leaderboard from '@components/shared/Leaderboard';
 import Progression from '@components/shared/Progression';
 import Suggestion from '@components/shared/Suggestion';
-import { useArticle } from '@hooks/data/useArticle';
+import { useArticleById } from '@hooks/data/useArticleById';
 import { Card } from 'flowbite-react';
 import { useRouter } from 'next/router';
 
 const ArticleDetail = () => {
   const router = useRouter();
-  const { article } = useArticle(router.query.id as string);
+  const { article } = useArticleById(router.query.id as string);
 
   return (
     <>
