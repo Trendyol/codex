@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { cx } from 'class-variance-authority';
 import { DELAY_FOR_WINNERS_POPUP } from 'src/constants';
-import { prizes } from '@modules/Challenge/models/constants';
+import { PARTICIPATE_ICON, prizes } from '@modules/Challenge/models/constants';
 import { User } from '@hooks/data/models/types';
 
 type WinnerPopupProps = {
@@ -24,14 +24,14 @@ const WinnerPopup: FC<WinnerPopupProps> = ({ participants, order }) => {
     setPopupAvailable(false);
   };
 
-  if (!popupAvailable || !participants.length || order > 3) return <></>;
+  if (!popupAvailable || !participants.length) return <></>;
 
   return (
     <Popup showHeader={false} show={true} onHide={closePopup}>
       <div className="mb-10 flex items-center justify-center gap-10">
-        <span className="text-4xl">{prizes[order].icon}</span>
+        <span className="text-4xl">{prizes[order]?.icon || PARTICIPATE_ICON}</span>
         <p className="text-center text-4xl font-semibold">Congratulations</p>
-        <span className="text-4xl">{prizes[order].icon}</span>
+        <span className="text-4xl">{prizes[order]?.icon || PARTICIPATE_ICON}</span>
       </div>
       <div className="flex flex-wrap justify-center gap-10">
         {participants.map(({ id, avatar }) => (

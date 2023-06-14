@@ -1,3 +1,4 @@
+export const PARTICIPATE_ICON = "🎟️";
 export const prizes = [
   {
     id: 0,
