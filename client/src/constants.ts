@@ -1,0 +1,2 @@
+export const CONFETTI_PARTICLE_COUNT = 800;
+export const DELAY_FOR_WINNERS_POPUP = 1800;
