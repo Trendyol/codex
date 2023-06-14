@@ -34,13 +34,13 @@ const WinnerPopup: FC<WinnerPopupProps> = ({ participants, order }) => {
         <span className="text-4xl">{prizes[order]?.icon || PARTICIPATE_ICON}</span>
       </div>
       <div className="flex flex-wrap justify-center gap-10">
-        {participants.map(({ id, avatar }) => (
+        {participants.map(({ id, avatar, name }) => (
           <Image
             key={id}
             className={cx('max-h-[60px] w-[60px] min-w-[60px] rounded-full')}
-            alt="avatar"
             width={60}
             height={60}
+            alt={name}
             src={avatar}
           />
         ))}
