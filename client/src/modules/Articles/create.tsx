@@ -58,7 +58,7 @@ const CreateArticle = () => {
                 theme={theme}
                 maxWidth="100%"
                 height="100%"
-                className="prose w-full rounded-lg border-none"
+                className="prose w-full rounded-lg border-none max-w-none"
               />
             </div>
             <ReactMarkdown
