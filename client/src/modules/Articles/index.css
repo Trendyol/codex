@@ -1,0 +1,6 @@
+.cm-focused {
+  @apply outline-none;
+}
+.cm-scroller {
+  @apply prose px-2 py-4 text-secondary-200 dark:bg-background-200 max-w-none;
+}

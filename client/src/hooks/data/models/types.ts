@@ -118,3 +118,15 @@ export type Placement = {
   teamId: string;
   participants: User[];
 };
+
+export type Article = {
+  id: string;
+  userId: string;
+  title: string;
+  content: string;
+  isApproved: boolean;
+  isPublished: boolean;
+  likedBy: Array<string>;
+  author: Pick<User, 'name'>;
+  createdAt: string;
+};
