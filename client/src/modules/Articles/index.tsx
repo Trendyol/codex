@@ -17,11 +17,14 @@ const Articles = () => {
         <div className="flex-1">
           <Card className="mb-6 flex h-fit items-center justify-between overflow-x-auto rounded-lg">
             <div className="text-xl font-semibold text-primary-400">Articles</div>
-            <Link href="/articles/create">
-              <Button intent={'secondary'} fluid>
-                Create New Article
-              </Button>
-            </Link>
+            <div className="flex gap-2">
+              <Link href="/articles/create">
+                <Button intent={'secondary'}>My Drafts</Button>
+              </Link>
+              <Link href="/articles/create">
+                <Button intent={'success'}>Create New Article</Button>
+              </Link>
+            </div>
           </Card>
 
           <div className="flex flex-1 flex-col gap-6">

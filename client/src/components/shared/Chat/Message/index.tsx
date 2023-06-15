@@ -29,8 +29,10 @@ const Message: FC<MessageProps> = ({ user, message, timestamp }) => {
           {email && <span className="text-gray-400">({email})</span>}
           <span className="ml-2 text-xs text-secondary-100">{points || 0} Points</span>
         </div>
-        <div className="whitespace-normal break-all text-sm text-secondary-200">{message}</div>
-        <div className="absolute bottom-0 right-0 text-[10px] text-secondary-100">{formattedTimestamp}</div>
+        <div className="break-word whitespace-normal text-sm text-secondary-200">{message}</div>
+        <div className="absolute bottom-0 right-0 text-[10px] text-secondary-100">
+          {formattedTimestamp}
+        </div>
       </div>
     </div>
   );
