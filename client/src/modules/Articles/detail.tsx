@@ -22,7 +22,7 @@ const ArticleDetail = () => {
     <>
       <div className="flex flex-1 gap-6">
         <Card className="mb-6 flex h-full flex-col gap-6 overflow-x-auto rounded-lg">
-          <div className="prose">
+          <div className="prose mt-12">
             <h1 className="mb-0">{article.title}</h1>
             <p className="mt-1 text-sm font-medium capitalize text-secondary-200 opacity-70 lg:text-sm">
               {article.author.name} &nbsp; | &nbsp; {formattedDate}
