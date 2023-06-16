@@ -2,7 +2,7 @@ import { IDataService } from '@core/data/services/data.service';
 import { Injectable } from '@nestjs/common';
 
 import {
-  CreateArticleDto,
+  ArticleEditorDto,
   CreateCommentDto,
   CreateDiscussionDto,
 } from './dtos/create-publication.dto';
@@ -11,7 +11,7 @@ import {
 export class PublicationService {
   constructor(private readonly dataService: IDataService) {}
 
-  async createArticle(createDto: CreateArticleDto, userId: string) {
+  async ArticleEditor(createDto: ArticleEditorDto, userId: string) {
     return await this.dataService.articles.create({
       ...createDto,
       userId,

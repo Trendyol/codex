@@ -1,7 +1,7 @@
 import Leaderboard from '@components/shared/Leaderboard';
 import Progression from '@components/shared/Progression';
 import Suggestion from '@components/shared/Suggestion';
-import { useContext, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
@@ -17,21 +17,44 @@ import Input from '@components/ui/Input';
 import { EditorView } from '@codemirror/view';
 import Spinner from '@components/shared/Spinner';
 import Community from '@components/shared/Community';
+import { useArticleById } from '@hooks/data/useArticleById';
+import { useRouter } from 'next/router';
 
-const CreateArticle = () => {
+type ArticleEditorProps = {
+  edit?: boolean;
+};
+
+const ArticleEditor: FC<ArticleEditorProps> = ({ edit = false }) => {
+  const router = useRouter();
   const { theme } = useContext(ThemeContext);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [result, setResult] = useState('');
+  const [submitResult, setSubmitResult] = useState('');
+  const { article, isLoading } = useArticleById(router.query.id as string, edit);
 
-  const { articleTrigger, articleLoading } = useArticle((result) => setResult(result));
+  const { articleTrigger, articleLoading } = useArticle((submitResult) =>
+    setSubmitResult(submitResult),
+  );
 
-  function handleArticle(isPublished: boolean) {
+  function handleArticleSubmit(isPublished: boolean) {
     articleTrigger({
       title,
       content,
       isPublished,
     });
+  }
+
+  useEffect(() => {
+    if (!edit || !article) {
+      return;
+    }
+
+    setTitle(article.title);
+    setContent(article.content);
+  }, [article]);
+
+  if (edit && isLoading) {
+    return <Spinner />;
   }
 
   if (articleLoading) {
@@ -42,7 +65,7 @@ const CreateArticle = () => {
     <div className="flex flex-1 gap-6">
       <Card className="break-word flex flex-col gap-6 overflow-hidden">
         <div className="text-xl font-semibold text-primary-400">Create Article</div>
-        <Input placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
+        <Input placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
         <TabsGroup tabs={['Edit', 'Preview']} className="h-[600px] max-h-[600px]">
           <div className="editor flex w-full gap-2">
             <CodeMirror
@@ -75,10 +98,10 @@ const CreateArticle = () => {
         </TabsGroup>
 
         <div className="flex justify-end gap-3">
-          <Button intent={'secondary'} onClick={() => handleArticle(false)}>
+          <Button intent={'secondary'} onClick={() => handleArticleSubmit(false)}>
             Save as Draft
           </Button>
-          <Button onClick={() => handleArticle(true)}>Publish</Button>
+          <Button onClick={() => handleArticleSubmit(true)}>Publish</Button>
         </div>
       </Card>
 
@@ -92,4 +115,4 @@ const CreateArticle = () => {
   );
 };
 
-export default CreateArticle;
+export default ArticleEditor;

@@ -24,9 +24,9 @@ const Articles = () => {
           <Card className="mb-6 flex h-fit items-center justify-between overflow-x-auto rounded-lg">
             <div className="text-xl font-semibold text-primary-400">Articles</div>
             <div className="flex gap-2">
-                <Button intent={'secondary'} onClick={() => toggleDraft()}>{
-                  isDraft ? 'Show Published' : 'Show Drafts'
-                }</Button>
+              <Button intent={'secondary'} onClick={() => toggleDraft()}>
+                {isDraft ? 'Show Published' : 'Show Drafts'}
+              </Button>
               <Link href="/articles/create">
                 <Button intent={'success'}>Create New Article</Button>
               </Link>
@@ -35,7 +35,7 @@ const Articles = () => {
 
           <div className="flex flex-1 flex-col gap-6">
             {articles &&
-              articles.map((article) => <ArticleListing key={article.title} {...article} />)}
+              articles.map((article) => <ArticleListing key={article.id} {...article} />)}
           </div>
         </div>
 

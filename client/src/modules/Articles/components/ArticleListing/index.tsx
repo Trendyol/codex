@@ -45,7 +45,7 @@ const ArticleListing: FC<ArticleProps> = (article: Article) => {
   const isAuthor = me?.id === author?.id;
 
   return (
-    <Link href={`/articles/${article.id}`}>
+    <Link href={`/articles/${article.id}/${isAuthor ? 'edit' : ''}`}>
       <Card className="min-w-[260px]">
         <div className="flex justify-between">
           <div>

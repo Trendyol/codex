@@ -5,7 +5,7 @@ import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/co
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 
 import {
-  CreateArticleDto,
+  ArticleEditorDto,
   CreateCommentDto,
   CreateDiscussionDto,
 } from './dtos/create-publication.dto';
@@ -18,8 +18,8 @@ export class PublicationController {
 
   @Post('/articles')
   @UseGuards(JwtGuard)
-  createArticle(@User() user, @Body() createDto: CreateArticleDto) {
-    return this.publicationService.createArticle(createDto, user.id);
+  ArticleEditor(@User() user, @Body() createDto: ArticleEditorDto) {
+    return this.publicationService.ArticleEditor(createDto, user.id);
   }
 
   @Post('/discussions')
