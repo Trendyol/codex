@@ -37,7 +37,11 @@ export class PublicationService {
   }
 
   async findArticles() {
-    return await this.dataService.queries.findArticles()
+    return await this.dataService.queries.findArticles();
+  }
+
+  async findDraftArticles(userId: string) {
+    return await this.dataService.queries.findDraftArticles(userId);
   }
 
   async findDiscussions(problemId: string, userId: string, isPublished: boolean) {

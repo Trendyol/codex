@@ -204,24 +204,36 @@ WHERE type = 'user'
 AND id = $USER_ID`;
 
 const findArticle = `
-SELECT *,
-       author
+SELECT *, author
 FROM default q1
 LET author = (
   SELECT q2.id, q2.name, q2.avatar
   FROM default q2
   WHERE q2.type = 'user' AND q2.id == q1.userId)
-WHERE q1.type = 'article' AND q1.id = $ARTICLE_ID`;
+  WHERE q1.type = 'article' AND q1.id = $ARTICLE_ID
+`;
 
 const findArticles = `
-SELECT *,
-       author
-FROM default q1
-LET author = (
-  SELECT q2.id, q2.name, q2.avatar
-  FROM default q2
-  WHERE q2.type = 'user' AND q2.id == q1.userId)
-WHERE q1.type = 'article'`;
+  SELECT *, author
+  FROM default q1
+  LET author = (
+    SELECT q2.id, q2.name, q2.avatar
+    FROM default q2
+    WHERE q2.type = 'user' AND q2.id == q1.userId
+  )
+  WHERE q1.type = 'article' AND q1.isPublished = true
+`;
+
+const findDraftArticles = `
+  SELECT *, author
+  FROM default q1
+  LET author = (
+    SELECT q2.id, q2.name, q2.avatar
+    FROM default q2
+    WHERE q2.type = 'user' AND q2.id == q1.userId
+  )
+  WHERE q1.type = 'article' AND q1.isPublished = false AND q1.userId = $USER_ID
+`;
 
 export const queries = {
   findChallenges,
@@ -236,4 +248,5 @@ export const queries = {
   findProblemProgression,
   findArticle,
   findArticles,
+  findDraftArticles,
 };

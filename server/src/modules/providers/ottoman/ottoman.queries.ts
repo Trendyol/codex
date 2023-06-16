@@ -123,6 +123,20 @@ export class OttomanQueries {
 
     return articles;
   }
+  async findDraftArticles(userId: string) {
+    const result = await this._query(queries.findDraftArticles, {
+      parameters: { USER_ID: userId },
+    });
+
+    const articles = result.rows.map((row) => {
+      return {
+        ...row['q1'],
+        author: row.author[0],
+      };
+    });
+
+    return articles;
+  }
 
   async findArticle(articleId: string) {
     const result = await this._query(queries.findArticle, {

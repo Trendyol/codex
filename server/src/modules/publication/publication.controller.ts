@@ -1,4 +1,3 @@
-import { AdminGuard } from '@auth/guards/admin.guard';
 import { AnonymousGuard } from '@auth/guards/anonymous.guard';
 import { JwtGuard } from '@auth/guards/jwt.guard';
 import { User } from '@core/decorators/user.decorator';
@@ -18,20 +17,19 @@ export class PublicationController {
   constructor(private readonly publicationService: PublicationService) {}
 
   @Post('/articles')
-  @UseGuards(JwtGuard, AdminGuard)
+  @UseGuards(JwtGuard)
   createArticle(@User() user, @Body() createDto: CreateArticleDto) {
-    console.log(user.id)
     return this.publicationService.createArticle(createDto, user.id);
   }
 
   @Post('/discussions')
-  @UseGuards(JwtGuard, AdminGuard)
+  @UseGuards(JwtGuard)
   createDiscussion(@User() user, @Body() createDto: CreateDiscussionDto) {
     return this.publicationService.createDiscussion(createDto, user.id);
   }
 
   @Post('/comments')
-  @UseGuards(JwtGuard, AdminGuard)
+  @UseGuards(JwtGuard)
   createComment(@User() user, @Body() createDto: CreateCommentDto) {
     return this.publicationService.createComment(createDto, user.id);
   }
@@ -40,6 +38,12 @@ export class PublicationController {
   @UseGuards(AnonymousGuard)
   findArticles() {
     return this.publicationService.findArticles();
+  }
+
+  @Get('/articles/drafts')
+  @UseGuards(AnonymousGuard)
+  findDraftArticles(@User() user) {
+    return this.publicationService.findDraftArticles(user.id);
   }
 
   @Get('/discussions')
