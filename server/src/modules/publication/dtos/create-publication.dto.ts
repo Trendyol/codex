@@ -11,10 +11,24 @@ export class BaseCreatePublicationDto {
   readonly isPublished: boolean;
 }
 
-export class ArticleEditorDto extends BaseCreatePublicationDto {
+export class CreateArticleDto extends BaseCreatePublicationDto {
   @ApiProperty()
   @IsString()
   readonly title: string;
+}
+
+export class EditPublicationDto {
+  @ApiProperty()
+  @IsString()
+  readonly title: string;
+
+  @ApiProperty()
+  @IsString()
+  readonly content: string;
+
+  @ApiProperty()
+  @IsBoolean()
+  readonly isPublished: boolean;
 }
 
 export class CreateDiscussionDto extends BaseCreatePublicationDto {

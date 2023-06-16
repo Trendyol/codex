@@ -1,13 +1,14 @@
 import { AnonymousGuard } from '@auth/guards/anonymous.guard';
 import { JwtGuard } from '@auth/guards/jwt.guard';
 import { User } from '@core/decorators/user.decorator';
-import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 
 import {
-  ArticleEditorDto,
+  CreateArticleDto,
   CreateCommentDto,
   CreateDiscussionDto,
+  EditPublicationDto,
 } from './dtos/create-publication.dto';
 import { PublicationService } from './publication.service';
 
@@ -18,8 +19,8 @@ export class PublicationController {
 
   @Post('/articles')
   @UseGuards(JwtGuard)
-  ArticleEditor(@User() user, @Body() createDto: ArticleEditorDto) {
-    return this.publicationService.ArticleEditor(createDto, user.id);
+  createArticle(@User() user, @Body() createDto: CreateArticleDto) {
+    return this.publicationService.createArticle(createDto, user.id);
   }
 
   @Post('/discussions')
@@ -32,6 +33,48 @@ export class PublicationController {
   @UseGuards(JwtGuard)
   createComment(@User() user, @Body() createDto: CreateCommentDto) {
     return this.publicationService.createComment(createDto, user.id);
+  }
+
+  @Put('/articles/:articleId')
+  @UseGuards(JwtGuard)
+  editArticle(@Param('articleId') articleId: string, @Body() editDto: EditPublicationDto) {
+    // todo: check author is me
+    return this.publicationService.editArticle(articleId, editDto);
+  }
+
+  @Put('/discussions/:discussionId')
+  @UseGuards(JwtGuard)
+  editDiscussion(@Param('discussionId') discussionId: string, @Body() editDto: EditPublicationDto) {
+    // todo: check author is me
+    return this.publicationService.editDiscussion(discussionId, editDto);
+  }
+
+  @Put('/comments/:commentId')
+  @UseGuards(JwtGuard)
+  editComment(@Param('commentId') commentId: string, @Body() editDto: EditPublicationDto) {
+    // todo: check author is me
+    return this.publicationService.editComment(commentId, editDto);
+  }
+
+  @Delete('/articles/:articleId')
+  @UseGuards(JwtGuard)
+  deleteArticle(@Param('articleId') articleId: string) {
+    // todo: check author is me
+    return this.publicationService.deleteArticle(articleId);
+  }
+
+  @Delete('/discussions/:discussionId')
+  @UseGuards(JwtGuard)
+  deleteDiscussion(@Param('discussionId') discussionId: string) {
+    // todo: check author is me
+    return this.publicationService.deleteDiscussion(discussionId);
+  }
+
+  @Delete('/comments/:commentId')
+  @UseGuards(JwtGuard)
+  deleteComment(@Param('commentId') commentId: string) {
+    // todo: check author is me
+    return this.publicationService.deleteComment(commentId);
   }
 
   @Get('/articles')

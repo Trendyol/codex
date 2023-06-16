@@ -2,16 +2,17 @@ import { IDataService } from '@core/data/services/data.service';
 import { Injectable } from '@nestjs/common';
 
 import {
-  ArticleEditorDto,
+  CreateArticleDto,
   CreateCommentDto,
   CreateDiscussionDto,
+  EditPublicationDto,
 } from './dtos/create-publication.dto';
 
 @Injectable()
 export class PublicationService {
   constructor(private readonly dataService: IDataService) {}
 
-  async ArticleEditor(createDto: ArticleEditorDto, userId: string) {
+  async createArticle(createDto: CreateArticleDto, userId: string) {
     return await this.dataService.articles.create({
       ...createDto,
       userId,
@@ -34,6 +35,30 @@ export class PublicationService {
       userId,
       likedBy: [],
     });
+  }
+
+  async editArticle(articleId: string, editDto: EditPublicationDto) {
+    return await this.dataService.articles.update(articleId, editDto);
+  }
+
+  async editDiscussion(discussionId: string, editDto: EditPublicationDto) {
+    return await this.dataService.discussions.update(discussionId, editDto);
+  }
+
+  async editComment(commentId: string, editDto: EditPublicationDto) {
+    return await this.dataService.comments.update(commentId, editDto);
+  }
+
+  async deleteArticle(articleId: string) {
+    return await this.dataService.articles.delete(articleId);
+  }
+
+  async deleteDiscussion(discussionId: string) {
+    return await this.dataService.discussions.delete(discussionId);
+  }
+
+  async deleteComment(commentId: string) {
+    return await this.dataService.comments.delete(commentId);
   }
 
   async findArticles() {

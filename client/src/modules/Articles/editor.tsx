@@ -19,6 +19,8 @@ import Spinner from '@components/shared/Spinner';
 import Community from '@components/shared/Community';
 import { useArticleById } from '@hooks/data/useArticleById';
 import { useRouter } from 'next/router';
+import { useArticleDelete } from '@hooks/data/useArticleDelete';
+import { toast } from 'react-toastify';
 
 type ArticleEditorProps = {
   edit?: boolean;
@@ -29,19 +31,42 @@ const ArticleEditor: FC<ArticleEditorProps> = ({ edit = false }) => {
   const { theme } = useContext(ThemeContext);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [submitResult, setSubmitResult] = useState('');
-  const { article, isLoading } = useArticleById(router.query.id as string, edit);
 
-  const { articleTrigger, articleLoading } = useArticle((submitResult) =>
-    setSubmitResult(submitResult),
+  const articleId = router.query.id as string;
+  const { article, isLoading } = useArticleById(articleId, edit);
+
+  const { articleTrigger: articleCreateTrigger, articleLoading: isCreating } = useArticle(
+    articleId,
+    (submitResult) => {
+      toast.success(articleId ? 'Article Updated!' : 'Article Created!');
+      router.push(articleId ? `/articles/${articleId}` : '/articles');
+    },
+  );
+
+  const { articleTrigger: articleDeleteTrigger, articleLoading: isDeleting } = useArticleDelete(
+    articleId,
+    (deleteResult) => {
+      toast.success('Article Deleted!');
+      router.push('/articles');
+    },
   );
 
   function handleArticleSubmit(isPublished: boolean) {
-    articleTrigger({
+    const confirmed = confirm('Are you sure?');
+    if (!confirmed) return;
+
+    articleCreateTrigger({
       title,
       content,
       isPublished,
     });
+  }
+
+  function handleArticleDelete() {
+    const confirmed = confirm('Are you sure?');
+    if (!confirmed) return;
+
+    articleDeleteTrigger();
   }
 
   useEffect(() => {
@@ -57,14 +82,16 @@ const ArticleEditor: FC<ArticleEditorProps> = ({ edit = false }) => {
     return <Spinner />;
   }
 
-  if (articleLoading) {
+  if (isCreating || isDeleting) {
     return <Spinner />;
   }
 
   return (
     <div className="flex flex-1 gap-6">
       <Card className="break-word flex flex-col gap-6 overflow-hidden">
-        <div className="text-xl font-semibold text-primary-400">Create Article</div>
+        <div className="text-xl font-semibold text-primary-400">
+          {edit ? 'Edit Article' : 'Create Article'}
+        </div>
         <Input placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
         <TabsGroup tabs={['Edit', 'Preview']} className="h-[600px] max-h-[600px]">
           <div className="editor flex w-full gap-2">
@@ -98,6 +125,11 @@ const ArticleEditor: FC<ArticleEditorProps> = ({ edit = false }) => {
         </TabsGroup>
 
         <div className="flex justify-end gap-3">
+          {edit && (
+            <Button intent={'danger'} onClick={() => handleArticleDelete()}>
+              Delete Article
+            </Button>
+          )}
           <Button intent={'secondary'} onClick={() => handleArticleSubmit(false)}>
             Save as Draft
           </Button>
