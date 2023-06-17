@@ -11,6 +11,7 @@ import {
 import { useConfig } from '@contexts/ConfigContext';
 import { cx } from 'class-variance-authority';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import Button from '@components/ui/Button';
 type VideoProps = {};
 
 type VideoRef = {
@@ -31,7 +32,7 @@ const Video: FC<VideoProps> = () => {
   const participants = room?.team.participants.filter((participant) => participant.id !== me?.id);
   const [muteVideo, setMuteVideo] = useState(false);
   const [muteAudio, setMuteAudio] = useState(false);
-  const [hidePreview, setHidePreview] = useState(true);
+  const [hidePreview, setHidePreview] = useState(false);
 
   useEffect(() => {
     if (!me || !room || !participants || peerInstance.current || hasInitialized.current) return;
@@ -43,6 +44,7 @@ const Video: FC<VideoProps> = () => {
       const peer = new Peer(me.id, {
         host: config.peerjsHost,
         path: '/peerjs',
+        // port: Number(config.peerjsPort),
       });
       peerInstance.current = peer;
       peer.on('error', (error: Error) => {});
@@ -115,15 +117,29 @@ const Video: FC<VideoProps> = () => {
   return (
     <div className="w-full">
       <div className="flex h-[40px] items-center justify-between border-b">
-        <div className="flex h-full w-full items-center justify-center" onClick={handleMuteVideo}>
+        <Button
+          disabled
+          intent={'text'}
+          className="flex h-full w-full items-center justify-center"
+          onClick={handleMuteVideo}
+        >
           {muteVideo ? <BsCameraVideoOffFill size={20} /> : <BsCameraVideoFill size={20} />}
-        </div>
-        <div className="flex h-full w-full items-center justify-center" onClick={handleMuteAudio}>
+        </Button>
+        <Button
+          disabled
+          intent={'text'}
+          className="flex h-full w-full items-center justify-center"
+          onClick={handleMuteAudio}
+        >
           {muteAudio ? <BsFillMicMuteFill size={20} /> : <BsFillMicFill size={20} />}
-        </div>
-        <div className="flex h-full w-full items-center justify-center" onClick={handleHidePreview}>
+        </Button>
+        <Button
+          intent={'text'}
+          className="flex h-full w-full items-center justify-center"
+          onClick={handleHidePreview}
+        >
           {hidePreview ? <AiFillEyeInvisible size={24} /> : <AiFillEye size={24} />}
-        </div>
+        </Button>
       </div>
       <div className="flex h-[calc(100%-40px)] flex-col overflow-hidden">
         <video
