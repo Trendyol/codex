@@ -77,6 +77,10 @@
   code {
     @apply rounded-md bg-[#eff1f6] px-1 py-0.5 text-[#262626];
   }
+
+  body {
+    @apply bg-background-200;
+  }
 }
 
 .prose {

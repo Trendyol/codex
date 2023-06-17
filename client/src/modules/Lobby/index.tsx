@@ -86,7 +86,7 @@ const Lobby: FC<LobbyProps> = ({ discussion }) => {
               {mounted() && <Dino />}
             </>
           )}
-          {discussion && <Placement />}
+          {discussion && <Placement limit={60} />}
         </div>
       </div>
     </div>
