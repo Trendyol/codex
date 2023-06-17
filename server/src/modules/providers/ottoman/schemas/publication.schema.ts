@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { Schema } from 'ottoman';
 
 const baseSchema = {
@@ -6,6 +7,7 @@ const baseSchema = {
   isApproved: Boolean,
   isPublished: Boolean,
   likedBy: [{ type: String }],
+  createdAt: { type: Date, default: DateTime.now().toJSDate() },
 };
 
 export const articleSchema = new Schema({

@@ -22,6 +22,8 @@ const buttonVariants = cva('text-center font-medium box-border border-border', {
         ,
       ],
       danger: ['bg-error', 'hover:bg-red-600', 'text-white'],
+      success: ['bg-success', 'hover:bg-green-600', 'text-white'],
+      text: ['bg-transparent', 'hover:bg-background-50', 'text-secondary-200'],
     },
     size: {
       small: ['text-sm', 'py-2 h-[36px]', 'px-3', 'rounded-lg'],

@@ -37,7 +37,6 @@ const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
 
   const contextValue = { theme, toggleDarkTheme, toggleLightTheme };
 
-  
   return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
 };
 

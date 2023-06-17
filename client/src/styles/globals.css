@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '@modules/Articles/index.css';
 
 @layer base {
   :root {
@@ -37,17 +38,17 @@
 
   :root[class='dark'] {
     --color-primary-50: #6e7b9f;
-    --color-primary-100: #9694f8;
-    --color-primary-200: #95a2f5;
-    --color-primary-300: #92a0f8;
-    --color-primary-400: #ccd3fb;
-    --color-primary-500: #c9d2fb;
+    --color-primary-100: #8481f7;
+    --color-primary-200: #8392f3;
+    --color-primary-300: #7f90f7;
+    --color-primary-400: #b7c1f9;
+    --color-primary-500: #b8c4fa;
 
     --color-secondary-100: #9197a4;
     --color-secondary-200: #afb8c7;
 
     --color-background-50: #020409;
-    --color-background-100: #000000;
+    --color-background-100: #030303;
     --color-background-200: #0e1116;
 
     --color-yellow-100: #262405;
@@ -76,4 +77,12 @@
   code {
     @apply rounded-md bg-[#eff1f6] px-1 py-0.5 text-[#262626];
   }
+
+  body {
+    @apply bg-background-200;
+  }
+}
+
+.prose {
+  max-width: unset;
 }

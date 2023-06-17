@@ -12,6 +12,8 @@ import { Status } from '@models/enums';
 import { DateTime } from 'luxon';
 import Placement from '@components/shared/Placement';
 import { MessageEntry } from '@models/types';
+import { useMountedState } from 'react-use';
+import Connection from '@components/shared/Connection';
 
 type LobbyProps = {
   discussion?: boolean;
@@ -19,6 +21,7 @@ type LobbyProps = {
 
 const Lobby: FC<LobbyProps> = ({ discussion }) => {
   const router = useRouter();
+  const mounted = useMountedState();
   const { challenge } = useChallenge(router.query.challenge as string);
   const { lobby } = useLobby(router.query.challenge as string);
   const { me } = useMe();
@@ -77,8 +80,13 @@ const Lobby: FC<LobbyProps> = ({ discussion }) => {
             text={!discussion && 'Time to Challenge'}
             date={discussion ? countdownDate : challenge?.date}
           />
-          {!discussion && <Dino />}
-          {discussion && <Placement />}
+          {!discussion && (
+            <>
+              <Connection />
+              {mounted() && <Dino />}
+            </>
+          )}
+          {discussion && <Placement limit={60} />}
         </div>
       </div>
     </div>

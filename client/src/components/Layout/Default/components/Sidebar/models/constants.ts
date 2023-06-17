@@ -46,25 +46,28 @@ export const USER_MENU_ITEMS = [
     Icon: BsFillGridFill,
     path: '/',
     target: '_self',
+    disabled: false,
   },
   {
     title: 'Practice',
     Icon: IoRocketSharp,
     path: '/practice',
     target: '_self',
+    disabled: false,
   },
   {
     title: 'Leaderboard',
     Icon: MdLeaderboard,
     path: '/leaderboard',
     target: '_self',
+    disabled: false,
   },
   {
     title: 'Articles',
     Icon: FaFeatherAlt,
     path: '/articles',
-    disabled: true,
     target: '_self',
+    disabled: false,
   },
 ];
 

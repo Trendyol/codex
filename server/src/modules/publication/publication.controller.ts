@@ -1,6 +1,7 @@
 import { AdminGuard } from '@auth/guards/admin.guard';
 import { AnonymousGuard } from '@auth/guards/anonymous.guard';
 import { JwtGuard } from '@auth/guards/jwt.guard';
+import { User } from '@core/decorators/user.decorator';
 import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 
@@ -18,29 +19,21 @@ export class PublicationController {
 
   @Post('/articles')
   @UseGuards(JwtGuard, AdminGuard)
-  createArticle(@Body() createDto: CreateArticleDto) {
-    return this.publicationService.createArticle({
-      ...createDto,
-      isPublished: createDto.isPublished || false,
-    });
+  createArticle(@User() user, @Body() createDto: CreateArticleDto) {
+    console.log(user.id)
+    return this.publicationService.createArticle(createDto, user.id);
   }
 
   @Post('/discussions')
   @UseGuards(JwtGuard, AdminGuard)
-  createDiscussion(@Body() createDto: CreateDiscussionDto) {
-    return this.publicationService.createDiscussion({
-      ...createDto,
-      isPublished: createDto.isPublished || true,
-    });
+  createDiscussion(@User() user, @Body() createDto: CreateDiscussionDto) {
+    return this.publicationService.createDiscussion(createDto, user.id);
   }
 
   @Post('/comments')
   @UseGuards(JwtGuard, AdminGuard)
-  createComment(@Body() createDto: CreateCommentDto) {
-    return this.publicationService.createComment({
-      ...createDto,
-      isPublished: createDto.isPublished || true,
-    });
+  createComment(@User() user, @Body() createDto: CreateCommentDto) {
+    return this.publicationService.createComment(createDto, user.id);
   }
 
   @Get('/articles')

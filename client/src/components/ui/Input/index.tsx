@@ -15,7 +15,7 @@ const inputVariants = cva('border border-border w-full resize-none', {
     intent: {
       primary: [
         'border-secondary-100',
-        'bg-background-100',
+        'bg-background-200',
         'focus:border-primary-100',
         'outline-primary-100',
       ],
