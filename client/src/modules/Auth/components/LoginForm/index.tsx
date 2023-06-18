@@ -4,10 +4,9 @@ import Link from 'next/link';
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { IoMdLogIn } from 'react-icons/io';
-import { useConfig } from "@contexts/ConfigContext";
+import { useConfig } from '@contexts/ConfigContext';
 
-
-const LoginForm = (props:any) => {
+const LoginForm = () => {
   const config = useConfig();
 
   return (
@@ -17,36 +16,34 @@ const LoginForm = (props:any) => {
         <div className="bg-background-12 mt-0 w-full max-w-md rounded-lg border p-0 shadow">
           <div className="space-y-3 p-8">
             <div className="space-y-6">
-              {config.isSignUpAvailable && (
-                <>
-                  <Input label="Email" type="email" name="email" placeholder="name@company.com" />
-                  <Input
-                    label="Password"
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="••••••••"
-                  />
-                  <Button fluid disabled={Boolean(config.passwordLoginEnabled)}>
-                    Sign in
+              <>
+                <Input label="Email" type="email" name="email" placeholder="name@company.com" />
+                <Input
+                  label="Password"
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="••••••••"
+                />
+                <Button fluid disabled={Boolean(config.passwordLoginEnabled)}>
+                  Sign in
+                </Button>
+                <div className="flex w-full items-center gap-2 text-gray-300">
+                  <div className="h-px w-full flex-1 bg-gray-700"></div>
+                  or
+                  <div className="h-px w-full flex-1 bg-gray-700"></div>
+                </div>
+                <Link href={`${config.baseUrl}/auth/google/callback`}>
+                  <Button
+                    fluid
+                    intent={'secondary'}
+                    className="mt-6 flex items-center justify-center"
+                  >
+                    <FcGoogle size={20} className="mr-2" />
+                    <div>Log in with Google</div>
                   </Button>
-                  <div className="flex w-full items-center gap-2 text-gray-300">
-                    <div className="h-px w-full flex-1 bg-gray-700"></div>
-                    or
-                    <div className="h-px w-full flex-1 bg-gray-700"></div>
-                  </div>
-                  <Link href={`${config.baseUrl}/auth/google/callback`}>
-                    <Button
-                      fluid
-                      intent={'secondary'}
-                      className="mt-6 flex items-center justify-center"
-                    >
-                      <FcGoogle size={20} className="mr-2" />
-                      <div>Log in with Google</div>
-                    </Button>
-                  </Link>
-                </>
-              )}
+                </Link>
+              </>
               {config.jwksEnabled && (
                 <Link href={`${config.jwksCallbackUrl}/auth/jwks/callback`}>
                   <Button
@@ -59,14 +56,19 @@ const LoginForm = (props:any) => {
                   </Button>
                 </Link>
               )}
-              {config.isSignUpAvailable && (
-                <p className="text-sm font-light text-gray-400">
-                  Don’t have an account yet?
-                  <a href="#" className="ml-2 font-medium text-primary-100 hover:underline">
+              <p className="text-sm font-light text-gray-400">
+                Don’t have an account yet?
+                <Link href="#">
+                  <Button
+                    size={'small'}
+                    disabled={Boolean(config.passwordLoginEnabled)}
+                    className="font-medium text-primary-100"
+                    intent={'text'}
+                  >
                     Sign up
-                  </a>
-                </p>
-              )}
+                  </Button>
+                </Link>
+              </p>
             </div>
           </div>
         </div>

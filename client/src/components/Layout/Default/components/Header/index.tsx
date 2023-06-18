@@ -13,7 +13,7 @@ import { ThemeContext } from '@contexts/ThemeContext';
 import { useLogout } from '@hooks/data/useLogout';
 import { useUsers } from '@hooks/data/useUsers';
 import { useDebounce } from 'react-use';
-import { useConfig } from "@contexts/ConfigContext";
+import { useConfig } from '@contexts/ConfigContext';
 
 const Header = () => {
   const [search, setSearch] = useState<string>();
@@ -24,7 +24,7 @@ const Header = () => {
   const { theme, toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
   const config = useConfig();
 
-    useDebounce(() => setDebouncedSearch(search), 500, [search]);
+  useDebounce(() => setDebouncedSearch(search), 500, [search]);
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
@@ -101,11 +101,11 @@ const Header = () => {
             <Link href={'/login'}>
               <Button className="mr-4 md:hidden">Log in</Button>
             </Link>
-            {config.isSignUpAvailable && (
+            <Link href={'/login'}>
               <Button intent={'secondary'}>
                 Create<span className="sm:hidden"> account</span>
               </Button>
-            )}
+            </Link>
           </>
         )}
       </div>
