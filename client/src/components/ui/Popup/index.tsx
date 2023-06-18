@@ -4,14 +4,23 @@ import { useClickAway, useLockBodyScroll } from 'react-use';
 
 type PopupProps = {
   show: boolean;
-  title?: string;
+  title?: string | ReactNode;
   showHeader?: boolean;
+  showClose?: boolean;
   children?: ReactNode;
   footer?: ReactNode;
   onHide: () => void;
 };
 
-const Popup: FC<PopupProps> = ({ show, onHide, title, children, footer, showHeader = true }) => {
+const Popup: FC<PopupProps> = ({
+  show,
+  onHide,
+  title,
+  children,
+  footer,
+  showHeader = true,
+  showClose = true,
+}) => {
   const ref = useRef(null);
   useLockBodyScroll(show);
   useClickAway(ref, () => onHide());
@@ -23,13 +32,15 @@ const Popup: FC<PopupProps> = ({ show, onHide, title, children, footer, showHead
         <div className="relative rounded-lg border border-border bg-background-200 shadow">
           {showHeader && (
             <div className="flex items-start justify-between rounded-t border-b border-border p-4">
-              {title && <h3 className="text-xl font-semibold">{title}</h3>}
-              <button
-                onClick={onHide}
-                className="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
-              >
-                <IoMdClose size={20} />
-              </button>
+              {title && <h3 className="w-full text-xl font-semibold">{title}</h3>}
+              {showClose && (
+                <button
+                  onClick={onHide}
+                  className="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
+                >
+                  <IoMdClose size={20} />
+                </button>
+              )}
             </div>
           )}
           <div className="max-h-[60vh] space-y-6 overflow-auto p-6">{children}</div>

@@ -14,6 +14,7 @@ import Placement from '@components/shared/Placement';
 import { MessageEntry } from '@models/types';
 import { useMountedState } from 'react-use';
 import Connection from '@components/shared/Connection';
+import WinnerPopup from '@modules/Lobby/components/Congrats';
 
 type LobbyProps = {
   discussion?: boolean;
@@ -86,7 +87,12 @@ const Lobby: FC<LobbyProps> = ({ discussion }) => {
               {mounted() && <Dino />}
             </>
           )}
-          {discussion && <Placement limit={60} />}
+          {discussion && (
+            <>
+              <Placement limit={60} />
+              <WinnerPopup />
+            </>
+          )}
         </div>
       </div>
     </div>
