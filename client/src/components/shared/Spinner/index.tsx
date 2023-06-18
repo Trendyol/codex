@@ -1,10 +1,12 @@
 import { FC } from 'react';
 
-type SpinnerProps = {};
+type SpinnerProps = {
+  className?: string;
+};
 
-const Spinner: FC<SpinnerProps> = () => {
+const Spinner: FC<SpinnerProps> = ({className}) => {
   return (
-    <div role="status">
+    <div role="status" className={className}>
       <svg
         aria-hidden="true"
         className="mr-2 h-8 w-8 animate-spin fill-blue-600 text-gray-200"

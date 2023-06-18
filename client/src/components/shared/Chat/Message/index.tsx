@@ -26,7 +26,7 @@ const Message: FC<MessageProps> = ({ user, message, timestamp }) => {
       <div className="relative ml-2 w-full">
         <div className="text-sm text-primary-500">
           <span className="font-semibold">{name || getSeedName(id)}</span>
-          <span className="ml-2 text-xs text-secondary-100">{points || 0} Points</span>
+          <span className="ml-1 text-xs text-secondary-100">{points || 0} Points</span>
           {email && <div className="text-[10px] text-gray-400 leading-3">({email})</div>}
         </div>
         <div className="break-all whitespace-normal text-sm text-secondary-200 mt-1">{message}</div>

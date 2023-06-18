@@ -14,10 +14,6 @@ export class RoomService {
   async findRoom(userId: string, challengeId: string) {
     const challenge = await this.dataService.challenges.findById(challengeId);
 
-    if (challenge.status == Status.ongoing) {
-      return { ...challenge, team: await this.teamService.findTeam(userId, challengeId) };
-    }
-
-    throw new BadRequestException(`Can't find ${Status[challenge.status]} challenge room`);
+    return { ...challenge, team: await this.teamService.findTeam(userId, challengeId) };
   }
 }
