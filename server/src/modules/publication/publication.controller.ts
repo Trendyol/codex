@@ -1,14 +1,14 @@
-import { AdminGuard } from '@auth/guards/admin.guard';
 import { AnonymousGuard } from '@auth/guards/anonymous.guard';
 import { JwtGuard } from '@auth/guards/jwt.guard';
 import { User } from '@core/decorators/user.decorator';
-import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 
 import {
   CreateArticleDto,
   CreateCommentDto,
   CreateDiscussionDto,
+  EditPublicationDto,
 } from './dtos/create-publication.dto';
 import { PublicationService } from './publication.service';
 
@@ -18,28 +18,75 @@ export class PublicationController {
   constructor(private readonly publicationService: PublicationService) {}
 
   @Post('/articles')
-  @UseGuards(JwtGuard, AdminGuard)
+  @UseGuards(JwtGuard)
   createArticle(@User() user, @Body() createDto: CreateArticleDto) {
-    console.log(user.id)
     return this.publicationService.createArticle(createDto, user.id);
   }
 
   @Post('/discussions')
-  @UseGuards(JwtGuard, AdminGuard)
+  @UseGuards(JwtGuard)
   createDiscussion(@User() user, @Body() createDto: CreateDiscussionDto) {
     return this.publicationService.createDiscussion(createDto, user.id);
   }
 
   @Post('/comments')
-  @UseGuards(JwtGuard, AdminGuard)
+  @UseGuards(JwtGuard)
   createComment(@User() user, @Body() createDto: CreateCommentDto) {
     return this.publicationService.createComment(createDto, user.id);
+  }
+
+  @Put('/articles/:articleId')
+  @UseGuards(JwtGuard)
+  editArticle(@Param('articleId') articleId: string, @Body() editDto: EditPublicationDto) {
+    // todo: check author is me
+    return this.publicationService.editArticle(articleId, editDto);
+  }
+
+  @Put('/discussions/:discussionId')
+  @UseGuards(JwtGuard)
+  editDiscussion(@Param('discussionId') discussionId: string, @Body() editDto: EditPublicationDto) {
+    // todo: check author is me
+    return this.publicationService.editDiscussion(discussionId, editDto);
+  }
+
+  @Put('/comments/:commentId')
+  @UseGuards(JwtGuard)
+  editComment(@Param('commentId') commentId: string, @Body() editDto: EditPublicationDto) {
+    // todo: check author is me
+    return this.publicationService.editComment(commentId, editDto);
+  }
+
+  @Delete('/articles/:articleId')
+  @UseGuards(JwtGuard)
+  deleteArticle(@Param('articleId') articleId: string) {
+    // todo: check author is me
+    return this.publicationService.deleteArticle(articleId);
+  }
+
+  @Delete('/discussions/:discussionId')
+  @UseGuards(JwtGuard)
+  deleteDiscussion(@Param('discussionId') discussionId: string) {
+    // todo: check author is me
+    return this.publicationService.deleteDiscussion(discussionId);
+  }
+
+  @Delete('/comments/:commentId')
+  @UseGuards(JwtGuard)
+  deleteComment(@Param('commentId') commentId: string) {
+    // todo: check author is me
+    return this.publicationService.deleteComment(commentId);
   }
 
   @Get('/articles')
   @UseGuards(AnonymousGuard)
   findArticles() {
     return this.publicationService.findArticles();
+  }
+
+  @Get('/articles/drafts')
+  @UseGuards(AnonymousGuard)
+  findDraftArticles(@User() user) {
+    return this.publicationService.findDraftArticles(user.id);
   }
 
   @Get('/discussions')

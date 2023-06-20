@@ -17,6 +17,20 @@ export class CreateArticleDto extends BaseCreatePublicationDto {
   readonly title: string;
 }
 
+export class EditPublicationDto {
+  @ApiProperty()
+  @IsString()
+  readonly title: string;
+
+  @ApiProperty()
+  @IsString()
+  readonly content: string;
+
+  @ApiProperty()
+  @IsBoolean()
+  readonly isPublished: boolean;
+}
+
 export class CreateDiscussionDto extends BaseCreatePublicationDto {
   @ApiProperty()
   @IsString()

@@ -5,6 +5,7 @@ import {
   CreateArticleDto,
   CreateCommentDto,
   CreateDiscussionDto,
+  EditPublicationDto,
 } from './dtos/create-publication.dto';
 
 @Injectable()
@@ -36,8 +37,36 @@ export class PublicationService {
     });
   }
 
+  async editArticle(articleId: string, editDto: EditPublicationDto) {
+    return await this.dataService.articles.update(articleId, editDto);
+  }
+
+  async editDiscussion(discussionId: string, editDto: EditPublicationDto) {
+    return await this.dataService.discussions.update(discussionId, editDto);
+  }
+
+  async editComment(commentId: string, editDto: EditPublicationDto) {
+    return await this.dataService.comments.update(commentId, editDto);
+  }
+
+  async deleteArticle(articleId: string) {
+    return await this.dataService.articles.delete(articleId);
+  }
+
+  async deleteDiscussion(discussionId: string) {
+    return await this.dataService.discussions.delete(discussionId);
+  }
+
+  async deleteComment(commentId: string) {
+    return await this.dataService.comments.delete(commentId);
+  }
+
   async findArticles() {
-    return await this.dataService.queries.findArticles()
+    return await this.dataService.queries.findArticles();
+  }
+
+  async findDraftArticles(userId: string) {
+    return await this.dataService.queries.findDraftArticles(userId);
   }
 
   async findDiscussions(problemId: string, userId: string, isPublished: boolean) {

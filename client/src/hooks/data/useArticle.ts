@@ -6,12 +6,16 @@ type ArticleParams = {
   content: string;
   isPublished: boolean;
 };
-export const useArticle = (successCallback?: (data: any) => void) => {
+export const useArticle = (articleId?: string, successCallback?: (data: any) => void) => {
   const { trigger, isMutating, data } = useMutation(
     'article',
     (_, { arg }: { arg: ArticleParams }) => {
-      let url = `/publication/articles`;
-      return axios.post(url, arg);
+      let url = `/publication/articles/`;
+      if (articleId) {
+        return axios.put(url + articleId, arg);
+      } else {
+        return axios.post(url, arg);
+      }
     },
     {
       onSuccess: ({ data }) => successCallback?.(data),

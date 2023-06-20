@@ -3,7 +3,7 @@ import { getMe } from '@services/me';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 
-const CreateArticlePage = () => {
+const ArticleEditorPage = () => {
   return (
     <>
       <Head>
@@ -27,4 +27,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   };
 };
 
-export default CreateArticlePage;
+export default ArticleEditorPage;

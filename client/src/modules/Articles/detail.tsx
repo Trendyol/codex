@@ -13,7 +13,7 @@ import remarkGfm from 'remark-gfm';
 
 const ArticleDetail = () => {
   const router = useRouter();
-  const { article } = useArticleById(router.query.id as string);
+  const { article } = useArticleById(router.query.id as string, true);
 
   if (!article) return <Spinner />;
 
@@ -22,7 +22,7 @@ const ArticleDetail = () => {
     <>
       <div className="flex flex-1 gap-6">
         <Card className="mb-6 flex h-full flex-col gap-6 overflow-x-auto rounded-lg">
-          <div className="prose mt-12">
+          <div className="prose">
             <h1 className="mb-0">{article.title}</h1>
             <p className="mt-1 text-sm font-medium capitalize text-secondary-200 opacity-70 lg:text-sm">
               {article.author.name} &nbsp; | &nbsp; {formattedDate}

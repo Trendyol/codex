@@ -3,16 +3,16 @@ import { getMe } from '@services/me';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 
-const ArticleEditorPage = () => {
+const EditArticlePage = () => {
   return (
     <>
       <Head>
-        <title>Codex | Create Article</title>
+        <title>Codex | Edit Article</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <ArticleEditor />
+      <ArticleEditor edit />
     </>
   );
 };
@@ -28,4 +28,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   };
 };
 
-export default ArticleEditorPage;
+export default EditArticlePage;

@@ -5,11 +5,13 @@ import Link from 'next/link';
 import { Article } from '@hooks/data/models/types';
 import Button from '@components/ui/Button';
 import { DateTime } from 'luxon';
+import { useMe } from '@hooks/data';
 
 type ArticleProps = {} & Article;
 
 const ArticleListing: FC<ArticleProps> = (article: Article) => {
   const { title, createdAt, author, isPublished } = article;
+  const { me } = useMe();
 
   const formattedDate = DateTime.fromISO(article.createdAt).toFormat('dd LLL yyyy');
 
@@ -40,8 +42,10 @@ const ArticleListing: FC<ArticleProps> = (article: Article) => {
     return plainText.trim();
   }
 
+  const isAuthor = me?.id === author?.id;
+
   return (
-    <Link href={`/articles/${article.id}`}>
+    <Link href={`/articles/${article.id}/${isAuthor ? 'edit' : ''}`}>
       <Card className="min-w-[260px]">
         <div className="flex justify-between">
           <div>
@@ -52,7 +56,7 @@ const ArticleListing: FC<ArticleProps> = (article: Article) => {
           </div>
 
           <Button intent={'primary'} size={'small'}>
-            Read &nbsp; &gt;
+            {!isAuthor ? 'Read' : 'Edit'}
           </Button>
         </div>
 
