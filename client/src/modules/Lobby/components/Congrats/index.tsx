@@ -8,9 +8,13 @@ import { useRoom } from '@hooks/data';
 import { getSeedAvatar, getSeedName } from '@utils/common';
 import { Tooltip } from 'flowbite-react';
 import { ThemeContext } from '@contexts/ThemeContext';
+import { useWindowSize } from 'react-use';
 import Spinner from '@components/shared/Spinner';
-import { DELAY_FOR_WINNERS_POPUP } from 'src/constants';
-import Confetti from '../Confetti';
+import dynamic from 'next/dynamic';
+
+const Confetti = dynamic(() => import('react-confetti'), {
+  ssr: false,
+});
 
 type CongratsProps = {};
 
@@ -19,14 +23,8 @@ const Congrats: FC<CongratsProps> = () => {
   const { placements } = usePlacements(query.challenge as string, isReady);
   const { room } = useRoom(query.challenge as string, isReady);
   const { theme } = useContext(ThemeContext);
-  const [showWinnersPopup, setShowWinnersPopup] = useState(false);
-
-
-  useEffect(() => {
-    setTimeout(() => {
-      setShowWinnersPopup(true);
-    }, DELAY_FOR_WINNERS_POPUP);
-  },[]);
+  const { width, height } = useWindowSize();
+  const [showWinnersPopup, setShowWinnersPopup] = useState(true);
 
   const handleHideWinnersPopup = () => setShowWinnersPopup(false);
 
@@ -40,7 +38,6 @@ const Congrats: FC<CongratsProps> = () => {
 
   return (
     <>
-      <Confetti />
       <Popup
         title={
           <div className="flex w-full items-center justify-center gap-8 text-center">
@@ -87,6 +84,7 @@ const Congrats: FC<CongratsProps> = () => {
           <Spinner className="flex w-full justify-center" />
         )}
       </Popup>
+      {<Confetti width={width} height={height} />}
     </>
   );
 };
