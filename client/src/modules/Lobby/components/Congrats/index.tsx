@@ -1,5 +1,5 @@
 import Popup from '@components/ui/Popup';
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { prizes } from '@modules/Challenge/models/constants';
 import { usePlacements } from '@hooks/data/usePlacements';
@@ -11,14 +11,16 @@ import { ThemeContext } from '@contexts/ThemeContext';
 import { useWindowSize } from 'react-use';
 import Spinner from '@components/shared/Spinner';
 import dynamic from 'next/dynamic';
+import Confetti from '../Confetti/index';
 
-const Confetti = dynamic(() => import('react-confetti'), {
+const ConfettiBackground = dynamic(() => import('react-confetti'), {
   ssr: false,
 });
 
 type CongratsProps = {};
 
 const Congrats: FC<CongratsProps> = () => {
+  const audioRef = useRef<HTMLAudioElement>(null);
   const { query, isReady } = useRouter();
   const { placements } = usePlacements(query.challenge as string, isReady);
   const { room } = useRoom(query.challenge as string, isReady);
@@ -26,15 +28,26 @@ const Congrats: FC<CongratsProps> = () => {
   const { width, height } = useWindowSize();
   const [showWinnersPopup, setShowWinnersPopup] = useState(true);
 
-  const handleHideWinnersPopup = () => setShowWinnersPopup(false);
+  useEffect(() => {
+    audioRef.current?.play();
+
+    // User action is required to play audio on some browsers
+    window.addEventListener('mouseover', () => {
+      audioRef.current?.play();
+    });
+  }, []);
+
+  const handleHideWinnersPopup = () => {
+    setShowWinnersPopup(false);
+  };
 
   const order = Number(placements?.findIndex((placement) => placement?.teamId === room?.team.id));
   const placement = placements?.[order];
   const prizeIcon = prizes[order]?.icon;
 
   const shouldShowWinnersPopup = Boolean(showWinnersPopup && placement);
-  
-  if (!shouldShowWinnersPopup) return <></>
+
+  if (!shouldShowWinnersPopup) return <></>;
 
   return (
     <>
@@ -84,7 +97,9 @@ const Congrats: FC<CongratsProps> = () => {
           <Spinner className="flex w-full justify-center" />
         )}
       </Popup>
-      {<Confetti width={width} height={height} />}
+      <audio src="/winner.mp3" ref={audioRef} />
+      <Confetti />
+      <ConfettiBackground width={width} height={height} />
     </>
   );
 };
