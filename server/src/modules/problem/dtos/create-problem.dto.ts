@@ -1,6 +1,6 @@
 import { DefaultCodes } from '@core/data/entities/problem.entity';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsBoolean, IsNumber, IsString } from 'class-validator';
 
 import { Difficulty } from '../models/enums';
 
@@ -21,4 +21,7 @@ export class CreateProblemDto {
   @IsArray()
   readonly defaultCodes: DefaultCodes[];
 
+  @ApiProperty()
+  @IsBoolean()
+  readonly isAvailable: boolean;
 }

@@ -42,11 +42,8 @@ const Submission: FC<SubmissionProps> = ({ problemId, code, language }) => {
   };
 
   const loading = runLoading || submissionLoading;
-  const accepted = result?.status == SubmissionStatus.Accepted;
-  const isSubmission = result?.type == SubmissionTypes.Submission;
   const showResult = activeTab == SubmissionTabs.Result && result && !loading;
   const showTestcase = activeTab == SubmissionTabs.Testcase && !loading;
-  const showComplete = accepted && isSubmission;
 
   return (
     <Card className="relative">

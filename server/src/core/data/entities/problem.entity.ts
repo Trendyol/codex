@@ -4,6 +4,7 @@ export class ProblemEntity {
   content: string;
   difficulty: number;
   defaultCodes: DefaultCodes[];
+  isAvailable: boolean;
 }
 
 export type DefaultCodes = {

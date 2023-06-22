@@ -10,7 +10,7 @@ export type Challenge = {
   participated: boolean;
   date: string;
   duration: number;
-  //
+  problemId: string;
   score: number;
   ranking: number;
   difficulty: Difficulty;
@@ -42,6 +42,7 @@ export type Problem = {
   content: string;
   difficulty: Difficulty;
   solved: boolean;
+  isAvailable: boolean;
 };
 
 export type Submission = {
