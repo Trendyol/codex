@@ -117,6 +117,7 @@ export type Placement = {
   date: string;
   teamId: string;
   participants: User[];
+  submission: Submission
 };
 
 export type Article = {

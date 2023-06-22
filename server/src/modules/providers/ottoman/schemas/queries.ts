@@ -110,13 +110,14 @@ WHERE type = 'user' and id = $USER_ID
 const findChallengePlacements = `
 SELECT MIN([date, teamId])[0] AS date,
        MIN([date, teamId])[1] AS teamId,
-       participants
-FROM ${bucketName} q1
+       participants,
+       submission
+FROM ${bucketName} submission
 LET team = (
     SELECT participants
     FROM ${bucketName} q2
     WHERE type = 'team'
-        AND id = q1.teamId),
+        AND id = submission.teamId),
 participants = (
     SELECT *
     FROM ${bucketName}  where type = 'user' and id in team[0].participants)
@@ -124,7 +125,8 @@ WHERE type = 'submission'
     AND status = 3
     AND challengeId = $CHALLENGE_ID
 GROUP BY teamId,
-         participants
+         participants,
+         submission
 ORDER BY date ASC
 `;
 

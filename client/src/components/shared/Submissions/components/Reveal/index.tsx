@@ -13,20 +13,18 @@ import { ThemeContext } from '@contexts/ThemeContext';
 import { editor } from 'monaco-editor';
 
 type RevealProps = {
-  submission: Submission;
+  submission?: Submission;
   onHide: () => void;
 };
 
 const Reveal: FC<RevealProps> = ({ submission, onHide }) => {
-  const { code, memory, date, runtime, status } = submission;
+  const { code, memory, date, runtime, status } = submission || {};
   const accepted = status == SubmissionStatus.Accepted;
-  const [copied, setCopied] = useState(false);
 
   const decodedCode = decodeBase64(code);
   const { theme } = useContext(ThemeContext);
 
   const copyCode = () => {
-    setCopied(true);
     toast.success('Code copied to clipboard');
 
     navigator.clipboard.writeText(decodedCode);
@@ -53,18 +51,12 @@ const Reveal: FC<RevealProps> = ({ submission, onHide }) => {
             <div className={cn(accepted ? 'text-success' : 'text-error')}>
               {accepted ? 'Accepted' : 'Wrong Answer'}
             </div>
-            <div
-              className={cn(
-                'ml-2 cursor-pointer',
-                copied ? 'text-success' : 'hover:text-secondary-200',
-              )}
-              onClick={copyCode}
-            >
+            <div className={'ml-2 cursor-pointer hover:text-secondary-200'} onClick={copyCode}>
               <FaRegCopy size={18} />
             </div>
           </div>
           <div className="mt-0.5 text-xs text-secondary-200">
-            {DateTime.fromISO(date).toFormat('dd LLL yyyy')} • {runtime} ms • {memory} KB
+            {date && DateTime.fromISO(date).toFormat('dd LLL yyyy')} • {runtime} ms • {memory} KB
           </div>
         </div>
       }
