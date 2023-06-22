@@ -65,12 +65,13 @@ export class OttomanQueries {
 
     const placements = [];
 
-    result.rows.forEach((row) => {
-      const participants = row.participants.map((participant) => participant[bucketName]);
+    result.rows.forEach(({ date, teamId, submission, participants }) => {
+      const mappedParticipants = participants.map((participant) => participant[bucketName]);
       placements.push({
-        date: row.date,
-        teamId: row.teamId,
-        participants: participants,
+        date,
+        teamId,
+        submission,
+        participants: mappedParticipants,
       });
     });
 
