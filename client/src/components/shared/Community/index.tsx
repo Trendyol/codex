@@ -6,7 +6,7 @@ import { COMMUNITY_LINK } from './models/constants';
 
 const Community = () => {
   return (
-    <Card className="flex flex-col items-center gap-6 whitespace-nowrap">
+    <Card className="flex flex-col items-center gap-4 whitespace-nowrap">
       <div className="text-lg font-semibold text-primary-400">Join Codex Community</div>
       <div className="flex h-20 w-20 items-center justify-center rounded-md bg-[#7788D4]">
         <BsDiscord color="white" size={50} radius={55} />

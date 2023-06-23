@@ -87,8 +87,8 @@ const ArticleEditor: FC<ArticleEditorProps> = ({ edit = false }) => {
   }
 
   return (
-    <div className="flex flex-1 gap-6">
-      <Card className="break-word flex flex-col gap-6 overflow-hidden">
+    <div className="flex flex-1 gap-4">
+      <Card className="break-word flex flex-col gap-4 overflow-hidden">
         <div className="text-xl font-semibold text-primary-400">
           {edit ? 'Edit Article' : 'Create Article'}
         </div>
@@ -137,7 +137,7 @@ const ArticleEditor: FC<ArticleEditorProps> = ({ edit = false }) => {
         </div>
       </Card>
 
-      <div className="flex w-sidebar flex-shrink-0 flex-col gap-6 xl:w-[270px] md:hidden">
+      <div className="flex w-sidebar flex-shrink-0 flex-col gap-4 xl:w-[270px] md:hidden">
         <Progression />
         <Leaderboard />
         <Community />

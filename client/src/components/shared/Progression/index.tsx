@@ -24,7 +24,7 @@ const Progression: FC<ProgressionProps> = () => {
                 {`${progression?.solvedAll} / ${progression?.totalAll}`}
               </div>
             </div>
-            <div className="flex gap-6">
+            <div className="flex gap-4">
               <div className="flex flex-col items-center">
                 <div className="text-green-800">Easy</div>
                 <div>{`${progression?.solvedEasy} / ${progression?.totalEasy}`}</div>

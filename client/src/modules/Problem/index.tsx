@@ -28,7 +28,7 @@ const Problem = () => {
   const handleCodeChange = (code?: string) => setCode(code);
 
   return (
-    <div className="flex h-[calc(100vh-94px)] gap-6 pb-6">
+    <div className="flex h-[calc(100vh-94px)] gap-4 pb-6">
       <div className="h-full w-[320px] overflow-auto">
         {problem && (
           <TabsGroup tabs={['Description', 'Submissions']} className="h-full">
@@ -41,7 +41,7 @@ const Problem = () => {
           </TabsGroup>
         )}
       </div>
-      <div className="flex flex-1 flex-col gap-6">
+      <div className="flex flex-1 flex-col gap-4">
         {defaultCode && (
           <Editor
             roomId={`${me?.id}-${problem?.id}`}
@@ -53,7 +53,7 @@ const Problem = () => {
           <Submission problemId={problem.id} code={code} language={Language.javascript} />
         )}
       </div>
-      <div className="flex h-full w-[320px] shrink-0 flex-col gap-6 md:hidden">
+      <div className="flex h-full w-[320px] shrink-0 flex-col gap-4 md:hidden">
         <TabsGroup tabs={['Note']}>
           <Chat
             className="flex flex-1 overflow-auto rounded-none border-none"

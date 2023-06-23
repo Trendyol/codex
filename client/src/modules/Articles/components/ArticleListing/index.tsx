@@ -6,6 +6,7 @@ import { Article } from '@hooks/data/models/types';
 import Button from '@components/ui/Button';
 import { DateTime } from 'luxon';
 import { useMe } from '@hooks/data';
+import ListingCard from '@components/shared/ListingCard';
 
 type ArticleProps = {} & Article;
 
@@ -45,33 +46,18 @@ const ArticleListing: FC<ArticleProps> = (article: Article) => {
   const isAuthor = me?.id === author?.id;
 
   return (
-    <Link href={`/articles/${article.id}/${isAuthor ? 'edit' : ''}`}>
-      <Card className="min-w-[260px]">
-        <div className="flex justify-between">
-          <div>
-            <div className="text-xl font-semibold text-primary-400">{article.title}</div>
-            <div className="mb-4 text-sm font-medium capitalize text-secondary-200 opacity-70 lg:text-sm">
-              {author?.name} - {formattedDate}
-            </div>
-          </div>
-
-          <Button intent={'primary'} size={'small'}>
-            {!isAuthor ? 'Read' : 'Edit'}
-          </Button>
-        </div>
-
-        <div className="flex">
-          <div className="mr-6 flex h-12 w-12 items-center justify-center rounded-md bg-[#9694ff] lg:hidden">
-            <BsFillEnvelopePaperFill color="white" />
-          </div>
-          <div className="flex flex-1 flex-col ">
-            <div className="mb-1 line-clamp-3 h-[72px] text-ellipsis whitespace-pre-wrap text-secondary-200">
-              {markdownToPlainText(article.content)}
-            </div>
-          </div>
-        </div>
-      </Card>
-    </Link>
+    <ListingCard
+      title={article.title}
+      subtitle={`${author?.name} - ${formattedDate}`}
+      action={
+        <Button intent={'primary'} size={'small'}>
+          {!isAuthor ? 'Read' : 'Edit'}
+        </Button>
+      }
+      image={<BsFillEnvelopePaperFill size={24} color="white" />}
+      content={markdownToPlainText(article.content)}
+      href={`/articles/${article.id}/${isAuthor ? 'edit' : ''}`}
+    />
   );
 };
 

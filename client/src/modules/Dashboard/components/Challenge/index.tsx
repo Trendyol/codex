@@ -7,6 +7,7 @@ import { Challenge } from '@hooks/data/models/types';
 import Participate from '@components/shared/Participate';
 import Link from 'next/link';
 import { useChallenge } from '@hooks/data';
+import ListingCard from '@components/shared/ListingCard';
 
 type ChallengeProps = {} & Challenge;
 
@@ -25,34 +26,23 @@ const Challenge: FC<ChallengeProps> = ({
   const { challenge } = useChallenge(id);
 
   return (
-    <Link href={challengePath}>
-      <Card className="min-w-[260px]">
-        <div className="mb-4 text-xl font-semibold text-primary-400">{name}</div>
-        <div className="flex">
-          <div className="mr-6 flex h-12 w-12 items-center justify-center rounded-md bg-[#9694ff] lg:hidden">
-            <BsFillTrophyFill color="white" size={28} />
-          </div>
-          <div className="flex flex-1 flex-col ">
-            <div className="mb-1 line-clamp-3 h-[72px] whitespace-pre-wrap text-secondary-200">
-              {description}
-            </div>
-            <div className="flex h-[36px] justify-between font-semibold text-secondary-200 lg:text-sm">
-              <div className="mt-auto text-sm capitalize">
-                {formattedDate} - {Status[status]}
-              </div>
-              {challenge && (
-                <Participate
-                  id={id}
-                  userParticipant={userParticipant}
-                  userActiveParticipant={userActiveParticipant}
-                  status={status}
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      </Card>
-    </Link>
+    <ListingCard
+      title={name}
+      subtitle={`${formattedDate} - ${Status[status]}`}
+      content={description}
+      image={<BsFillTrophyFill color="white" size={28} />}
+      action={
+        challenge && (
+          <Participate
+            id={id}
+            userParticipant={userParticipant}
+            userActiveParticipant={userActiveParticipant}
+            status={status}
+          />
+        )
+      }
+      href={challengePath}
+    />
   );
 };
 

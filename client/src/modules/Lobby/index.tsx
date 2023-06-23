@@ -66,9 +66,9 @@ const Lobby: FC<LobbyProps> = ({ discussion }) => {
   if (!me) return <></>;
 
   return (
-    <div className="flex h-[calc(100vh-94px)] gap-6 pb-6">
-      <div className="flex flex-1 gap-6 md:flex-col">
-        <div className="flex flex-1 flex-col gap-6">
+    <div className="flex h-[calc(100vh-94px)] gap-4 pb-6">
+      <div className="flex flex-1 gap-4 md:flex-col">
+        <div className="flex flex-1 flex-col gap-4">
           {!discussion && <Participants activeParticipants={activeParticipants} />}
           <Chat
             className="h-full overflow-auto"
@@ -76,7 +76,7 @@ const Lobby: FC<LobbyProps> = ({ discussion }) => {
             sendMessage={(message) => sendMessage(me, lobbyId, message)}
           />
         </div>
-        <div className="flex w-[320px] shrink-0 flex-col gap-6 md:hidden">
+        <div className="flex w-[320px] shrink-0 flex-col gap-4 md:hidden">
           <Countdown
             text={!discussion && 'Time to Challenge'}
             date={discussion ? countdownDate : challenge?.date}
