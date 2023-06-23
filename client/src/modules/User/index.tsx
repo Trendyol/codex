@@ -13,12 +13,12 @@ const User = () => {
   const handleHideUpdatePopup = () => setShowUpdatePopup(false);
 
   return (
-    <div className="flex gap-6">
+    <div className="flex gap-4">
       <div className="flex flex-1 flex-col space-y-4 overflow-x-auto">
         <Lore onShowUpdatePopup={handleShowUpdatePopup} />
         <Challenges />
       </div>
-      <div className="flex w-sidebar flex-shrink-0 flex-col gap-6 xl:w-[270px] md:hidden">
+      <div className="flex w-sidebar flex-shrink-0 flex-col gap-4 xl:w-[270px] md:hidden">
         <Progression />
         <Leaderboard />
         <Community />

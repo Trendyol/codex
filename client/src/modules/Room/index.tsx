@@ -62,7 +62,7 @@ const Room = () => {
   if (!me) return <></>;
 
   return (
-    <div className="flex h-[calc(100vh-94px)] gap-6 pb-6">
+    <div className="flex h-[calc(100vh-94px)] gap-4 pb-6">
       <div className="h-full w-[320px] overflow-auto">
         {challenge?.problem && room?.team && (
           <TabsGroup tabs={['Description', 'Submissions']} className="h-full">
@@ -75,7 +75,7 @@ const Room = () => {
           </TabsGroup>
         )}
       </div>
-      <div className="flex flex-1 flex-col gap-6">
+      <div className="flex flex-1 flex-col gap-4">
         {room?.team.id && defaultCode && (
           <Editor
             roomId={room?.team.id}
@@ -94,7 +94,7 @@ const Room = () => {
           />
         )}
       </div>
-      <div className="flex h-full w-[320px] shrink-0 flex-col gap-6 md:hidden">
+      <div className="flex h-full w-[320px] shrink-0 flex-col gap-4 md:hidden">
         <Countdown date={countdownDate} onComplete={handleLobbyNavigation} />
         <TabsGroup tabs={['Video', 'Chat', 'Note']}>
           <Video />

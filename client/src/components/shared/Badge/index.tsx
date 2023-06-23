@@ -1,7 +1,8 @@
+import { cn } from '@utils/common';
 import { cva, cx, type VariantProps } from 'class-variance-authority';
 import { FC, ReactNode } from 'react';
 
-type ButtonProps = {
+type BadgeProps = {
   children: ReactNode;
   className?: string;
 } & VariantProps<typeof badgeVariants>;
@@ -24,8 +25,8 @@ const badgeVariants = cva('text-xs font-medium mr-2 w-fit rounded', {
   },
 });
 
-const Badge: FC<ButtonProps> = ({ intent, size, className, children, ...props }) => {
-  const badgeClasses = cx(className, badgeVariants({ intent, size }));
+const Badge: FC<BadgeProps> = ({ intent, size, className, children, ...props }) => {
+  const badgeClasses = cn(badgeVariants({ intent, size }), className);
 
   return (
     <div {...props} className={badgeClasses}>
