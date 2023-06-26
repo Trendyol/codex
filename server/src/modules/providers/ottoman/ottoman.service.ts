@@ -7,6 +7,7 @@ import {
   CommentEntity,
   DiscussionEntity,
 } from '@core/data/entities/publication.entity';
+import { TagEntity } from '@core/data/entities/tag.entity';
 import { TeamEntity } from '@core/data/entities/team.entity';
 import { TestcaseEntity } from '@core/data/entities/testcase.entity';
 import { IDataService } from '@core/data/services/data.service';
@@ -19,6 +20,7 @@ import { challengeSchema } from './schemas/challenge.schema';
 import { problemSchema } from './schemas/problem.schema';
 import { articleSchema, commentSchema, discussionSchema } from './schemas/publication.schema';
 import { submissionSchema } from './schemas/submission.schema';
+import { tagSchema } from './schemas/tag.schema';
 import { teamSchema } from './schemas/team.schema';
 import { testcaseSchema } from './schemas/testcase.schema';
 import { userSchema } from './schemas/user.schema';
@@ -35,6 +37,7 @@ export class OttomanDataService implements IDataService, OnModuleInit {
   articles: OttomanGenericRepository<ArticleEntity>;
   discussions: OttomanGenericRepository<DiscussionEntity>;
   comments: OttomanGenericRepository<CommentEntity>;
+  tags: OttomanGenericRepository<TagEntity>;
 
   async onModuleInit() {
     const ottoman = new Ottoman({
@@ -107,5 +110,8 @@ export class OttomanDataService implements IDataService, OnModuleInit {
       commentSchema,
     );
     this.comments = new OttomanGenericRepository<CommentEntity>(commentModel);
+
+    const tagModel = ottoman.model<TagEntity, Document<TagEntity>>('tag', tagSchema);
+    this.tags = new OttomanGenericRepository<TagEntity>(tagModel);
   }
 }

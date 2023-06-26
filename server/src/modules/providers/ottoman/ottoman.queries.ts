@@ -89,17 +89,25 @@ export class OttomanQueries {
     });
   }
 
-  async findProblems(userId: string) {
-    const result = await this._query(queries.findProblems, {
-      parameters: { USER_ID: userId },
-    });
+  async findProblems(userId: string, tags?: string[]) {
+    let result;
+    const tagsIdsArray = (tags as unknown as string)?.split(',');
+    if (tags) {
+      result = await this._query(queries.findProblemsWithTags, {
+        parameters: { USER_ID: userId, TAG_IDS: tagsIdsArray },
+      });
+    } else {
+      result = await this._query(queries.findProblems, {
+        parameters: { USER_ID: userId },
+      });
+    }
 
     const problems = [];
-
     result.rows.forEach((row) => {
       problems.push({
         ...row['q1'],
         solved: row.solved[0]?.['$1'],
+        tags: row.tags.map((tag) => tag['q3']),
       });
     });
 

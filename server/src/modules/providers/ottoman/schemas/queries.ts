@@ -145,10 +145,27 @@ SELECT *, solved
 FROM ${bucketName} q1
 LET solved = (
     SELECT TRUE
-    FROM ${bucketName} q2
+    FROM default q2
     WHERE type = 'user'
-        AND q1.id in q2.problems)
-WHERE type = 'problem'
+        AND q1.id in q2.problems and q2.id = $USER_ID),
+    tags = (
+    select * from default q3 where type = 'tag' and q3.id in q1.tags
+    )
+WHERE type = 'problem' 
+`;
+
+const findProblemsWithTags = `
+SELECT *, solved
+FROM ${bucketName} q1
+LET solved = (
+    SELECT TRUE
+    FROM default q2
+    WHERE type = 'user'
+        AND q1.id in q2.problems and q2.id = $USER_ID),
+    tags = (
+    select * from default q3 where type = 'tag' and q3.id in q1.tags
+    )
+WHERE type = 'problem' and ANY tag IN q1.tags SATISFIES tag IN $TAG_IDS END;
 `;
 
 const findProblemProgression = `SELECT ARRAY_LENGTH(solvedAll) AS solvedAll,
@@ -247,6 +264,7 @@ export const queries = {
   appendChallengeToUser,
   appendProblemToUser,
   findProblems,
+  findProblemsWithTags,
   findProblemProgression,
   findArticle,
   findArticles,

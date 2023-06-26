@@ -9,6 +9,7 @@ import { ProblemModule } from './modules/problem/problem.module';
 import { PublicationModule } from './modules/publication/publication.module';
 import { RoomModule } from './modules/room/room.module';
 import { SubmissionModule } from './modules/submission/submission.module';
+import { TagModule } from './modules/tag/tag.module';
 import { TeamModule } from './modules/team/team.module';
 import { TestcaseModule } from './modules/testcase/testcase.module';
 
@@ -25,6 +26,7 @@ import { TestcaseModule } from './modules/testcase/testcase.module';
     SubmissionModule,
     TestcaseModule,
     PublicationModule,
+    TagModule,
   ],
 })
 export class AppModule {}

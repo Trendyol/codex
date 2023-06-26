@@ -36,12 +36,20 @@ export type Testcase = {
   stdin: string;
 };
 
+export type Tag = {
+  id: string;
+  title: string;
+  forArticles: boolean;
+  forProblems: boolean;
+}
+
 export type Problem = {
   id: string;
   title: string;
   content: string;
   difficulty: Difficulty;
   solved: boolean;
+  tags?: Tag[];
 };
 
 export type Submission = {
