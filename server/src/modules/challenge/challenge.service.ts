@@ -130,7 +130,7 @@ export class ChallengeService {
       status: { $lt: Status.finished },
     });
 
-    unfinishedChallenges.forEach(async ({ id, status, date, duration }) => {
+    unfinishedChallenges.forEach(async ({ id, status, date, duration, participants }) => {
       const currentStatus = this.getCurrentStatus(date, duration);
 
       if (currentStatus != status) {

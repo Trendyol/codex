@@ -4,6 +4,7 @@ import { SubmissionEntity } from '../entities';
 import { ChallengeEntity } from '../entities/challenge.entity';
 import { ProblemEntity } from '../entities/problem.entity';
 import { ArticleEntity, CommentEntity, DiscussionEntity } from '../entities/publication.entity';
+import { TagEntity } from '../entities/tag.entity';
 import { TeamEntity } from '../entities/team.entity';
 import { TestcaseEntity } from '../entities/testcase.entity';
 import { UserEntity } from '../entities/user.entity';
@@ -18,6 +19,7 @@ export abstract class IDataService {
   abstract teams: IGenericRepository<Pure<TeamEntity>, TeamEntity>;
   abstract problems: IGenericRepository<Pure<ProblemEntity>, ProblemEntity>;
   abstract testcases: IGenericRepository<Pure<TestcaseEntity>, TestcaseEntity>;
+  abstract tags: IGenericRepository<Pure<TagEntity>, TagEntity>;
   abstract queries: OttomanQueries;
 
   abstract articles: IGenericRepository<Pure<ArticleEntity>, ArticleEntity>;

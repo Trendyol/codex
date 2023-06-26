@@ -21,4 +21,8 @@ export class CreateProblemDto {
   @IsArray()
   readonly defaultCodes: DefaultCodes[];
 
+  @ApiProperty()
+  @IsArray()
+  readonly tags: string[];
+
 }

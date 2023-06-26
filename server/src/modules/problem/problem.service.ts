@@ -7,9 +7,8 @@ import { CreateProblemDto } from './dtos/create-problem.dto';
 export class ProblemService {
   constructor(private readonly dataService: IDataService) {}
 
-  async findAll(userId?: string) {
-    if (userId) return await this.dataService.queries.findProblems(userId);
-    return await this.dataService.problems.find({});
+  async findAll(userId?: string, tags?: string[]) {
+    return await this.dataService.queries.findProblems(userId || '', tags);
   }
 
   async findById(id: string) {
