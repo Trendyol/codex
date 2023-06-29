@@ -5,16 +5,11 @@ import { CONFETTI_PARTICLE_COUNT } from 'src/constants';
 type ConfettiProps = {};
 
 const Confetti: FC<ConfettiProps> = () => {
-  const refAnimationInstance: any = useRef(null);
-
-  const getInstance = useCallback((instance: any) => {
-    refAnimationInstance.current = instance;
-  }, []);
+  const refAnimationInstance = useRef<confetti.CreateTypes | null>(null);
 
   const makeShot = useCallback((position: number, particleRatio: number, opts: any) => {
-    if (!refAnimationInstance.current) return;
-
     setTimeout(() => {
+      if (!refAnimationInstance.current) return;
       refAnimationInstance.current({
         ...opts,
         origin: { y: position },
@@ -118,8 +113,8 @@ const Confetti: FC<ConfettiProps> = () => {
 
   return (
     <ReactCanvasConfetti
-      refConfetti={getInstance}
-      className="z-50 pointer-events-none fixed left-0 top-0 h-full w-full"
+      refConfetti={(ref) => (refAnimationInstance.current = ref)}
+      className="pointer-events-none fixed left-0 top-0 z-50 h-full w-full"
     />
   );
 };

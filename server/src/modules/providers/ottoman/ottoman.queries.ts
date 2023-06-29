@@ -34,14 +34,6 @@ export class OttomanQueries {
     return result.rows[0];
   }
 
-  async findWinners(challengeId: string) {
-    const result = await this._query(queries.findWinners, {
-      parameters: { CHALLENGE_ID: challengeId },
-    });
-
-    return result.rows;
-  }
-
   async findChallengeTeamFinishRankings(challengeId: string) {
     const result = await this._query(queries.findChallengeTeamFinishRankings, {
       parameters: { CHALLENGE_ID: challengeId },
@@ -56,26 +48,6 @@ export class OttomanQueries {
     await this._query(queries.addPointsToUser, {
       parameters: { USER_ID: userId, POINTS: points },
     });
-  }
-
-  async findChallengePlacements(challengeId: string) {
-    const result = await this._query(queries.findChallengePlacements, {
-      parameters: { CHALLENGE_ID: challengeId },
-    });
-
-    const placements = [];
-
-    result.rows.forEach(({ date, teamId, submission, participants }) => {
-      const mappedParticipants = participants.map((participant) => participant[bucketName]);
-      placements.push({
-        date,
-        teamId,
-        submission,
-        participants: mappedParticipants,
-      });
-    });
-
-    return placements;
   }
 
   async appendChallengeToUser(userId: string, challenge: UserChallenge) {

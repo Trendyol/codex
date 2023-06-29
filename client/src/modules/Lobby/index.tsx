@@ -6,7 +6,6 @@ import { disconnectSocket, joinLobby, sendMessage } from '@services/lobby';
 import { useRouter } from 'next/router';
 import { FC, useEffect, useMemo, useState } from 'react';
 import Chat from '../../components/shared/Chat';
-import Dino from './components/Dino';
 import Participants from './components/Participants';
 import { Status } from '@models/enums';
 import { DateTime } from 'luxon';
@@ -84,7 +83,7 @@ const Lobby: FC<LobbyProps> = ({ discussion }) => {
           {!discussion && (
             <>
               <Connection />
-              {mounted() && <Dino />}
+              {/* {mounted() && <Dino />} */}
             </>
           )}
           {discussion && (

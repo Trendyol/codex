@@ -46,7 +46,31 @@ export class ChallengeService {
   }
 
   async getPlacements(challengeId: string) {
-    return await this.dataService.queries.findChallengePlacements(challengeId);
+    const teamFinishRankings = await this.dataService.queries.findChallengeTeamFinishRankings(
+      challengeId,
+    );
+    const placements = [];
+    for (const teamFinishRanking of teamFinishRankings) {
+      const placement = {
+        participants: [],
+        submission: null,
+        ...teamFinishRanking,
+      };
+      const team = await this.dataService.teams.findById(teamFinishRanking.teamId, {
+        populate: '*',
+      });
+      const submission = await this.dataService.submissions.findOne(
+        { challengeId, teamId: teamFinishRanking.teamId },
+        { sort: { date: 'asc' } },
+      );
+
+      placement.participants = team.participants;
+      placement.submission = submission;
+
+      placements.push(placement);
+    }
+
+    return placements;
   }
 
   async participate(userId: string, challengeId: string) {
