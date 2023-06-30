@@ -4,6 +4,7 @@ import { Interval } from '@nestjs/schedule';
 import { DateTime } from 'luxon';
 
 import { LobbyService } from '../lobby/lobby.service';
+import { SubmissionStatus } from '../submission/models/enums';
 import { TeamService } from '../team/team.service';
 import { CreateChallengeDto } from './dtos/create-challenge.dto';
 import {
@@ -60,7 +61,7 @@ export class ChallengeService {
         populate: '*',
       });
       const submission = await this.dataService.submissions.findOne(
-        { challengeId, teamId: teamFinishRanking.teamId },
+        { challengeId, teamId: teamFinishRanking.teamId, status: SubmissionStatus.Accepted },
         { sort: { date: 'asc' } },
       );
 
