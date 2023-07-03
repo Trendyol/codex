@@ -1,9 +1,13 @@
+import config from '@core/config/configuration';
 import { IDataService } from '@core/data/services/data.service';
+import {CodexMailOptions} from "@core/data/services/mail.service";
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
 import { DateTime } from 'luxon';
 
 import { LobbyService } from '../lobby/lobby.service';
+import { MailService } from '../providers/mail/mail.service';
+import { MAIL_TEMPLATES } from "../providers/mail/models/enums";
 import { SubmissionStatus } from '../submission/models/enums';
 import { TeamService } from '../team/team.service';
 import { CreateChallengeDto } from './dtos/create-challenge.dto';
@@ -15,7 +19,7 @@ import {
   POINTS_GAP,
   STATUS_INTERVAL,
 } from './models/constants';
-import { Status } from './models/enums';
+import {Status} from './models/enums';
 
 @Injectable()
 export class ChallengeService {
@@ -23,6 +27,7 @@ export class ChallengeService {
     private readonly dataService: IDataService,
     private readonly teamService: TeamService,
     private readonly lobbyService: LobbyService,
+    private readonly mailService: MailService,
   ) {}
 
   async create(createChallengeDto: CreateChallengeDto) {
@@ -155,16 +160,34 @@ export class ChallengeService {
       status: { $lt: Status.finished },
     });
 
-    unfinishedChallenges.forEach(async ({ id, status, date, duration, participants }) => {
+    for (const {id, status, date, duration, participants, name} of unfinishedChallenges) {
       const currentStatus = this.getCurrentStatus(date, duration);
 
       if (currentStatus != status) {
         await this.dataService.challenges.update(id, { status: currentStatus });
         Logger.log(`Challenge status updated ${id}: ${Status[currentStatus]}`);
         if (currentStatus == Status.ongoing) this.startChallenge(id);
+        if (currentStatus == Status.pending)  this.sendUpcomingMailToUser(participants, name, id);
         if (currentStatus == Status.finished) this.finishChallenge(id);
       }
-    });
+    }
+  }
+
+  async sendUpcomingMailToUser(participants: string[], name: string, id: string){
+    for (const userId of participants) {
+          const user = await this.dataService.users.findById(userId);
+
+          const options: CodexMailOptions = {
+            subject: `Reminder from Codex | ${name} will start soon!`,
+            template: MAIL_TEMPLATES.upcoming,
+            context: {
+              url: `${config.clientUrl}/challenge/${id}`,
+              challengeName: name
+            }
+          }
+
+          await this.mailService.send(user, options);
+        }
   }
 
   getCurrentStatus(date: Date, duration: number) {
