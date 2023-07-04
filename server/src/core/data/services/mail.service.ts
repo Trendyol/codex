@@ -1,6 +1,6 @@
-import {UserEntity} from "@core/data/entities";
+import { UserEntity } from "@core/data/entities";
 
-import {MAIL_TEMPLATES} from "../../../modules/providers/mail/models/enums";
+import { MAIL_TEMPLATES } from "../../../modules/providers/mail/models/enums";
 
 export type Attachment = {
   filename: string;

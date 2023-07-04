@@ -1,6 +1,6 @@
 import config from '@core/config/configuration';
 import { UserEntity } from '@core/data/entities';
-import {CodexMailOptions, IMailService} from "@core/data/services/mail.service";
+import { CodexMailOptions, IMailService } from "@core/data/services/mail.service";
 import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 
