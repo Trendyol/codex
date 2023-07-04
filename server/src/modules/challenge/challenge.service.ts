@@ -1,6 +1,6 @@
 import config from '@core/config/configuration';
 import { IDataService } from '@core/data/services/data.service';
-import {CodexMailOptions} from "@core/data/services/mail.service";
+import { CodexMailOptions } from "@core/data/services/mail.service";
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
 import { DateTime } from 'luxon';

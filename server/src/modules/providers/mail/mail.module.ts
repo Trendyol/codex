@@ -11,8 +11,8 @@ import { MailService } from './mail.service';
     MailerModule.forRoot({
       transport: {
         host: config.mail.host,
-        port: Number(config.mail.port) || 465,
-        secure: Boolean(config.mail.secure) || true,
+        port: Number(config.mail.port),
+        secure: Boolean(config.mail.secure),
         auth: {
           user: config.mail.user,
           pass: config.mail.password,
