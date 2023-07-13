@@ -36,6 +36,15 @@ const Lore = () => {
         </div>
       </div>
       <div className="mt-12 p-6">
+        <div className="mb-2">
+          <Badge className="capitalize inline-block opacity-70" intent={4} size={'small'}>
+            Participants: {challenge.participants.length}
+          </Badge>
+          <Badge className="capitalize inline-block opacity-70" intent={4} size={'small'}>
+            Team Size: {challenge.teamSize}
+          </Badge>
+        </div>
+
         <div className="flex items-center gap-3 text-2xl font-semibold">
           <span>{name}</span>
           {problem && (
