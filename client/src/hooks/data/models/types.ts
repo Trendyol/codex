@@ -17,6 +17,8 @@ export type Challenge = {
   userParticipant: boolean;
   userActiveParticipant: boolean;
   activeParticipants?: string[];
+
+  participants: string[];
 };
 
 export type Progression = {
@@ -41,7 +43,7 @@ export type Tag = {
   title: string;
   forArticles: boolean;
   forProblems: boolean;
-}
+};
 
 export type Problem = {
   id: string;
@@ -125,7 +127,7 @@ export type Placement = {
   date: string;
   teamId: string;
   participants: User[];
-  submission: Submission
+  submission: Submission;
 };
 
 export type Article = {
