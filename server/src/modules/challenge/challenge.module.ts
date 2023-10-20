@@ -7,9 +7,11 @@ import { RoomModule } from '../room/room.module';
 import { TeamModule } from '../team/team.module';
 import { ChallengeController } from './challenge.controller';
 import { ChallengeService } from './challenge.service';
+import { MailModule } from '../providers/mail/mail.module';
+
 
 @Module({
-  imports: [DataModule, TeamModule, LobbyModule, RoomModule, ScheduleModule.forRoot()],
+  imports: [DataModule, TeamModule, LobbyModule, RoomModule, ScheduleModule.forRoot(), MailModule],
   providers: [ChallengeService],
   controllers: [ChallengeController],
   exports: [ChallengeService],
