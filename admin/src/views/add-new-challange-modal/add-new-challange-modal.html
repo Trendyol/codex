@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <?!= HtmlService.createHtmlOutputFromFile("src/views/add-new-challange-modal/styles-add-new-challange-modal").getContent(); ?>
+</head>
+
+<body>
+    <div class="container">
+        <div id="loader" class="lds-facebook hide"><div></div><div></div><div></div></div>
+        <div id="formContainer" class="form-container">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" placeholder="Trendyol Champs" class="text-field" id="name" name="name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea type="text" class="text-area-field description-editor" id="description" name="description" placeholder="### markdown"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button id="submitButton" onclick="submit"> Submit </button>
+                    </div>
+                </div>
+                <div class="col-6">
+
+                    <div class="form-group">
+                        <label for="problem-choice">Select Problem</label>
+                        <input list="problems" data-selected="" class="text-field" name="problem-choice" id="problemChoice">
+                        <datalist id="problems"></datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="duration">Duration</label>
+                        <input type="text" placeholder="10" class="text-field" id="duration" name="duration" />
+                    </div>
+                    <div class="form-group">
+                        <label for="teamSize">Team Size</label>
+                        <input type="text" placeholder="2" class="text-field" id="teamSize" name="teamSize" />
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="text" placeholder="2023-04-07T11:50:06.963Z" class="text-field" id="date" name="date" />
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+</body>
+    <?!= HtmlService.createHtmlOutputFromFile("src/views/add-new-challange-modal/scripts-add-new-challange-modal").getContent(); ?>
+
+</html>

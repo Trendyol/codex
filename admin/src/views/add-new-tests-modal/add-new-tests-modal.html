@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <?!= HtmlService.createHtmlOutputFromFile("src/views/add-new-tests-modal/styles-add-new-tests-modal").getContent(); ?>
+</head>
+
+<body>
+    <div class="container">
+        <div id="loader" class="lds-facebook hide"><div></div><div></div><div></div></div>
+        <div id="tableContainer" class="table-container">
+            <table id="testsTable">
+                <thead>
+                    <tr>
+                        <td>Input</td>
+                        <td>Output</td>
+                        <td>Is Public</td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <div id="formContainer" class="form-container">
+
+            <div class="form-group mt-20">
+                <label for="problem-choice">Select Problem</label>
+                <input list="problems" data-selected="" class="text-field" name="problem-choice" id="problemChoice">
+                <datalist id="problems"></datalist>
+            </div>
+
+            <div class="form-group">
+                <button id="submitButton" onclick="submit"> Submit </button>
+            </div>
+        </div>
+    </div>
+</body>
+    <?!= HtmlService.createHtmlOutputFromFile("src/views/add-new-tests-modal/scripts-add-new-tests-modal").getContent(); ?>
+</html>
