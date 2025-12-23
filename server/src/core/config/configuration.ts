@@ -47,6 +47,19 @@ export interface Config {
       path: string;
     };
   };
+  mail: {
+    isEnabled: string;
+    address: string;
+    host: string;
+    port: string;
+    secure: string;
+    user: string;
+    password: string;
+  };
+  social: {
+    discord: string;
+    email: string;
+  };
 }
 
 export const config = {
@@ -93,6 +106,19 @@ export const config = {
       path: process.env.STORAGE_CDN_PATH,
     },
   },
+  mail:{
+    isEnabled: process.env.MAIL_IS_ENABLED,
+    address: process.env.MAIL_ADDRESS,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
+    secure: process.env.MAIL_SECURE,
+    user: process.env.MAIL_USER,
+    password:process.env.MAIL_PASSWORD,
+  },
+  social:{
+    discord: process.env.SOCIAL_DISCORD,
+    email: process.env.SOCIAL_EMAIL,
+  }
 };
 
 export default config as Config;
